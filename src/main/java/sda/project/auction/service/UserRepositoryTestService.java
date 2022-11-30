@@ -13,5 +13,10 @@ public class UserRepositoryTestService implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+
+        //repository.save(new User("pko@wp.pl","test1", "Pawel", "lodzkie", "Lodz", "blablabla"));
+        // repository.save(new User("tchodzia@gmail.com","test1", "Magda", "mazowieckie", "Warszawa", "blablabla"));
+
     }
 }
