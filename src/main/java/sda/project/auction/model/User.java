@@ -14,6 +14,15 @@ import java.util.Date;
 @ToString
 public class User {
 
+    public User(String email, String password, String account_name, String voivodeship, String city, String address) {
+        this.email = email;
+        this.password = password;
+        this.account_name = account_name;
+        this.voivodeship = voivodeship;
+        this.city = city;
+        this.address = address;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -28,7 +37,7 @@ public class User {
     private String account_name;
 
     @Column
-    private String voivodship;
+    private String voivodeship;
 
     @Column
     private String city;
