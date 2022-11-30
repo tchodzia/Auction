@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <form th:object="${user}" th:action="@{/signup}" method="post">
+    <div class="mb-3">
+      <label for="firstName" class="form-label">Name:</label>
+      <input id="firstName" class="form-control" type="text" th:field="*{account_name}" >
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input id="email" class="form-control" type="text" th:field="*{email}">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password:</label>
+      <input id="password" class="form-control" type="password" th:field="*{password}">
+    </div>
+    <div class="mb-3">
+      <label for="voivodeship" class="form-label">Voivodeship:</label>
+      <input id="voivodeship" class="form-control" type="text" th:field="*{voivodeship}" >
+    </div>
+    <div class="mb-3">
+      <label for="city" class="form-label">City:</label>
+      <input id="city" class="form-control" type="text" th:field="*{city}" >
+    </div>
+    <div class="mb-3">
+      <label for="address" class="form-label">Address:</label>
+      <input id="address" class="form-control" type="text" th:field="*{address}" >
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">Sign Up</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
