@@ -1,0 +1,37 @@
+package sda.project.auction.service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import sda.project.auction.model.Auction;
+import sda.project.auction.repository.AuctionRepository;
+
+import java.util.List;
+import java.util.stream.StreamSupport;
+
+import static java.util.stream.Collectors.toList;
+
+
+@Service
+@RequiredArgsConstructor
+public class AuctionService {
+    private final AuctionRepository repository;
+
+    public Auction save(Auction auction){
+        return repository.save(auction);
+    }
+
+    public Auction findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Auction with id " + id + " not found."));
+    }
+
+
+    public List<Auction> findAll() {
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .collect(toList());
+    }
+
+    public List<Auction> findCurrent10() {
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .collect(toList());
+    }
+}
