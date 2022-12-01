@@ -7,7 +7,7 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@Entity(name="auction")
+@Entity(name="auctions")
 @Getter
 @NoArgsConstructor
 @ToString

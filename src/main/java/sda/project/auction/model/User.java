@@ -9,7 +9,7 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity(name="user")
+@Entity(name="users")
 @Getter
 @NoArgsConstructor
 @ToString

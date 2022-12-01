@@ -3,7 +3,6 @@ package sda.project.auction.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
-import sda.project.auction.model.User;
 import sda.project.auction.repository.UserRepository;
 
 @Service
