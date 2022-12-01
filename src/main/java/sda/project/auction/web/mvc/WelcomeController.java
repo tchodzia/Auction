@@ -24,8 +24,12 @@ public class WelcomeController {
         //map.addAttribute("userName", "Jan Kowalski");
         //map.addAttribute("user", user);
 
-        List<Auction> auctions = auctionService.findAll();
-        map.addAttribute("auctions", auctions);
+        List<Auction> auctionsNew10 = auctionService.findFirst10ByDateOfIssue();
+        map.addAttribute("auctionsNew10", auctionsNew10);
+
+        List<Auction> auctionsLast10 = auctionService.findLast10ByDateOfIssue();
+        map.addAttribute("auctionsLast10", auctionsLast10);
+
         return "index";
     }
 }

@@ -21,11 +21,11 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th colspan="4">TOP 10</th>
+    <th colspan="4">Nowe aukcje</th>
   </tr>
   </thead>
   <tbody>
-  <tr th:each="auction : ${auctions}">
+  <tr th:each="auction : ${auctionsNew10}">
     <td th:text="${auction.getID()}"></td>
     <td th:text="${auction.getTitle()}"></td>
     <td th:text="${auction.getCategory()}"></td>
@@ -39,8 +39,26 @@
   </tbody>
 </table>
 
-<!-- <p th:text="'Welcome ' + ${user.getEmail()}"></p> -->
-
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th colspan="4">Aukcje na zakończeniu</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="auction : ${auctionsLast10}">
+    <td th:text="${auction.getID()}"></td>
+    <td th:text="${auction.getTitle()}"></td>
+    <td th:text="${auction.getCategory()}"></td>
+    <td th:text="${auction.getBUY_NOW_price()}"></td>
+    <!-- <td>
+       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+     </td>
+     -->
+  </tr>
+  </tbody>
+</table>
 
 <!--
 <div class="container">
