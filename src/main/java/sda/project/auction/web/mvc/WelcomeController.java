@@ -40,9 +40,9 @@ public class WelcomeController {
         List<Category> sortedCategories = new ArrayList<>();
         for (Category category : categories) {
             sortedCategories.add(category);
-            List<Category> down_categories = categoryService.findAllSelectedByParentCategory(category.getID());
-            for (Category down_category : down_categories) {
-                sortedCategories.add(down_category);
+            List<Category> downCategories = categoryService.findAllSelectedByParentCategory(category.getID());
+            for (Category downCategory : downCategories) {
+                sortedCategories.add(downCategory);
             }
         }
 
