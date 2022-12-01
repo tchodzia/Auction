@@ -1,8 +1,10 @@
 package sda.project.auction.web.mvc;
 
 import sda.project.auction.model.Auction;
+import sda.project.auction.model.Category;
 import sda.project.auction.model.User;
 import sda.project.auction.service.AuctionService;
+import sda.project.auction.service.CategoryService;
 import sda.project.auction.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import java.util.List;
 public class WelcomeController {
     private final UserService userService;
     private final AuctionService auctionService;
+    private final CategoryService categoryService;
     @GetMapping("/")
     public String welcomePage(ModelMap map) {
         //User user = userService.findById(1L);
@@ -29,6 +32,9 @@ public class WelcomeController {
 
         List<Auction> auctionsLast10 = auctionService.findLast10ByDateOfIssue();
         map.addAttribute("auctionsLast10", auctionsLast10);
+
+        List<Category> categories = categoryService.findAllOrderedByParentCategory();
+        map.addAttribute("categories", categories);
 
         return "index";
     }

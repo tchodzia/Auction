@@ -21,6 +21,27 @@
 <table class="table table-striped">
   <thead>
   <tr>
+    <th colspan="4">Kategorie</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="category : ${categories}">
+    <td th:text="${category.getID()}"></td>
+    <td th:text="${category.getName()}"></td>
+    <td th:text="${category.getIcon()}"></td>
+    <td th:text="${category.getParent_category()}"></td>
+    <!-- <td>
+       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+     </td>
+     -->
+  </tr>
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
     <th colspan="4">Nowe aukcje</th>
   </tr>
   </thead>
