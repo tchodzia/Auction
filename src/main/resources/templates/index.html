@@ -25,7 +25,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="category : ${categories}">
+  <tr th:each="category : ${sortedCategories}">
     <td th:text="${category.getID()}"></td>
     <td th:text="${category.getName()}"></td>
     <td th:text="${category.getIcon()}"></td>

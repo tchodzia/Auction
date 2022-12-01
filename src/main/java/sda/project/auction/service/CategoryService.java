@@ -21,4 +21,10 @@ public class CategoryService {
                 .collect(toList());
     }
 
+    public List<Category> findAllSelectedByParentCategory(Long Id) {
+        return StreamSupport.stream(repository.findAllSelectedByParentCategory(Id).spliterator(), false)
+                .collect(toList());
+    }
+
+
 }

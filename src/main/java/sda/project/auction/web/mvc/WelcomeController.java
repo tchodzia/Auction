@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,7 +35,19 @@ public class WelcomeController {
         map.addAttribute("auctionsLast10", auctionsLast10);
 
         List<Category> categories = categoryService.findAllOrderedByParentCategory();
-        map.addAttribute("categories", categories);
+        //map.addAttribute("categories", categories);
+
+        List<Category> sortedCategories = new ArrayList<>();
+        for (Category category : categories) {
+            sortedCategories.add(category);
+            List<Category> down_categories = categoryService.findAllSelectedByParentCategory(category.getID());
+            for (Category down_category : down_categories) {
+                sortedCategories.add(down_category);
+            }
+        }
+
+        //List<Category> down_categories = categoryService.findAllSelectedByParentCategory();
+        map.addAttribute("sortedCategories", sortedCategories);
 
         return "index";
     }
