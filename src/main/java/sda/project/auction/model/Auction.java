@@ -47,7 +47,8 @@ public class Auction {
     @Column
     private Long numbers_of_visitors;
 
-
+    @Column
+    private Long user;
 
     public void setID(Long id) {
         this.ID = id;

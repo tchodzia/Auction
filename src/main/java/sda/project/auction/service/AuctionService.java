@@ -1,11 +1,14 @@
 package sda.project.auction.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import sda.project.auction.model.Auction;
 import sda.project.auction.repository.AuctionRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.toList;
@@ -30,8 +33,14 @@ public class AuctionService {
                 .collect(toList());
     }
 
-    public List<Auction> findCurrent10() {
-        return StreamSupport.stream(repository.findAll().spliterator(), false)
+    public List<Auction> findFirst10ByDateOfIssue() {
+        return StreamSupport.stream(repository.findFirst10ByDateOfIssue().spliterator(), false)
                 .collect(toList());
     }
+
+    public List<Auction> findLast10ByDateOfIssue() {
+        return StreamSupport.stream(repository.findLast10ByDateOfIssue().spliterator(), false)
+                .collect(toList());
+    }
+
 }
