@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity(name="user")
@@ -46,7 +47,7 @@ public class User {
     private String address;
 
     @Column
-    private Date created_date;
+    private LocalDateTime created_date;
 
     @Column
     private Account_State account_state;
