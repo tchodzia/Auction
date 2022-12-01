@@ -16,21 +16,26 @@ import sda.project.auction.web.mappers.UserMapper;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/signup")
+@RequestMapping()
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/signup")
     public String signUp(ModelMap map) {
         map.addAttribute("user", new CreateUserForm());
         return "create-user";
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public String handleSignUp(@ModelAttribute("user") CreateUserForm form, ModelMap model) {
         log.info("Signing Up from form: {}", form);
         userService.save(UserMapper.toEntity(form));
         return "create-user";
+    }
+
+    @GetMapping("/header")
+    public String header() {
+        return "header";
     }
 
 }

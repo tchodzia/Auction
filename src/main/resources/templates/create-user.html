@@ -18,13 +18,16 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="#">Categories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Categories</a>
+          <a class="nav-link" href="#">FAQ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"> ???? </a>
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">LogIn/SignUp/LogOut</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -34,7 +37,7 @@
     </div>
   </div>
 </nav>
-
+<br>
 <div class="container">
   <form th:object="${user}" th:action="@{/signup}" method="post">
     <div class="mb-3">
