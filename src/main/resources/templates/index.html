@@ -2,85 +2,91 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-  <meta charset="UTF-8">
-  <meta name="description" content="Auction service">
-  <meta name="keywords" content="auction">
-  <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="description" content="Auction service">
+    <meta name="keywords" content="auction">
+    <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Auctions Portal</title>
-  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
-  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <title>Auctions Portal</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
 <div>
-  <h1>Welcome to Auctions Portal!</h1>
+    <h1>Welcome to Auctions Portal!</h1>
 </div>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="5">Kategorie</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="category : ${sortedCategories}">
-    <td th:text="${category.getID()}"></td>
-    <td th:text="${category.getName()}"></td>
-    <td th:text="${category.getIcon()}"></td>
-    <td th:text="${category.getParent_category()}"></td>
-    <td><a class="btn btn-primary" th:href="@{/get-auctions/__${category.getID()}__}" target="_parent">Pokaż aukcje</a></td>
+<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+    <div th:each="categoryTree : ${categoryTrees}" class="btn-group" role="group">
+        <button th:text="${categoryTree.getCategoryName()}" type="button" class="btn btn-primary dropdown-toggle"
+                data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+        </button>
+        <ul class="dropdown-menu">
+            <li th:each="category : ${categoryTree.getSubcategories()}"><a th:text="${category.getCategoryName()}"
+                                                                           class="dropdown-item" href="#">Dropdown
+                link</a></li>
+        </ul>
+    </div>
+</div>
 
-    <!-- <td>
-       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-     </td>
-     -->
-  </tr>
-  </tbody>
+<!--<tr th:each="category : ${sortedCategories}">
+   <td th:text="${category.getID()}"></td>
+   <td th:text="${category.getName()}"></td>
+   <td th:text="${category.getIcon()}"></td>
+   <td th:text="${category.getParent_category()}"></td>
+  <td><a class="btn btn-primary" th:href="@{/get-auctions/__${category.getID()}__}" target="_parent">Pokaż
+       aukcje</a></td>-->
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th colspan="4">Nowe aukcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auction : ${auctionsNew10}">
+        <td th:text="${auction.getID()}"></td>
+        <td th:text="${auction.getTitle()}"></td>
+        <td th:text="${auction.getCategory()}"></td>
+        <td th:text="${auction.getBUY_NOW_price()}"></td>
+        <!-- <td>
+           <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+           <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+         </td>
+         -->
+    </tr>
+    </tbody>
 </table>
 
 <table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="4">Nowe aukcje</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="auction : ${auctionsNew10}">
-    <td th:text="${auction.getID()}"></td>
-    <td th:text="${auction.getTitle()}"></td>
-    <td th:text="${auction.getCategory()}"></td>
-    <td th:text="${auction.getBUY_NOW_price()}"></td>
-   <!-- <td>
-      <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-      <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-    </td>
-    -->
-  </tr>
-  </tbody>
-</table>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="4">Aukcje na zakończeniu</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="auction : ${auctionsLast10}">
-    <td th:text="${auction.getID()}"></td>
-    <td th:text="${auction.getTitle()}"></td>
-    <td th:text="${auction.getCategory()}"></td>
-    <td th:text="${auction.getBUY_NOW_price()}"></td>
-    <!-- <td>
-       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-     </td>
-     -->
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th colspan="4">Aukcje na zakończeniu</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auction : ${auctionsLast10}">
+        <td th:text="${auction.getID()}"></td>
+        <td th:text="${auction.getTitle()}"></td>
+        <td th:text="${auction.getCategory()}"></td>
+        <td th:text="${auction.getBUY_NOW_price()}"></td>
+        <!-- <td>
+           <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+           <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+         </td>
+         -->
+    </tr>
+    </tbody>
 </table>
 
 <!--
@@ -88,6 +94,6 @@
   <p th:text="'Welcome ' + ${user.firstName} + ' ' + ${user.lastName} + ' (' + ${user.login} + ')'"></p>
 </div>
 -->
-
+</div>
 </body>
 </html>

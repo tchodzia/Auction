@@ -2,6 +2,7 @@ package sda.project.auction.web.mvc;
 
 import sda.project.auction.model.Auction;
 import sda.project.auction.model.Category;
+import sda.project.auction.model.CategoryTree;
 import sda.project.auction.model.User;
 import sda.project.auction.service.AuctionService;
 import sda.project.auction.service.CategoryService;
@@ -48,6 +49,11 @@ public class WelcomeController {
 
         //List<Category> down_categories = categoryService.findAllSelectedByParentCategory();
         map.addAttribute("sortedCategories", sortedCategories);
+
+        //test
+        List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
+        map.addAttribute("categoryTrees", categoryTrees);
+        //koniec testu
 
         return "index";
     }

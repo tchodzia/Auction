@@ -16,7 +16,7 @@ public class Category {
     private Long ID;
 
     @Column
-    private String name;
+    public String name;
 
     @Column
     private String description;
