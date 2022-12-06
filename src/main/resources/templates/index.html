@@ -156,8 +156,10 @@
   </thead>
   <tbody>
   <tr th:each="auction : ${finishedAuctionsByUser}">
-    <td th:text="${auction.getAuction()}"></td>
-    <td th:text="${auction.getUser()}"></td>
+     <td th:text="${auction.getID()}"></td>
+     <td th:text="${auction.getTitle()}"></td>
+    <td th:text="${auction.getCategory()}"></td>
+    <td th:text="${auction.getEnd_date()}"></td>
     <!-- <td>
        <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
        <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
