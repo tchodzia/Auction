@@ -14,7 +14,41 @@
 </head>
 <body>
 
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>aaa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>bbb</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th colspan="4">Aukcje wystawione przez użytkownika</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="auction : ${auctions}">
+    <td th:text="${auction.getID()}"></td>
+    <td th:text="${auction.getTitle()}"></td>
+    <td th:text="${auction.getCategory()}"></td>
+    <td th:text="${auction.getBUY_NOW_price()}"></td>
+    <td>
+       <a class="btn btn-success" th:href="@{/set-auction/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj</a>
+       <a class="btn btn-danger" th:href="@{/end-auction/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
+     </td>
+
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>
