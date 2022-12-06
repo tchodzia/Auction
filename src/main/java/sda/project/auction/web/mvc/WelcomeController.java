@@ -50,6 +50,7 @@ public class WelcomeController {
 
 
         // CATEGORIES
+/*
         List<Category> categories = categoryService.findAllOrderedByParentCategory();
 
         List<Category> sortedCategories = new ArrayList<>();
@@ -62,7 +63,7 @@ public class WelcomeController {
         }
 
         map.addAttribute("sortedCategories", sortedCategories);
-
+*/
         List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
         map.addAttribute("categoryTrees", categoryTrees);
 
