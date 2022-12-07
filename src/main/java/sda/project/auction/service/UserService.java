@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import sda.project.auction.model.User;
 import sda.project.auction.repository.UserRepository;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -24,5 +22,10 @@ public class UserService {
     public User findByEmail(String email) {
         return repository.findByEmail(email).orElseThrow(() -> new RuntimeException("User with email " + email + " not found."));
     }
+
+/*    public User update(User newUser){
+        User current = findById(newUser.getID());
+        return repository.save(newUser);
+    }*/
 
 }

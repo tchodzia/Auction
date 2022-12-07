@@ -1,14 +1,11 @@
-package sda.project.auction.web;
+package sda.project.auction.web.mvc;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
+import sda.project.auction.model.User;
 import sda.project.auction.service.UserService;
 import sda.project.auction.web.form.CreateUserForm;
 import sda.project.auction.web.mappers.UserMapper;
@@ -33,9 +30,19 @@ public class UserController {
         return "create-user";
     }
 
-    @GetMapping("/header")
-    public String header() {
-        return "header";
+    @GetMapping("/update/user/{id}")
+    public String update(@PathVariable Long id, ModelMap map) {
+        User foundUser = userService.findById(id);
+        map.addAttribute("user", foundUser);
+        return "update-user";
+    }
+
+    @PostMapping("/update/save")
+    public String saveUser(@ModelAttribute("user") CreateUserForm form) {
+        log.info("Updating user from form {}: ", form);
+        User user = userService.findById(form.getID());
+        userService.save(UserMapper.toUpdateEntity(user, form));
+        return "redirect:/";
     }
 
 }

@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class CreateUserForm {
 
+    private Long ID;
     private String email;
     private String password;
     private String account_name;

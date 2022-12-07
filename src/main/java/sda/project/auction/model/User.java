@@ -4,6 +4,7 @@ package sda.project.auction.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
@@ -11,9 +12,18 @@ import java.util.Date;
 
 @Entity(name="users")
 @Getter
+@Setter
 @NoArgsConstructor
 @ToString
 public class User {
+
+    public User(String email, String password, String voivodeship, String city, String address) {
+        this.email = email;
+        this.password = password;
+        this.voivodeship = voivodeship;
+        this.city = city;
+        this.address = address;
+    }
 
     public User(String email, String password, String account_name, String voivodeship, String city, String address) {
         this.email = email;
