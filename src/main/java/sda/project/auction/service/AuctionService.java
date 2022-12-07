@@ -49,4 +49,10 @@ public class AuctionService {
     public List<Auction> finishedAuctionsByUser(Long id) {
         return repository.finishedAuctionsByUser(id);
     }
+
+    public Auction getCurrentRandomAuction() {
+        return repository.getCurrentRandomAuction();
+    }
+
+
 }

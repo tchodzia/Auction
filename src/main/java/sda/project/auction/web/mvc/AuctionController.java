@@ -18,12 +18,12 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/get-auctions")
+@RequestMapping("/auctions")
 public class AuctionController {
         private final AuctionService auctionService;
 
-        @GetMapping("/{id}")
-        public String displayAuction(@PathVariable("id") Long id, ModelMap map) {
+        @GetMapping("/user/{id}")
+        public String displayAuctionByUser(@PathVariable("id") Long id, ModelMap map) {
             List<Auction> auctions = auctionService.findAllAuctionsByDateOfIssueAndUser(id);
             map.addAttribute("auctions", auctions);
 
@@ -35,6 +35,15 @@ public class AuctionController {
 
             return "get-auctions";
         }
+
+    @GetMapping("/{id}")
+    public String displayAuctionById(@PathVariable("id") Long id, ModelMap map) {
+        Auction auction = auctionService.findById(id);
+        map.addAttribute("auction", auction);
+
+        return "get-auction";
+    }
+
 
 
 }

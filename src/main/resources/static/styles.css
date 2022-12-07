@@ -4,3 +4,10 @@
     font-size: .875em;
     color: #dc3545
 }
+
+#table1 {
+    width:70%;
+    margin:2px;
+}
+
+.mydiv div:hover{background-color:gray;}
