@@ -2,16 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-  <meta charset="UTF-8">
-  <meta name="description" content="Auction service">
-  <meta name="keywords" content="auction">
-  <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Auction service">
+    <meta name="keywords" content="auction">
+    <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Auctions Portal</title>
-  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/styles.css">
-  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <title>Auctions Portal</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -21,13 +21,22 @@
         crossorigin="anonymous"></script>
 
 <div>
+    <div class="alert alert-success" role="alert"
+        th:if="${!message.isBlank()}"
+        th:text="${message}">
+    </div>
+
+<!--    <div th:if="${!message.isBlank()}"
+         th:text="${message}">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>-->
 
     <h1>Welcome to Auctions Portal!</h1>
 
     <div align="right">
         <!--th:href="@{/update/user/__${user.id}__}"-->
-        <a class="btn btn-success"  role="button" target="_parent">Edit user data</a>
-        <a class="btn btn-danger"  role="button" target="_parent">Delete user account</a></div>
+        <a class="btn btn-success" role="button" target="_parent">Edit user data</a>
+        <a class="btn btn-danger" role="button" target="_parent">Delete user account</a></div>
 
 </div>
 
@@ -36,7 +45,8 @@
         <button th:text="${categoryTree.getCategoryName()}" type="button" class="btn btn-primary dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
-            <li th:each="category : ${categoryTree.getSubcategories()}"><a th:text="${category.getCategoryName()}" class="dropdown-item" href="#"></a></li>
+            <li th:each="category : ${categoryTree.getSubcategories()}"><a th:text="${category.getCategoryName()}"
+                                                                           class="dropdown-item" href="#"></a></li>
         </ul>
     </div>
 </div>
@@ -50,127 +60,127 @@
        aukcje</a></td>-->
 
 <table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="4">Nowe aukcje</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="auction : ${auctionsNew10}">
-    <td th:text="${auction.getID()}"></td>
-    <td th:text="${auction.getTitle()}"></td>
-    <td th:text="${auction.getCategory()}"></td>
-    <td th:text="${auction.getBUY_NOW_price()}"></td>
-    <!-- <td>
-       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-     </td>
-     -->
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th colspan="4">Nowe aukcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auction : ${auctionsNew10}">
+        <td th:text="${auction.getID()}"></td>
+        <td th:text="${auction.getTitle()}"></td>
+        <td th:text="${auction.getCategory()}"></td>
+        <td th:text="${auction.getBUY_NOW_price()}"></td>
+        <!-- <td>
+           <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+           <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+         </td>
+         -->
+    </tr>
+    </tbody>
 </table>
 
 <table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="4">Aukcje na zakończeniu</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="auction : ${auctionsLast10}">
-    <td th:text="${auction.getID()}"></td>
-    <td th:text="${auction.getTitle()}"></td>
-    <td th:text="${auction.getCategory()}"></td>
-    <td th:text="${auction.getBUY_NOW_price()}"></td>
-    <!-- <td>
-       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-     </td>
-     -->
-  </tr>
-  </tbody>
-</table>
-
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="4">Aukcje wystawione przez użytkownika</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="auction : ${auctionsByUser}">
-    <td th:text="${auction.getID()}"></td>
-    <td th:text="${auction.getTitle()}"></td>
-    <td th:text="${auction.getCategory()}"></td>
-    <td th:text="${auction.getBUY_NOW_price()}"></td>
-    <!-- <td>
-       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-     </td>
-     -->
-  </tr>
-  </tbody>
-</table>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="4">Aukcje licytowane przez użytkownika</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="auction : ${auctionsBiddingByUser}">
-    <td th:text="${auction.getAuction()}"></td>
-    <td th:text="${auction.getAmount()}"></td>
-    <!-- <td>
-       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-     </td>
-     -->
-  </tr>
-  </tbody>
-</table>
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="4">Aukcje obserwowane przez użytkownika</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="auction : ${observedAuctionsByUser}">
-    <td th:text="${auction.getAuction()}"></td>
-    <td th:text="${auction.getUser()}"></td>
-    <!-- <td>
-       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-     </td>
-     -->
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th colspan="4">Aukcje na zakończeniu</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auction : ${auctionsLast10}">
+        <td th:text="${auction.getID()}"></td>
+        <td th:text="${auction.getTitle()}"></td>
+        <td th:text="${auction.getCategory()}"></td>
+        <td th:text="${auction.getBUY_NOW_price()}"></td>
+        <!-- <td>
+           <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+           <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+         </td>
+         -->
+    </tr>
+    </tbody>
 </table>
 
 
 <table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="4">Zakończone aukcje użytkownika</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="auction : ${finishedAuctionsByUser}">
-     <td th:text="${auction.getID()}"></td>
-     <td th:text="${auction.getTitle()}"></td>
-    <td th:text="${auction.getCategory()}"></td>
-    <td th:text="${auction.getEnd_date()}"></td>
-    <!-- <td>
-       <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-     </td>
-     -->
-  </tr>
-  </tbody>
+    <thead>
+    <tr>
+        <th colspan="4">Aukcje wystawione przez użytkownika</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auction : ${auctionsByUser}">
+        <td th:text="${auction.getID()}"></td>
+        <td th:text="${auction.getTitle()}"></td>
+        <td th:text="${auction.getCategory()}"></td>
+        <td th:text="${auction.getBUY_NOW_price()}"></td>
+        <!-- <td>
+           <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+           <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+         </td>
+         -->
+    </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th colspan="4">Aukcje licytowane przez użytkownika</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auction : ${auctionsBiddingByUser}">
+        <td th:text="${auction.getAuction()}"></td>
+        <td th:text="${auction.getAmount()}"></td>
+        <!-- <td>
+           <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+           <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+         </td>
+         -->
+    </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th colspan="4">Aukcje obserwowane przez użytkownika</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auction : ${observedAuctionsByUser}">
+        <td th:text="${auction.getAuction()}"></td>
+        <td th:text="${auction.getUser()}"></td>
+        <!-- <td>
+           <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+           <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+         </td>
+         -->
+    </tr>
+    </tbody>
+</table>
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th colspan="4">Zakończone aukcje użytkownika</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="auction : ${finishedAuctionsByUser}">
+        <td th:text="${auction.getID()}"></td>
+        <td th:text="${auction.getTitle()}"></td>
+        <td th:text="${auction.getCategory()}"></td>
+        <td th:text="${auction.getEnd_date()}"></td>
+        <!-- <td>
+           <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
+           <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
+         </td>
+         -->
+    </tr>
+    </tbody>
 </table>
 <!--
 <div class="container">

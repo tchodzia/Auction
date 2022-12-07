@@ -1,10 +1,13 @@
 package sda.project.auction.web.mvc;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sda.project.auction.model.User;
 import sda.project.auction.service.UserService;
 import sda.project.auction.web.form.CreateUserForm;
@@ -24,10 +27,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String handleSignUp(@ModelAttribute("user") CreateUserForm form, ModelMap model) {
+    public String handleSignUp(@ModelAttribute("user") @Valid CreateUserForm form, Errors errors, RedirectAttributes redirectAttributes) {
         log.info("Signing Up from form: {}", form);
+        if(errors.hasErrors()){
+            return "create-user";
+        }
         userService.save(UserMapper.toEntity(form));
-        return "create-user";
+        redirectAttributes.addAttribute("message", form.getAccount_name() + " your account was created!");
+        return "redirect:/";
     }
 
     @GetMapping("/update/user/{id}")
@@ -38,9 +45,13 @@ public class UserController {
     }
 
     @PostMapping("/update/save")
-    public String saveUser(@ModelAttribute("user") CreateUserForm form) {
+    public String saveUser(@ModelAttribute("user") @Valid CreateUserForm form, Errors errors, RedirectAttributes redirectAttributes) {
         log.info("Updating user from form {}: ", form);
+        if(errors.hasErrors()){
+            return "update-user";
+        }
         userService.update(form);
+        redirectAttributes.addAttribute("message", form.getAccount_name() + " your account was updated!");
         return "redirect:/";
     }
 
