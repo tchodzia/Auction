@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 public class AuctionService {
     private final AuctionRepository repository;
 
-    public Auction save(Auction auction) {
+    public Auction save(Auction auction){
         return repository.save(auction);
     }
 
@@ -33,23 +33,23 @@ public class AuctionService {
                 .collect(toList());
     }
 
-/*    public List<Auction> findFirst10ByDateOfIssue() {
+    public List<Auction> findFirst10ByDateOfIssue() {
         return StreamSupport.stream(repository.findFirst10ByDateOfIssue().spliterator(), false)
                 .collect(toList());
-    }*/
-
-
-    public List<Auction> findFirst10ByDateOfIssue() {
-        return repository.findFirst10ByDateOfIssue();
     }
-
-/*    public List<Auction> findLast10ByDateOfIssue() {
-        return StreamSupport.stream(repository.findLast10ByDateOfIssue().spliterator(), false)
-                .collect(toList());
-    }*/
 
     public List<Auction> findLast10ByDateOfIssue() {
-        return repository.findLast10ByDateOfIssue();
+        return StreamSupport.stream(repository.findLast10ByDateOfIssue().spliterator(), false)
+                .collect(toList());
     }
 
+    public List<Auction> findAllAuctionsByDateOfIssueAndUser(Long id) {
+        return StreamSupport.stream(repository.findAllAuctionsByDateOfIssueAndUser(id).spliterator(), false)
+                .collect(toList());
+    }
+
+    public List<Auction> finishedAuctionsByUser(Long id) {
+        return StreamSupport.stream(repository.finishedAuctionsByUser(id).spliterator(), false)
+                .collect(toList());
+    }
 }

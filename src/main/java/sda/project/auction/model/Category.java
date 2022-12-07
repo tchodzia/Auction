@@ -25,5 +25,5 @@ public class Category {
     private String icon;
 
     @Column
-    private Long parent_category;
+    private Long parentCategory;
 }

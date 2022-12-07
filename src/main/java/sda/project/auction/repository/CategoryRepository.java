@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CategoryRepository extends CrudRepository<Category, Long> {
 
-    @Query(value = "SELECT * FROM categories WHERE parent_category IS NULL ORDER BY parent_category ASC, name ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM categories WHERE parent_category = 0 OR parent_category IS NULL ORDER BY parent_category ASC, name ASC", nativeQuery = true)
     public List<Category> findAllOrderedByParentCategory();
 
     @Query(value = "SELECT * FROM categories WHERE parent_category = :id ORDER BY name ASC", nativeQuery = true)

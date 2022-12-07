@@ -3,12 +3,14 @@ package sda.project.auction.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity(name="auctions")
 @Getter
+@Setter
 @NoArgsConstructor
 @ToString
 public class Auction {
@@ -47,8 +49,8 @@ public class Auction {
     @Column
     private Long numbers_of_visitors;
 
-    @Column
-    private Long user;
+    @ManyToOne
+    private User user;
 
     public void setID(Long id) {
         this.ID = id;

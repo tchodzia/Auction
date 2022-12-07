@@ -46,18 +46,9 @@ public class CategoryService {
         return repository.findAllOrderedByParentCategory();
     }
 
-    /*    public List<Category> findAllOrderedByParentCategory() {
-            return StreamSupport.stream(repository.findAllOrderedByParentCategory().spliterator(), false)
-                    .collect(toList());
-        }*/
     public List<Category> findAllSelectedByParentCategory(Long Id) {
         return repository.findAllSelectedByParentCategory(Id);
     }
-
-    /*    public List<Category> findAllSelectedByParentCategory(Long Id) {
-            return StreamSupport.stream(repository.findAllSelectedByParentCategory(Id).spliterator(), false)
-                    .collect(toList());
-        }*/
 
 
 }
