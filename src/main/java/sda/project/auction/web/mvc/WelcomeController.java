@@ -1,5 +1,6 @@
 package sda.project.auction.web.mvc;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import sda.project.auction.model.*;
 import sda.project.auction.service.*;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class WelcomeController {
     private final ObservedAuctionService observedAuctionService;
 
     @GetMapping("/")
-    public String welcomePage(ModelMap map) {
+    public String welcomePage(ModelMap map, @ModelAttribute("message") String message) {
         User user = userService.findById(2L);
         map.addAttribute("user", user);
 
@@ -69,6 +70,9 @@ public class WelcomeController {
         List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
         map.addAttribute("categoryTrees", categoryTrees);
 
+        if (!message.isEmpty()){
+            map.addAttribute("message", message);
+        }
         return "index";
     }
 }

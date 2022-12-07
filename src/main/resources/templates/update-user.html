@@ -12,30 +12,60 @@
 <div class="container">
 
   <form th:object="${user}" th:action="@{/update/save}" method="post">
-      <input id="id" name="id" type="hidden" th:field="*{ID}">
+      <input type="hidden" th:field="*{ID}">
     <div class="mb-3">
       <label for="firstName" class="form-label">Name:</label>
-      <input id="firstName" class="form-control" type="text" th:field="*{account_name}" >
+      <input id="firstName" class="form-control" type="text" th:field="*{account_name}">
+      <div
+              th:if="${#fields.hasErrors('account_name')}"
+              th:text="${#fields.errors('account_name')[0]}"
+              class="invalid-feedback-custom"
+      ></div>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email:</label>
       <input id="email" class="form-control" type="text" th:field="*{email}">
+      <div
+              th:if="${#fields.hasErrors('email')}"
+              th:text="${#fields.errors('email')[0]}"
+              class="invalid-feedback-custom"
+      ></div>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password:</label>
       <input id="password" class="form-control" type="password" th:field="*{password}">
+      <div
+              th:if="${#fields.hasErrors('password')}"
+              th:text="${#fields.errors('password')[0]}"
+              class="invalid-feedback-custom"
+      ></div>
     </div>
     <div class="mb-3">
       <label for="voivodeship" class="form-label">Voivodeship:</label>
-      <input id="voivodeship" class="form-control" type="text" th:field="*{voivodeship}" >
+      <input id="voivodeship" class="form-control" type="text" th:field="*{voivodeship}">
+      <div
+              th:if="${#fields.hasErrors('voivodeship')}"
+              th:text="${#fields.errors('voivodeship')[0]}"
+              class="invalid-feedback-custom"
+      ></div>
     </div>
     <div class="mb-3">
       <label for="city" class="form-label">City:</label>
-      <input id="city" class="form-control" type="text" th:field="*{city}" >
+      <input id="city" class="form-control" type="text" th:field="*{city}">
+      <div
+              th:if="${#fields.hasErrors('city')}"
+              th:text="${#fields.errors('city')[0]}"
+              class="invalid-feedback-custom"
+      ></div>
     </div>
     <div class="mb-3">
       <label for="address" class="form-label">Address:</label>
-      <input id="address" class="form-control" type="text" th:field="*{address}" >
+      <input id="address" class="form-control" type="text" th:field="*{address}">
+      <div
+              th:if="${#fields.hasErrors('address')}"
+              th:text="${#fields.errors('address')[0]}"
+              class="invalid-feedback-custom"
+      ></div>
     </div>
     <div>
       <button type="submit" class="btn btn-primary">Update</button>
