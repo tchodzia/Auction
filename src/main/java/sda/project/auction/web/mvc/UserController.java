@@ -40,8 +40,7 @@ public class UserController {
     @PostMapping("/update/save")
     public String saveUser(@ModelAttribute("user") CreateUserForm form) {
         log.info("Updating user from form {}: ", form);
-        User user = userService.findById(form.getID());
-        userService.save(UserMapper.toUpdateEntity(user, form));
+        userService.update(form);
         return "redirect:/";
     }
 
