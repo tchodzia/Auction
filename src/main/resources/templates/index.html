@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
     <meta name="description" content="Auction service">
     <meta name="keywords" content="auction">
@@ -12,28 +11,29 @@
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/styles.css">
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
-
 </head>
-<body>
 
+<body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 
 <div>
     <h1>Welcome to Auctions Portal!</h1>
+
+    <div align="right">
+        <!--th:href="@{/update/user/__${user.id}__}"-->
+        <a class="btn btn-success"  role="button" target="_parent">Edit user data</a>
+        <a class="btn btn-danger"  role="button" target="_parent">Delete user account</a></div>
+
 </div>
 
 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
     <div th:each="categoryTree : ${categoryTrees}" class="btn-group" role="group">
         <button th:text="${categoryTree.getCategoryName()}" type="button" class="btn btn-primary dropdown-toggle"
-                data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-        </button>
+                data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
-            <li th:each="category : ${categoryTree.getSubcategories()}"><a th:text="${category.getCategoryName()}"
-                                                                           class="dropdown-item" href="#">Dropdown
-                link</a></li>
+            <li th:each="category : ${categoryTree.getSubcategories()}"><a th:text="${category.getCategoryName()}" class="dropdown-item" href="#"></a></li>
         </ul>
     </div>
 </div>
@@ -45,7 +45,6 @@
    <td th:text="${category.getParent_category()}"></td>
   <td><a class="btn btn-primary" th:href="@{/get-auctions/__${category.getID()}__}" target="_parent">Pokaż
        aukcje</a></td>-->
-
 
 <table class="table table-striped">
     <thead>

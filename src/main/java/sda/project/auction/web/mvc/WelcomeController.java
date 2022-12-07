@@ -50,10 +50,8 @@ public class WelcomeController {
         //List<Category> down_categories = categoryService.findAllSelectedByParentCategory();
         map.addAttribute("sortedCategories", sortedCategories);
 
-        //test
         List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
         map.addAttribute("categoryTrees", categoryTrees);
-        //koniec testu
 
         return "index";
     }
