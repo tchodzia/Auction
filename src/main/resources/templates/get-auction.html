@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+      <html lang="en" xmlns:th="http://www.thymeleaf.org">
+      <head>
 
-  <meta charset="UTF-8">
-  <meta name="description" content="Auction service">
-  <meta name="keywords" content="auction">
-  <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta charset="UTF-8">
+      <meta name="description" content="Auction service">
+      <meta name="keywords" content="auction">
+      <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Auctions</title>
+      <title>Auctions</title>
   <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
   <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
@@ -47,22 +47,23 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th colspan="4">Aukcje wystawione przez użytkownika</th>
+    <th colspan="4">Bieżąca aukcja</th>
   </tr>
   </thead>
   <tbody>
-  <tr th:each="auction : ${auctions}">
+  <tr>
     <td th:text="${auction.getID()}"></td>
     <td th:text="${auction.getTitle()}"></td>
     <td th:text="${auction.getCategory()}"></td>
     <td th:text="${auction.getBUY_NOW_price()}"></td>
-    <td>
-       <a class="btn btn-success" th:href="@{/set-auction/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj</a>
-       <a class="btn btn-danger" th:href="@{/end-auction/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
-     </td>
 
   </tr>
   </tbody>
 </table>
+</body>
+</html></title>
+</head>
+<body>
+
 </body>
 </html>

@@ -48,6 +48,8 @@ public class WelcomeController {
         List<Auction> finishedAuctionsByUser = auctionService.finishedAuctionsByUser(user.getID());
         map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
 
+        Auction currentRandomAuction = auctionService.getCurrentRandomAuction();
+        map.addAttribute("currentRandomAuction", currentRandomAuction);
 
         // CATEGORIES
 /*
