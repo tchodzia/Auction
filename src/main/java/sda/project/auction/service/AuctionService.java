@@ -31,25 +31,22 @@ public class AuctionService {
     public List<Auction> findAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .collect(toList());
+
     }
 
     public List<Auction> findFirst10ByDateOfIssue() {
-        return StreamSupport.stream(repository.findFirst10ByDateOfIssue().spliterator(), false)
-                .collect(toList());
+        return repository.findFirst10ByDateOfIssue();
     }
 
     public List<Auction> findLast10ByDateOfIssue() {
-        return StreamSupport.stream(repository.findLast10ByDateOfIssue().spliterator(), false)
-                .collect(toList());
+        return repository.findLast10ByDateOfIssue();
     }
 
     public List<Auction> findAllAuctionsByDateOfIssueAndUser(Long id) {
-        return StreamSupport.stream(repository.findAllAuctionsByDateOfIssueAndUser(id).spliterator(), false)
-                .collect(toList());
+        return repository.findAllAuctionsByDateOfIssueAndUser(id);
     }
 
     public List<Auction> finishedAuctionsByUser(Long id) {
-        return StreamSupport.stream(repository.finishedAuctionsByUser(id).spliterator(), false)
-                .collect(toList());
+        return repository.finishedAuctionsByUser(id);
     }
 }

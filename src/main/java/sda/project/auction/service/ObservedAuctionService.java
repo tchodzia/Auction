@@ -20,7 +20,6 @@ public class ObservedAuctionService {
 
 
     public List<ObservedAuction> findAllObservedAuctionsByUserId(Long id) {
-        return StreamSupport.stream(repository.findAllObservedAuctionsByUserId(id).spliterator(), false)
-                .collect(toList());
+        return repository.findAllObservedAuctionsByUserId(id);
     }
 }

@@ -20,8 +20,7 @@ public class BiddingService {
 
 
     public List<Bidding> findAllBiddingsByUserId(Long id) {
-        return StreamSupport.stream(repository.findAllBiddingsByUserId(id).spliterator(), false)
-                .collect(toList());
+        return repository.findAllBiddingsByUserId(id);
     }
 
 }
