@@ -47,15 +47,19 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th colspan="4" th:text="${auction.getTitle()}"></th>
+    <th colspan="4" th:text="${category.getName()}"></th>
   </tr>
   </thead>
   <tbody>
-  <tr>
+  <tr th:each="auction : ${auctions}">
     <td th:text="${auction.getID()}"></td>
     <td th:text="${auction.getTitle()}"></td>
     <td th:text="${auction.getCategory()}"></td>
     <td th:text="${auction.getBUY_NOW_price()}"></td>
+    <td>
+      <a class="btn btn-success" th:href="@{/set-auction/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj</a>
+      <a class="btn btn-danger" th:href="@{/end-auction/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
+    </td>
 
   </tr>
   </tbody>

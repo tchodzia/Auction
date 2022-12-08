@@ -68,6 +68,9 @@ public class User {
     @Column
     private Account_Type account_type;
 
+    @Column
+    private UserRole userRole;
+
     public void setID(Long id) {
         this.ID = id;
     }
