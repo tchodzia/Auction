@@ -68,11 +68,10 @@ public class User {
     @Column
     private Account_Type account_type;
 
-    //żeby nie mapował spring enuma enumerycznie tylko string - inaczej byloby 0 albo 1
+    @Column
     @Enumerated(EnumType.STRING)
-    private Roles role;
-
-    enum Roles{
+    private UserRole userRole;
+    enum UserRole{
         ROLE_USER, ROLE_ADMIN
     }
 

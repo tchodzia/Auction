@@ -54,5 +54,10 @@ public class AuctionService {
         return repository.getCurrentRandomAuction();
     }
 
+    public List<Auction> findAllCurrentAuctionsByCategory(Long id) {
+        return repository.findAllCurrentAuctionsByCategory(id);
+    }
+
+
 
 }

@@ -24,6 +24,7 @@ public interface AuctionRepository extends CrudRepository<Auction, Long> {
     @Query(value = "SELECT * FROM auctions WHERE date_of_issue <= CURRENT_DATE AND end_date >= CURRENT_DATE ORDER BY RAND() ASC LIMIT 1", nativeQuery = true)
     public Auction getCurrentRandomAuction();
 
-
+    @Query(value = "SELECT * FROM auctions WHERE (date_of_issue <= CURRENT_DATE AND end_date >= CURRENT_DATE) AND category=:id ORDER BY end_date ASC", nativeQuery = true)
+    public List<Auction> findAllCurrentAuctionsByCategory(@Param("id") Long id);
 
 }

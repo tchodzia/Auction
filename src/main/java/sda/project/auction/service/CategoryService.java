@@ -2,6 +2,7 @@ package sda.project.auction.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sda.project.auction.model.Auction;
 import sda.project.auction.model.Category;
 import sda.project.auction.model.CategoryTree;
 import sda.project.auction.repository.CategoryRepository;
@@ -35,6 +36,7 @@ public class CategoryService {
             for (int j = 0; j < subcategoriesAmount; j++) {
                 CategoryTree subcT = new CategoryTree();
                 subcT.setCategoryName(repository.findAllSelectedByParentCategory(cT.getCatID()).get(j).getName());
+                subcT.setCatID(repository.findAllSelectedByParentCategory(cT.getCatID()).get(j).getID());
                 listOfSubcategories.add(subcT);
             }
             cT.setSubcategories(listOfSubcategories);
@@ -49,6 +51,8 @@ public class CategoryService {
     public List<Category> findAllSelectedByParentCategory(Long Id) {
         return repository.findAllSelectedByParentCategory(Id);
     }
-
+    public Category findById(Long Id) {
+        return repository.findById(Id).orElseThrow(() -> new RuntimeException("Category with id " + Id + " not found."));
+    }
 
 }
