@@ -13,6 +13,8 @@ import sda.project.auction.service.UserService;
 import sda.project.auction.web.form.CreateUserForm;
 import sda.project.auction.web.mappers.UserMapper;
 
+import java.security.Principal;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -37,8 +39,10 @@ public class UserController {
         return "redirect:/";
     }
 
+    //principal.get name jak użytkownik uderzy w endpoint to wtedy możemy złapać name użytkownika z sobie go z bazy wyciągnąć
+
     @GetMapping("/update/user/{id}")
-    public String update(@PathVariable Long id, ModelMap map) {
+    public String update(@PathVariable Long id, ModelMap map, Principal principal) {
         User foundUser = userService.findById(id);
         map.addAttribute("user", foundUser);
         return "update-user";
