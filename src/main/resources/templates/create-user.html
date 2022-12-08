@@ -42,6 +42,7 @@
 <br>
 <div class="container">
     <form th:object="${user}" th:action="@{/signup}" method="post">
+        <input type="hidden" th:field="*{ID}">
         <div class="mb-3">
             <label for="firstName" class="form-label">Name:</label>
             <input id="firstName" class="form-control" type="text" th:field="*{account_name}">
