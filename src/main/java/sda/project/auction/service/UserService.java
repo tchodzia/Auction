@@ -31,6 +31,7 @@ public class UserService {
 
     public User update(CreateUserForm form) {
         User user = UserMapper.toUpdateEntity(findById(form.getID()), form);
+        user.setPassword(encoder.encode((CharSequence) user.getPassword()));
         return repository.save(user);
     }
 
