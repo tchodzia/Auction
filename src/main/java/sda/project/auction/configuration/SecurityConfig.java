@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .requestMatchers("/css/styles.css", "/webjars/**").permitAll()
                 .requestMatchers("/update/save").authenticated()
                 .requestMatchers("/delete/user/**").authenticated()
+                .anyRequest().permitAll()
                 .and().formLogin()
                 .and().httpBasic()
                 .and().logout()

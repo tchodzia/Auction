@@ -2,8 +2,10 @@ package sda.project.auction.web.form;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import sda.project.auction.model.User;
 
 @Getter
 @Setter
@@ -33,4 +35,7 @@ public class CreateUserForm {
 
     @NotBlank(message = "Pole nie może być puste")
     private String address;
+
+    @NotNull(message = "Pole nie może być puste")
+    private User.UserRole role;
 }

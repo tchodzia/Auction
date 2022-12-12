@@ -25,6 +25,7 @@ public class UserController {
     @GetMapping("/signup")
     public String signUp(ModelMap map) {
         map.addAttribute("user", new CreateUserForm());
+        map.addAttribute("roles", User.UserRole.values());
         return "create-user";
     }
 
