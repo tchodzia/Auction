@@ -1,6 +1,5 @@
 package sda.project.auction.configuration;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,8 +24,15 @@ public class SecurityConfig {
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("").permitAll()
-                .and().formLogin().and()
-                .httpBasic().and().logout().and().build();
+                .requestMatchers("/auctions/**").permitAll()
+                .requestMatchers("/images/**").permitAll()
+                .requestMatchers("/css/styles.css").permitAll()
+                .requestMatchers("/webjars/**").permitAll()
+                .and().formLogin()
+                .and().httpBasic()
+                .and().logout()
+                .and().csrf().disable()
+                .build();
     }
 
     @Bean

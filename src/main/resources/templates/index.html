@@ -10,7 +10,7 @@
 
     <title>Auctions Portal</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 
 
@@ -42,7 +42,7 @@
                     <a class="nav-link" href="#">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">LogIn/SignUp/LogOut</a>
+                    <a class="nav-link" href="/login">LogIn/SignUp/LogOut</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">
@@ -61,8 +61,9 @@
     <div class="alert alert-success" role="alert"
         th:if="${!message.isBlank()}"
         th:text="${message}">
+            <button th:type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-
+</div>
 <!--    <div th:if="${!message.isBlank()}"
          th:text="${message}">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -116,30 +117,29 @@
     </div>
 
 
-  <div class="table1">
-    <div class="card text-white bg-info mb-3">
-      <div class="card-header"></div>
-      <div class="card-body">
-        <h5 class="card-title">Aktualna aukcja</h5>
-        <p class="card-text">
-        <table>
-        <tbody>
-        <tr>
-            <td th:text="${currentRandomAuction.getID()}"></td>
-            <td th:text="${currentRandomAuction.getTitle()}"></td>
-            <td th:text="${currentRandomAuction.getCategory()}"></td>
-            <td th:text="${currentRandomAuction.getBUY_NOW_price()}"></td>
 
-        </tr>
-        <tr>
-            <td colspan="4"><a class="btn btn-outline-light" th:href="@{/auctions/__${currentRandomAuction.getID()}__}" role="button" target="_parent">Pokaż aukcję</a></td>
-        </tr>
-        </tbody>
-      </table>
-        </p>
-      </div>
+    <div class="card w-100" style="margin: 2px">
+        <div class="card-body">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img th:src="@{/images/Smartwatch.jfif}" width="100%" height="*" style="margin: 2px">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${currentRandomAuction.getTitle()}"></h5>
+                            <p class="card-text" th:text="${currentRandomAuction.getCategory()}"></p>
+                            <p class="card-text" th:text="${currentRandomAuction.getDescription()}"></p>
+                            <p class="card-text" th:text="${currentRandomAuction.getBUY_NOW_price()}"></p>
+                            <a class="btn btn-primary" th:href="@{/auctions/__${currentRandomAuction.getID()}__}">Pokaż aukcję</a>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
 
 <div style="margin: 2px">
 <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
