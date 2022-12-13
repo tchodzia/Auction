@@ -8,30 +8,31 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@Entity(name="users")
+@Entity(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
 public class User {
 
-    public User(String email, String password, String voivodeship, String city, String address) {
+    public User(String email, String password, String voivodeship, String city, String address, UserRole userRole) {
         this.email = email;
         this.password = password;
         this.voivodeship = voivodeship;
         this.city = city;
         this.address = address;
+        this.userRole = userRole;
     }
 
-    public User(String email, String password, String account_name, String voivodeship, String city, String address) {
+    public User(String email, String password, String account_name, String voivodeship, String city, String address, UserRole userRole) {
         this.email = email;
         this.password = password;
         this.account_name = account_name;
         this.voivodeship = voivodeship;
         this.city = city;
         this.address = address;
+        this.userRole = userRole;
     }
 
     @Id
@@ -71,7 +72,8 @@ public class User {
     @Column
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    enum UserRole{
+
+    public enum UserRole {
         ROLE_USER, ROLE_ADMIN
     }
 

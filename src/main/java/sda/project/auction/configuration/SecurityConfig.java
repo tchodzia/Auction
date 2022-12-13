@@ -21,13 +21,9 @@ public class SecurityConfig {
 
         return http.authorizeHttpRequests()
                 .requestMatchers("/update/user/**").authenticated()
-                .requestMatchers("/").permitAll()
-                .requestMatchers("/signup").permitAll()
-                .requestMatchers("").permitAll()
+                .requestMatchers("/", "", "/signup").permitAll()
                 .requestMatchers("/auctions/**").permitAll()
                 .requestMatchers("/images/**").permitAll()
-                .requestMatchers("/css/styles.css").permitAll()
-                .requestMatchers("/webjars/**").permitAll()
                 .requestMatchers("/auctions/create").permitAll()
                 .requestMatchers("/auctions/create/**").permitAll()
                 .requestMatchers("/auctions/add/**").permitAll()
@@ -36,6 +32,10 @@ public class SecurityConfig {
                 .requestMatchers("/upload").permitAll()
                 .requestMatchers("/files").permitAll()
                 .requestMatchers("/files/**").permitAll()
+                .requestMatchers("/css/styles.css", "/webjars/**").permitAll()
+                .requestMatchers("/update/save").authenticated()
+                .requestMatchers("/delete/user/**").authenticated()
+                .anyRequest().permitAll()
                 .and().formLogin()
                 .and().httpBasic()
                 .and().logout()
@@ -47,6 +47,4 @@ public class SecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 }

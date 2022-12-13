@@ -25,6 +25,7 @@ public class UserController {
     @GetMapping("/signup")
     public String signUp(ModelMap map) {
         map.addAttribute("user", new CreateUserForm());
+        map.addAttribute("roles", User.UserRole.values());
         return "create-user";
     }
 
@@ -58,5 +59,12 @@ public class UserController {
         redirectAttributes.addAttribute("message", form.getAccount_name() + " your account was updated!");
         return "redirect:/";
     }
+
+    @GetMapping("/delete/user/{id}")
+    public String deleteUser(@PathVariable Long id){
+        userService.delete(id);
+        return "redirect:/logout";
+    }
+
 
 }
