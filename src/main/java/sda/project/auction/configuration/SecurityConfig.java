@@ -1,29 +1,33 @@
 package sda.project.auction.configuration;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig {
+@RequiredArgsConstructor
+public class SecurityConfig{
 
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService){
-        this.userDetailsService = userDetailsService;
-    }
 
     @Bean
-    public SecurityFilterChain filterCHain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeHttpRequests()
-                .requestMatchers("/update/user/**").authenticated()
-                .requestMatchers("/", "", "/signup").permitAll()
-                .requestMatchers("/auctions/**").permitAll()
-                .requestMatchers("/images/**").permitAll()
+                .requestMatchers("/update/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/", "", "/css/styles.css", "/webjars/**").permitAll()
+                .requestMatchers("/signup").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/auctions/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/images/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/update/save").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/delete/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .requestMatchers("/auctions/create").permitAll()
                 .requestMatchers("/auctions/create/**").permitAll()
                 .requestMatchers("/auctions/add/**").permitAll()
@@ -32,9 +36,6 @@ public class SecurityConfig {
                 .requestMatchers("/upload").permitAll()
                 .requestMatchers("/files").permitAll()
                 .requestMatchers("/files/**").permitAll()
-                .requestMatchers("/css/styles.css", "/webjars/**").permitAll()
-                .requestMatchers("/update/save").authenticated()
-                .requestMatchers("/delete/user/**").authenticated()
                 .anyRequest().permitAll()
                 .and().formLogin()
                 .and().httpBasic()
@@ -43,6 +44,10 @@ public class SecurityConfig {
                 .build();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
