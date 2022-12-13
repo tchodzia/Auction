@@ -30,9 +30,10 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String handleSignUp(@ModelAttribute("user") @Valid CreateUserForm form, Errors errors, RedirectAttributes redirectAttributes) {
+    public String handleSignUp(@ModelAttribute("user") @Valid CreateUserForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
         log.info("Signing Up from form: {}", form);
         if(errors.hasErrors()){
+            map.addAttribute("roles", User.UserRole.values());
             return "create-user";
         }
         userService.save(UserMapper.toEntity(form));

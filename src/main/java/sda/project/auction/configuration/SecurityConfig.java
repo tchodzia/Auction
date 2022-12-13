@@ -22,10 +22,9 @@ public class SecurityConfig{
 
         return http.authorizeHttpRequests()
                 .requestMatchers("/update/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                .requestMatchers("/", "", "/css/styles.css", "/webjars/**").permitAll()
-                .requestMatchers("/signup").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/", "", "/signup").permitAll()
+                .requestMatchers("/css/styles.css", "/webjars/**", "/images/**").permitAll()
                 .requestMatchers("/auctions/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                .requestMatchers("/images/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .requestMatchers("/update/save").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .requestMatchers("/delete/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .anyRequest().permitAll()
