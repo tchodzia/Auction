@@ -2,7 +2,9 @@ package sda.project.auction.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Slf4j
 public class Auction {
     public Auction(String title, String description, Long category, Long min_price, Long BUY_NOW_price, boolean promoted, String localization, LocalDateTime date_of_issue, LocalDateTime end_date, User user) {
         this.title = title;
@@ -84,20 +87,41 @@ public class Auction {
         }
     }
 
-    //String str = "2016-03-04 11:30";
-    public void setDate_of_issue(String date_of_issue) {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(date_of_issue, formatter);
-
+    public void setStringToDate_of_issue(String date_of_issue) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        if (date_of_issue != null && !date_of_issue.isBlank()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            dateTime = LocalDateTime.parse(date_of_issue, formatter);
+        }
         this.date_of_issue = dateTime;
     }
 
-    public void setEnd_date(String end_date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(end_date, formatter);
-
+    public void setStringToEnd_date(String end_date) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        if (end_date != null && !end_date.isBlank()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            dateTime = LocalDateTime.parse(end_date, formatter);
+        }
         this.end_date = dateTime;
     }
 
+
+
+    public String getStringDateOfIssue() {
+        DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        if (this.date_of_issue != null) {
+             return this.date_of_issue.format(customFormat);
+        } else {
+            return LocalDateTime.now().format(customFormat);
+        }
+    }
+
+    public String getStringEndDate() {
+        DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        if (this.end_date != null) {
+            return this.end_date.format(customFormat);
+        } else {
+            return LocalDateTime.now().format(customFormat);
+        }
+    }
 }
