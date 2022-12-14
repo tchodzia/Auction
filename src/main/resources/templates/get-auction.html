@@ -44,6 +44,8 @@
 </nav>
 <br>
 
+
+
 <table class="table table-striped">
   <thead>
   <tr>
@@ -51,7 +53,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr>
+   <tr>
     <td th:text="${auction.getID()}"></td>
     <td th:text="${auction.getTitle()}"></td>
     <td th:text="${auction.getCategory()}"></td>
@@ -65,9 +67,9 @@
   </tbody>
 </table>
 </body>
-</html></title>
-</head>
-<body>
+      <div th:each="onefile : ${storedFiles}">
+        <img th:src="@{/files/__${onefile.getID()}__}" width="10%" height="*" style="margin: 2px">
+      </div>
 
 </body>
 </html>

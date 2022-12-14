@@ -20,11 +20,13 @@ public class File {
     @Column
     private String file_type;
     @Lob
+    @Column(columnDefinition="BLOB")
     private byte[]  file_content;
 
-    public File(String name, String type, byte[] data) {
+    public File(String name, String type, byte[] data, Auction auction) {
         this.file_name = name;
         this.file_type = type;
         this.file_content = data;
+        this.auction = auction;
     }
 }
