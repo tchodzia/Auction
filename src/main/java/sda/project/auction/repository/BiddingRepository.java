@@ -11,4 +11,7 @@ public interface BiddingRepository  extends CrudRepository<Bidding, Long> {
 
      @Query(value = "SELECT * FROM biddings WHERE user_id=:id", nativeQuery = true)
      public List<Bidding> findAllBiddingsByUserId(@Param("id") Long id);
+
+     Bidding findBiddingByAuctionID(Long id);
+
 }

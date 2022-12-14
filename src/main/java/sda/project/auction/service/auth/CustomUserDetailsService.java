@@ -20,8 +20,4 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(CustomUserDetails::new)
                 .orElseThrow(() -> new RuntimeException("User with login: " + username + " not found in database!"));
     }
-
-    public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("test1"));
-    }
 }

@@ -181,7 +181,7 @@
 </div>
 
 
-<div th:if="${!user.getEmail().isBlank()}" class="d-flex justify-content-between">
+<div th:if="${loggedUser != null}" class="d-flex justify-content-between">
 
     <div style="margin: 2px" class="table2">
         <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
