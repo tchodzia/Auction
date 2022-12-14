@@ -51,6 +51,10 @@
                 <li th:object="${loggedUser}">
                     <a th:if="${loggedUser == null}" class="nav-link" href="/signup">SignUp</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/auctions/create/__${user.getID()}__}">Nowa aukcja</a>
+                </li>
+
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

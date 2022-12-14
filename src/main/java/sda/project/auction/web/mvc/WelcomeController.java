@@ -28,6 +28,7 @@ public class WelcomeController {
     @GetMapping("/")
     public String welcomePage(ModelMap map, @ModelAttribute("message") String message) {
 
+
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedUser = userService.findByEmail(principal.getUsername());
@@ -38,7 +39,8 @@ public class WelcomeController {
 
         }
 
-        User user = userService.findById(2L);
+        User user = userService.findById(8L);
+
         map.addAttribute("user", user);
 
         List<Auction> auctionsNew10 = auctionService.findFirst10ByDateOfIssue();
@@ -66,20 +68,7 @@ public class WelcomeController {
         map.addAttribute("currentRandomAuction", currentRandomAuction);
 
         // CATEGORIES
-/*
-        List<Category> categories = categoryService.findAllOrderedByParentCategory();
 
-        List<Category> sortedCategories = new ArrayList<>();
-        for (Category category : categories) {
-            sortedCategories.add(category);
-            List<Category> downCategories = categoryService.findAllSelectedByParentCategory(category.getID());
-            for (Category downCategory : downCategories) {
-                sortedCategories.add(downCategory);
-            }
-        }
-
-        map.addAttribute("sortedCategories", sortedCategories);
-*/
         List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
         map.addAttribute("categoryTrees", categoryTrees);
 

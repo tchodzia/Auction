@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="description" content="Auction service">
+  <meta name="keywords" content="auction">
+  <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Auctions Portal</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+
+
+  <script>
+    function rowClicked(value) {
+      location.href = "/auctions/" + value;
+    }
+  </script>
+
+
+  <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src ="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+  <!--<script src ="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+  <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+  <script>
+    $(function() {
+      $('#datetimepicker1').datetimepicker();
+    });
+  </script>
+  <!-- <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+  <!--
+  <style>
+    .container {
+      margin-top: 5px;
+      margin-left: 10px;
+      width: 600px;
+    }
+  </style>
+  -->
+
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="https://assets.allegrostatic.com/metrum/metrum-brand/allegro-347440b030.svg" alt="Serwis aukcyjny"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Categories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">FAQ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login">LogIn/SignUp/LogOut</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<br>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+
+<br>
+<div class="container">
+
+    <form th:object="${auction}" th:action="@{/auctions/add/__${user.getID()}__}" method="post" enctype="multipart/form-data">
+
+
+  <input type="hidden" id="ID" th:field="*{ID}">
+    <div class="mb-3">
+      <label for="title" class="form-label">Nazwa aukcji:</label>
+      <input id="title" class="form-control" type="text" th:field="*{title}">
+      <div
+              th:if="${#fields.hasErrors('title')}"
+              th:text="${#fields.errors('title')[0]}"
+              class="invalid-feedback-custom"
+      ></div>
+     </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Opis aukcji:</label>
+    <input id="description" class="form-control" type="text" th:field="*{description}">
+  </div>
+
+
+  <div class="mb-3">
+    <label for="category" class="form-label">Kategoria:</label>
+    <select class="form-select" aria-label="multiple select example" th:field="*{category}" id="category">
+      <div th:each="categoryTree: ${categories}">
+      <option th:value="${categoryTree.getCatID()}"
+              th:text="${categoryTree.getCategoryName()}"></option>
+
+    <option th:each="subcategoryTree: ${categoryTree.getSubcategories()}"
+            th:value="${subcategoryTree.getCatID()}">
+            &gt;&gt; [[${subcategoryTree.getCategoryName()}]]</option>
+      </div>
+
+    </select>
+    <div
+            th:if="${#fields.hasErrors('category')}"
+            th:text="${#fields.errors('category')[0]}"
+            class="invalid-feedback-custom"
+    ></div>
+
+
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="margin: 2px">
+    <div th:each="categoryTree : ${categoryTrees}" class="btn-group" role="group">
+      <button th:text="${categoryTree.getCategoryName()}" type="button" class="btn btn-primary dropdown-toggle"
+              data-bs-toggle="dropdown" aria-expanded="false"></button>
+      <ul class="dropdown-menu">
+        <li th:each="category : ${categoryTree.getSubcategories()}"><a th:text="${category.getCategoryName()}"
+                                                                       class="dropdown-item" th:href="@{/auctions/cat/__${category.getCatID()}__}"></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="min_price" class="form-label">Minimalna cena:</label>
+    <input id="min_price" class="form-control" type="text" th:field="*{min_price}">
+    <div
+            th:if="${#fields.hasErrors('min_price')}"
+            th:text="${#fields.errors('min_price')[0]}"
+            class="invalid-feedback-custom"
+    ></div>
+  </div>
+
+
+  <div class="mb-3">
+    <label for="BUY_NOW_price" class="form-label">Cena "Kup teraz":</label>
+    <input id="BUY_NOW_price" class="form-control" type="text" th:field="*{BUY_NOW_price}">
+    <div
+            th:if="${#fields.hasErrors('BUY_NOW_price')}"
+            th:text="${#fields.errors('BUY_NOW_price')[0]}"
+            class="invalid-feedback-custom"
+    ></div>
+  </div>
+
+
+  <div class="mb-3">
+    <label for="localization" class="form-label">Lokalizacja:</label>
+    <input id="localization" class="form-control" type="text" th:field="*{localization}">
+  </div>
+
+  <div class="mb-3">
+    <label for="promoted" class="form-label">Aukcja promowana: </label>
+      <select id="promoted" class="form-control" th:field="*{promoted}">
+        <option th:each="promoteOption: ${promotedOptions}"
+                th:value="${promoteOption['key']}"
+                th:text="${promoteOption['value']}"></option>
+      </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="date_of_issue" class="form-label">Data i czas rozpoczęcia (yyyy-MM-dd HH:mm):</label>
+    <input id="date_of_issue" class="form-control" type="text" name="date_of_issue" th:field="*{date_of_issue}">
+
+    <div
+            th:if="${#fields.hasErrors('date_of_issue')}"
+            th:text="${#fields.errors('date_of_issue')[0]}"
+            class="invalid-feedback-custom"
+    ></div>
+
+  </div>
+
+<!--
+  <div class="mb-3">
+    <label for="end_date" class="form-label">Data i czas zakończenia (yyyy-MM-dd HH:mm):</label>
+    <input id="end_date" class="form-control" type="text" name="end_date" th:field="*{end_date}"  data-mdb-toggle="datetimepicker">
+
+    <div
+            th:if="${#fields.hasErrors('end_date')}"
+            th:text="${#fields.errors('end_date')[0]}"
+            class="invalid-feedback-custom"
+    ></div>
+-->
+
+    <div class ="container">
+      <div class ="row">
+        <div class ='col-sm-6'>
+          <div class ="form-group">
+            <div class ='input-group date' id='datetimepicker1'>
+              <input type ='text' class="form-control" id="end_date" th:field="*{end_date}" />
+              <span class ="input-group-addon">
+            <span class ="glyphicon glyphicon-calendar"></span>
+          </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+  <div class="container-fluid" style="max-width: 600px; margin: 0 auto;">
+    <h2 class="text-left">Lista plików</h2>
+
+
+    <input type="file" multiple name="files" />
+    <!--
+    <button class="btn btn-sm btn-outline-success float-right" type="submit">Upload</button>
+    -->
+
+    <div th:if="${files.size() > 0}">
+      <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col">Nazwa pliku</th>
+          <th scope="col">Link</th>
+          <th scope="col">Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="onefile : ${files}">
+          <td th:text="${onefile.getFile_name()}"></td>
+          <td><a th:href="@{${onefile.getID()}}">Download</a></td>
+          <td>
+            <a th:href="@{'/files/delete/' + ${onefile.getFile_name()}}" th:fileName="${onefile.getFile_name()}" id="btnDelete"
+               title="Usuń plik" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:unless="${files.size() > 0}">
+      <span>Nie znaleziono pliku!</span>
+    </div>
+  </div>
+
+<div th:if="${update}">
+    <div>
+      <button type="submit" class="btn btn-primary">Aktualizuj aukcję</button>
+    </div>
+</div>
+  <div th:if="!${update}">
+  <div>
+    <button type="submit" class="btn btn-primary">Utwórz aukcję</button>
+  </div>
+</div>
+  </form>
+</div>
+
+
+</body>
+</html>
