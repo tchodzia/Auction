@@ -6,15 +6,24 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import sda.project.auction.model.Auction;
+import sda.project.auction.model.CategoryTree;
 import sda.project.auction.model.File;
+import sda.project.auction.model.User;
+import sda.project.auction.service.AuctionService;
+import sda.project.auction.service.CategoryService;
 import sda.project.auction.service.FileStorageService;
+import sda.project.auction.service.UserService;
 import sda.project.auction.web.message.ResponseFile;
 import sda.project.auction.web.message.ResponseMessage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -28,7 +37,10 @@ public class FileController {
 
     @Autowired
     private FileStorageService storageService;
+    private final AuctionService auctionService;
+    private final CategoryService categoryService;
 
+    private final UserService userService;
     @PostMapping("/upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
@@ -72,10 +84,31 @@ public class FileController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteFile(@PathVariable Long id) {
-        //File fileDB = storageService.getFile(id);
-        storageService.deleteById(id);
-        return "redirect:";
+    public String deleteFile(@PathVariable Long id, ModelMap map) {
+
+        File fileDB = storageService.getFile(id);
+        storageService.delete(id);
+
+        map.addAttribute("update", true);
+
+        Auction auction = auctionService.findById(fileDB.getAuction().getID());
+        map.addAttribute("auction", auction);
+
+        User user = userService.findById(auction.getUser().getID());
+        map.addAttribute("user", user);
+
+        List<File> files = storageService.getFilesByAuctionId(auction.getID());
+        map.addAttribute("storedFiles", files);
+
+        List<CategoryTree> categories = categoryService.findAllCategoryTree();
+        map.addAttribute("categories", categories);
+
+        Map<String, String> promotedOptions = new HashMap<String, String>();
+        promotedOptions.put("false", "nie");
+        promotedOptions.put("true", "tak");
+        map.addAttribute("promotedOptions", promotedOptions);
+
+        return "create-auction";
     }
 }
 

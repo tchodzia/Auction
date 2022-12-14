@@ -42,7 +42,8 @@ public class FileStorageService {
         return fileDBRepository.getFilesByAuctionId(id);
     }
 
-    public File deleteById(Long id) {
-        return fileDBRepository.deleteByID(id);
+    public void delete(Long id) {
+        fileDBRepository.deleteById(id);
     }
+
 }
