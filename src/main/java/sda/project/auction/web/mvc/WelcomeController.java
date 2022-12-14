@@ -1,5 +1,6 @@
 package sda.project.auction.web.mvc;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import sda.project.auction.model.*;
 import sda.project.auction.service.*;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import sda.project.auction.service.auth.CustomUserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,20 @@ public class WelcomeController {
 
     @GetMapping("/")
     public String welcomePage(ModelMap map, @ModelAttribute("message") String message) {
+
+
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User loggedUser = userService.findByEmail(principal.getUsername());
+            map.addAttribute("loggedUser", loggedUser);
+        }
+
+        else{
+
+        }
+
         User user = userService.findById(8L);
+
         map.addAttribute("user", user);
 
         List<Auction> auctionsNew10 = auctionService.findFirst10ByDateOfIssue();
@@ -37,8 +52,8 @@ public class WelcomeController {
         List<Auction> auctionsByUser = auctionService.findAllAuctionsByDateOfIssueAndUser(user.getID());
         map.addAttribute("auctionsByUser", auctionsByUser);
 
-      //  List<Auction> auctionsAll = auctionService.findAll();
-      //  map.addAttribute("auctionsAll", auctionsAll);
+        //  List<Auction> auctionsAll = auctionService.findAll();
+        //  map.addAttribute("auctionsAll", auctionsAll);
 
         List<Bidding> auctionsBiddingByUser = biddingService.findAllBiddingsByUserId(user.getID());
         map.addAttribute("auctionsBiddingByUser", auctionsBiddingByUser);
@@ -53,24 +68,11 @@ public class WelcomeController {
         map.addAttribute("currentRandomAuction", currentRandomAuction);
 
         // CATEGORIES
-/*
-        List<Category> categories = categoryService.findAllOrderedByParentCategory();
 
-        List<Category> sortedCategories = new ArrayList<>();
-        for (Category category : categories) {
-            sortedCategories.add(category);
-            List<Category> downCategories = categoryService.findAllSelectedByParentCategory(category.getID());
-            for (Category downCategory : downCategories) {
-                sortedCategories.add(downCategory);
-            }
-        }
-
-        map.addAttribute("sortedCategories", sortedCategories);
-*/
         List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
         map.addAttribute("categoryTrees", categoryTrees);
 
-        if (!message.isEmpty()){
+        if (!message.isEmpty()) {
             map.addAttribute("message", message);
         }
         return "index";

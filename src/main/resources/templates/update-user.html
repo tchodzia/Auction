@@ -1,76 +1,105 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Sign Up</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/styles.css">
-  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img
+                src="https://assets.allegrostatic.com/metrum/metrum-brand/allegro-347440b030.svg" alt="Serwis aukcyjny"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<br>
 <div class="container">
 
-  <form th:object="${user}" th:action="@{/update/save}" method="post">
-      <input type="hidden" th:field="*{ID}">
-    <div class="mb-3">
-      <label for="firstName" class="form-label">Name:</label>
-      <input id="firstName" class="form-control" type="text" th:field="*{account_name}">
-      <div
-              th:if="${#fields.hasErrors('account_name')}"
-              th:text="${#fields.errors('account_name')[0]}"
-              class="invalid-feedback-custom"
-      ></div>
-    </div>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email:</label>
-      <input id="email" class="form-control" type="text" th:field="*{email}">
-      <div
-              th:if="${#fields.hasErrors('email')}"
-              th:text="${#fields.errors('email')[0]}"
-              class="invalid-feedback-custom"
-      ></div>
-    </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password:</label>
-      <input id="password" class="form-control" type="password" th:field="*{password}">
-      <div
-              th:if="${#fields.hasErrors('password')}"
-              th:text="${#fields.errors('password')[0]}"
-              class="invalid-feedback-custom"
-      ></div>
-    </div>
-    <div class="mb-3">
-      <label for="voivodeship" class="form-label">Voivodeship:</label>
-      <input id="voivodeship" class="form-control" type="text" th:field="*{voivodeship}">
-      <div
-              th:if="${#fields.hasErrors('voivodeship')}"
-              th:text="${#fields.errors('voivodeship')[0]}"
-              class="invalid-feedback-custom"
-      ></div>
-    </div>
-    <div class="mb-3">
-      <label for="city" class="form-label">City:</label>
-      <input id="city" class="form-control" type="text" th:field="*{city}">
-      <div
-              th:if="${#fields.hasErrors('city')}"
-              th:text="${#fields.errors('city')[0]}"
-              class="invalid-feedback-custom"
-      ></div>
-    </div>
-    <div class="mb-3">
-      <label for="address" class="form-label">Address:</label>
-      <input id="address" class="form-control" type="text" th:field="*{address}">
-      <div
-              th:if="${#fields.hasErrors('address')}"
-              th:text="${#fields.errors('address')[0]}"
-              class="invalid-feedback-custom"
-      ></div>
-    </div>
-    <div>
-      <button type="submit" class="btn btn-primary">Update</button>
-    </div>
-  </form>
+    <form th:object="${user}" th:action="@{/update/save}" method="post">
+        <input type="hidden" th:field="*{ID}">
+        <input type="hidden" th:field="*{userRole}">
+        <div class="mb-3">
+            <label for="firstName" class="form-label">Name:</label>
+            <input id="firstName" class="form-control" type="text" th:field="*{account_name}">
+            <div
+                    th:if="${#fields.hasErrors('account_name')}"
+                    th:text="${#fields.errors('account_name')[0]}"
+                    class="invalid-feedback-custom"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input id="email" class="form-control" type="text" th:field="*{email}">
+            <div
+                    th:if="${#fields.hasErrors('email')}"
+                    th:text="${#fields.errors('email')[0]}"
+                    class="invalid-feedback-custom"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input id="password" class="form-control" type="password" th:field="*{password}">
+            <div
+                    th:if="${#fields.hasErrors('password')}"
+                    th:text="${#fields.errors('password')[0]}"
+                    class="invalid-feedback-custom"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label for="voivodeship" class="form-label">Voivodeship:</label>
+            <input id="voivodeship" class="form-control" type="text" th:field="*{voivodeship}">
+            <div
+                    th:if="${#fields.hasErrors('voivodeship')}"
+                    th:text="${#fields.errors('voivodeship')[0]}"
+                    class="invalid-feedback-custom"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label for="city" class="form-label">City:</label>
+            <input id="city" class="form-control" type="text" th:field="*{city}">
+            <div
+                    th:if="${#fields.hasErrors('city')}"
+                    th:text="${#fields.errors('city')[0]}"
+                    class="invalid-feedback-custom"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address:</label>
+            <input id="address" class="form-control" type="text" th:field="*{address}">
+            <div
+                    th:if="${#fields.hasErrors('address')}"
+                    th:text="${#fields.errors('address')[0]}"
+                    class="invalid-feedback-custom"
+            ></div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>

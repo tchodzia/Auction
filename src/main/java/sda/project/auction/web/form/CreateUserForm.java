@@ -37,5 +37,5 @@ public class CreateUserForm {
     private String address;
 
     @NotNull(message = "Pole nie może być puste")
-    private User.UserRole role;
+    private User.UserRole userRole;
 }
