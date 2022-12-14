@@ -19,6 +19,30 @@
       location.href = "/auctions/" + value;
     }
   </script>
+
+
+  <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src ="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+  <!--<script src ="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+  <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+  <script>
+    $(function() {
+      $('#datetimepicker1').datetimepicker();
+    });
+  </script>
+  <!-- <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+  <!--
+  <style>
+    .container {
+      margin-top: 5px;
+      margin-left: 10px;
+      width: 600px;
+    }
+  </style>
+  -->
+
+
 </head>
 
 <body>
@@ -61,8 +85,10 @@
 <br>
 <div class="container">
 
-<form th:object="${auction}" th:action="@{/auctions/add/__${user.getID()}__}" method="post" enctype="multipart/form-data">
-    <input type="hidden" id="ID" th:field="*{ID}">
+    <form th:object="${auction}" th:action="@{/auctions/add/__${user.getID()}__}" method="post" enctype="multipart/form-data">
+
+
+  <input type="hidden" id="ID" th:field="*{ID}">
     <div class="mb-3">
       <label for="title" class="form-label">Nazwa aukcji:</label>
       <input id="title" class="form-control" type="text" th:field="*{title}">
@@ -78,14 +104,38 @@
     <input id="description" class="form-control" type="text" th:field="*{description}">
   </div>
 
+
   <div class="mb-3">
     <label for="category" class="form-label">Kategoria:</label>
-    <input id="category" class="form-control" type="text" th:field="*{category}">
+    <select class="form-select" aria-label="multiple select example" th:field="*{category}" id="category">
+      <div th:each="categoryTree: ${categories}">
+      <option th:value="${categoryTree.getCatID()}"
+              th:text="${categoryTree.getCategoryName()}"></option>
+
+    <option th:each="subcategoryTree: ${categoryTree.getSubcategories()}"
+            th:value="${subcategoryTree.getCatID()}">
+            &gt;&gt; [[${subcategoryTree.getCategoryName()}]]</option>
+      </div>
+
+    </select>
     <div
             th:if="${#fields.hasErrors('category')}"
             th:text="${#fields.errors('category')[0]}"
             class="invalid-feedback-custom"
     ></div>
+
+
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="margin: 2px">
+    <div th:each="categoryTree : ${categoryTrees}" class="btn-group" role="group">
+      <button th:text="${categoryTree.getCategoryName()}" type="button" class="btn btn-primary dropdown-toggle"
+              data-bs-toggle="dropdown" aria-expanded="false"></button>
+      <ul class="dropdown-menu">
+        <li th:each="category : ${categoryTree.getSubcategories()}"><a th:text="${category.getCategoryName()}"
+                                                                       class="dropdown-item" th:href="@{/auctions/cat/__${category.getCatID()}__}"></a></li>
+      </ul>
+    </div>
   </div>
 
   <div class="mb-3">
@@ -116,36 +166,60 @@
   </div>
 
   <div class="mb-3">
-    <label for="promoted" class="form-label">Aukcja promowana:</label>
-    <input id="promoted" class="form-control" type="text" th:field="*{promoted}">
+    <label for="promoted" class="form-label">Aukcja promowana: </label>
+      <select id="promoted" class="form-control" th:field="*{promoted}">
+        <option th:each="promoteOption: ${promotedOptions}"
+                th:value="${promoteOption['key']}"
+                th:text="${promoteOption['value']}"></option>
+      </select>
   </div>
 
   <div class="mb-3">
     <label for="date_of_issue" class="form-label">Data i czas rozpoczęcia (yyyy-MM-dd HH:mm):</label>
-    <input id="date_of_issue" class="form-control" type="text" th:field="*{date_of_issue}">
+    <input id="date_of_issue" class="form-control" type="text" name="date_of_issue" th:field="*{date_of_issue}">
+
     <div
             th:if="${#fields.hasErrors('date_of_issue')}"
             th:text="${#fields.errors('date_of_issue')[0]}"
             class="invalid-feedback-custom"
     ></div>
+
   </div>
 
-
+<!--
   <div class="mb-3">
     <label for="end_date" class="form-label">Data i czas zakończenia (yyyy-MM-dd HH:mm):</label>
-    <input id="end_date" class="form-control" type="text" th:field="*{end_date}">
+    <input id="end_date" class="form-control" type="text" name="end_date" th:field="*{end_date}"  data-mdb-toggle="datetimepicker">
+
     <div
             th:if="${#fields.hasErrors('end_date')}"
             th:text="${#fields.errors('end_date')[0]}"
             class="invalid-feedback-custom"
     ></div>
-  </div>
+-->
+
+    <div class ="container">
+      <div class ="row">
+        <div class ='col-sm-6'>
+          <div class ="form-group">
+            <div class ='input-group date' id='datetimepicker1'>
+              <input type ='text' class="form-control" id="end_date" th:field="*{end_date}" />
+              <span class ="input-group-addon">
+            <span class ="glyphicon glyphicon-calendar"></span>
+          </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
 
 
 
   <div class="container-fluid" style="max-width: 600px; margin: 0 auto;">
-    <h2 class="text-center">Lista plików</h2>
+    <h2 class="text-left">Lista plików</h2>
 
 
     <input type="file" multiple name="files" />
@@ -180,11 +254,16 @@
     </div>
   </div>
 
-
+<div th:if="${update}">
     <div>
-      <button type="submit" class="btn btn-primary">Utwórz aukcję</button>
+      <button type="submit" class="btn btn-primary">Aktualizuj aukcję</button>
     </div>
-
+</div>
+  <div th:if="!${update}">
+  <div>
+    <button type="submit" class="btn btn-primary">Utwórz aukcję</button>
+  </div>
+</div>
   </form>
 </div>
 

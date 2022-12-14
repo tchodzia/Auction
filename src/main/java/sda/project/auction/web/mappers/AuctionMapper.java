@@ -14,8 +14,8 @@ public class AuctionMapper {
 
     public static Auction toEntity(CreateAuctionForm form, User user){
         Auction auction = new Auction();
-        auction.setDate_of_issue(form.getDate_of_issue());
-        auction.setEnd_date(form.getEnd_date());
+        auction.setStringToDate_of_issue(form.getDate_of_issue());
+        auction.setStringToEnd_date(form.getEnd_date());
         return new Auction(
                 form.getTitle(),
                 form.getDescription(),
@@ -39,8 +39,8 @@ public class AuctionMapper {
         auction.setBUY_NOW_price(form.getBUY_NOW_price());
         auction.setPromoted(form.isPromoted());
         auction.setLocalization(form.getLocalization());
-        auction.setDate_of_issue(form.getDate_of_issue());
-        auction.setEnd_date(form.getEnd_date());
+        auction.setStringToDate_of_issue(form.getDate_of_issue());
+        auction.setStringToEnd_date(form.getEnd_date());
         auction.setUser(user);
         return auction;
     }
