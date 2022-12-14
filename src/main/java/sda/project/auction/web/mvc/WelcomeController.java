@@ -40,7 +40,6 @@ public class WelcomeController {
         }
 
         User user = userService.findById(8L);
-
         map.addAttribute("user", user);
 
         List<Auction> auctionsNew10 = auctionService.findFirst10ByDateOfIssue();
