@@ -9,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sda.project.auction.model.User;
+import sda.project.auction.model.UserRole;
 import sda.project.auction.service.UserService;
 import sda.project.auction.web.form.CreateUserForm;
 import sda.project.auction.web.mappers.UserMapper;
@@ -25,7 +26,7 @@ public class UserController {
     @GetMapping("/signup")
     public String signUp(ModelMap map) {
         map.addAttribute("user", new CreateUserForm());
-        map.addAttribute("roles", User.UserRole.values());
+        map.addAttribute("roles", UserRole.values());
         return "create-user";
     }
 
@@ -33,7 +34,7 @@ public class UserController {
     public String handleSignUp(@ModelAttribute("user") @Valid CreateUserForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
         log.info("Signing Up from form: {}", form);
         if(errors.hasErrors()){
-            map.addAttribute("roles", User.UserRole.values());
+            map.addAttribute("roles", UserRole.values());
             return "create-user";
         }
         userService.save(UserMapper.toEntity(form));

@@ -186,18 +186,18 @@
 
   </div>
 
-<!--
+
   <div class="mb-3">
     <label for="end_date" class="form-label">Data i czas zakończenia (yyyy-MM-dd HH:mm):</label>
-    <input id="end_date" class="form-control" type="text" name="end_date" th:field="*{end_date}"  data-mdb-toggle="datetimepicker">
+    <input id="end_date" class="form-control" type="text" name="end_date" th:field="*{end_date}">
 
     <div
             th:if="${#fields.hasErrors('end_date')}"
             th:text="${#fields.errors('end_date')[0]}"
             class="invalid-feedback-custom"
     ></div>
--->
 
+<!--
     <div class ="container">
       <div class ="row">
         <div class ='col-sm-6'>
@@ -212,22 +212,17 @@
         </div>
       </div>
     </div>
+-->
 
+  <div class="container" style="max-width: 600px; margin: 0 auto;">
 
-
-
-
-
-  <div class="container-fluid" style="max-width: 600px; margin: 0 auto;">
-    <h2 class="text-left">Lista plików</h2>
-
-
-    <input type="file" multiple name="files" />
+    <label for="files" class="form-label">Pliki:</label>
+    <input type="file" id="files" multiple name="files" />
     <!--
     <button class="btn btn-sm btn-outline-success float-right" type="submit">Upload</button>
     -->
 
-    <div th:if="${files.size() > 0}">
+    <div th:if="${storedFiles.size() > 0}">
       <table class="table table-hover">
         <thead class="thead-light">
         <tr>
@@ -237,21 +232,22 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="onefile : ${files}">
+        <tr th:each="onefile : ${storedFiles}">
           <td th:text="${onefile.getFile_name()}"></td>
-          <td><a th:href="@{${onefile.getID()}}">Download</a></td>
+          <td><a th:href="@{/files/__${onefile.getID()}__}">Ściągnij</a></td>
           <td>
-            <a th:href="@{'/files/delete/' + ${onefile.getFile_name()}}" th:fileName="${onefile.getFile_name()}" id="btnDelete"
-               title="Usuń plik" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+            <a th:href="@{/files/delete/__${onefile.getID()}__}" th:fileName="${onefile.getFile_name()}" id="btnDelete"
+              class="fa-regular fa-trash-can icon-dark btn-delete">Usuń plik</a>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-
-    <div th:unless="${files.size() > 0}">
+<!--
+    <div th:unless="${storedFiles.size() > 0}">
       <span>Nie znaleziono pliku!</span>
     </div>
+    -->
   </div>
 
 <div th:if="${update}">

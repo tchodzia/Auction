@@ -3,11 +3,11 @@ package sda.project.auction.web.mvc;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sda.project.auction.model.*;
 import sda.project.auction.service.AuctionService;
@@ -15,12 +15,9 @@ import sda.project.auction.service.CategoryService;
 import sda.project.auction.service.FileStorageService;
 import sda.project.auction.service.UserService;
 import sda.project.auction.web.form.CreateAuctionForm;
-import sda.project.auction.web.form.CreateUserForm;
 import sda.project.auction.web.mappers.AuctionMapper;
-import sda.project.auction.web.mappers.UserMapper;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +56,7 @@ public class AuctionController {
         map.addAttribute("category", category);
         List<Auction> auctions = auctionService.findAllCurrentAuctionsByCategory(id);
         map.addAttribute("auctions", auctions);
+
         return "get-auctions-by-category";
     }
 
@@ -72,8 +70,10 @@ public class AuctionController {
        User user = userService.findById(id);
        map.addAttribute("user", user);
 
-       List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
-       map.addAttribute("files", files);
+
+        //List<File> storedFiles = fileStorageService.getFilesByAuctionId(auction.getID());
+        List<File> storedFiles = new ArrayList<>();
+        map.addAttribute("storedFiles", storedFiles);
 
         List<CategoryTree> categories = categoryService.findAllCategoryTree();
         map.addAttribute("categories", categories);
@@ -90,15 +90,21 @@ public class AuctionController {
     }
 
     @PostMapping("/add/{id}")
-    public String handleCreateAndUpdateAuctionForm(@PathVariable("id") Long id, @ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, final RedirectAttributes redirectAttributes, ModelMap map) {
-        map.addAttribute("update", false);
+    public String handleCreateAndUpdateAuctionForm(@PathVariable("id") Long id, @RequestParam(value = "files", required = false) MultipartFile[] files, @ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, final RedirectAttributes redirectAttributes, ModelMap map) throws IOException {
+        //map.addAttribute("update", false);
             User user = userService.findById(id);
             map.addAttribute("user", user);
             Auction auction = AuctionMapper.toEntity(form, user);
             //map.addAttribute("auction", auction);
 
-        List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
-            map.addAttribute("files", files);
+           //List<File> storedFiles = fileStorageService.getFilesByAuctionId(auction.getID());
+            if (files == null || files.length == 0) {
+                List<File> storedFiles = new ArrayList<>();
+                map.addAttribute("storedFiles", storedFiles);
+            } else {
+                map.addAttribute("storedFiles", files);
+            }
+
 
             Map<String, String> promotedOptions = new HashMap<String, String>();
             promotedOptions.put("false", "nie");
@@ -113,8 +119,9 @@ public class AuctionController {
             if (errors.hasErrors()){
                 return "create-auction";
             }
-        auctionService.save(auction);
-
+        Auction auction2 = auctionService.save(auction);
+            List<File> storedFiles2 = fileStorageService.store(files, auction2);
+        //map.addAttribute("storedFiles2", storedFiles2);
         redirectAttributes.addAttribute("message", form.getTitle() + " auction was created!");
         return "redirect:/";
     }
@@ -129,7 +136,7 @@ public class AuctionController {
             map.addAttribute("user", user);
 
             List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
-            map.addAttribute("files", files);
+            map.addAttribute("storedFiles", files);
 
             List<CategoryTree> categories = categoryService.findAllCategoryTree();
             map.addAttribute("categories", categories);
@@ -147,6 +154,9 @@ public class AuctionController {
     public String displayAuctionById(@PathVariable("id") Long id, ModelMap map) {
         Auction auction = auctionService.findById(id);
         map.addAttribute("auction", auction);
+
+        List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
+        map.addAttribute("storedFiles", files);
 
         return "get-auction";
     }

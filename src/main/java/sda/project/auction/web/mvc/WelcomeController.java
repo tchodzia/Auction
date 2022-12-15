@@ -25,6 +25,7 @@ public class WelcomeController {
 
     private final ObservedAuctionService observedAuctionService;
 
+    private final FileStorageService fileStorageService;
     @GetMapping("/")
     public String welcomePage(ModelMap map, @ModelAttribute("message") String message) {
 
@@ -40,7 +41,6 @@ public class WelcomeController {
         }
 
         User user = userService.findById(8L);
-
         map.addAttribute("user", user);
 
         List<Auction> auctionsNew10 = auctionService.findFirst10ByDateOfIssue();
@@ -66,6 +66,15 @@ public class WelcomeController {
 
         Auction currentRandomAuction = auctionService.getCurrentRandomAuction();
         map.addAttribute("currentRandomAuction", currentRandomAuction);
+
+
+        List<File> files = fileStorageService.getFilesByAuctionId(currentRandomAuction.getID());
+        if (files == null || files.size() == 0) {
+            List<File> storedFiles = new ArrayList<>();
+            map.addAttribute("storedFiles", storedFiles);
+        } else {
+            map.addAttribute("storedFiles", files);
+        }
 
         // CATEGORIES
 

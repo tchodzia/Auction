@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import sda.project.auction.model.Auction;
 import sda.project.auction.model.File;
 import sda.project.auction.repository.FileDBRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -17,11 +19,15 @@ public class FileStorageService {
     @Autowired
     private FileDBRepository fileDBRepository;
 
-    public File store(MultipartFile file) throws IOException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        File fileDB = new File(fileName, file.getContentType(), file.getBytes());
+    public List<File> store(MultipartFile[] files, Auction auction) throws IOException {
+        List<File> storedFiles = new ArrayList<>();
+        for (MultipartFile file : files) {
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            File fileDB = new File(fileName, file.getContentType(), file.getBytes(), auction);
 
-        return fileDBRepository.save(fileDB);
+            storedFiles.add(fileDBRepository.save(fileDB));
+        }
+        return storedFiles;
     }
 
     public File getFile(Long id) {
@@ -35,4 +41,9 @@ public class FileStorageService {
     public List<File> getFilesByAuctionId(Long id) {
         return fileDBRepository.getFilesByAuctionId(id);
     }
+
+    public void delete(Long id) {
+        fileDBRepository.deleteById(id);
+    }
+
 }
