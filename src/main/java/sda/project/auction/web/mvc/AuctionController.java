@@ -3,7 +3,6 @@ package sda.project.auction.web.mvc;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,11 +18,8 @@ import sda.project.auction.service.BiddingService;
 import sda.project.auction.service.CategoryService;
 import sda.project.auction.service.UserService;
 import sda.project.auction.service.auth.CustomUserDetails;
-import sda.project.auction.web.form.CreateUserForm;
 import sda.project.auction.web.form.NewBidForm;
-import sda.project.auction.web.mappers.UserMapper;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -34,7 +30,6 @@ public class AuctionController {
         private final AuctionService auctionService;
         private final CategoryService categoryService;
         private final BiddingService biddingService;
-
         private final UserService userService;
 
         @GetMapping("/user/{id}")
@@ -73,24 +68,5 @@ public class AuctionController {
             map.addAttribute("loggedUser", loggedUser);}
         return "get-auction";
     }
-
-    @GetMapping("/newbid/auction/{auction_id}/user/{user_id}")
-    public String createNewBid(@PathVariable("auction_id") Long auction_id, @PathVariable("user_id") Long user_id, ModelMap map){
-            map.addAttribute("newbid", new NewBidForm(auction_id, user_id));
-            return "create-bid";
-    }
-
-    @PostMapping("/newbid")
-    public String handleNewBid(@ModelAttribute("newbid") @Valid NewBidForm newBidForm, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
-        if(errors.hasErrors()){
-            return "create-bid";
-        }
-        biddingService.save(new Bidding(auctionService.findById(newBidForm.getAuction_id()), userService.findById(newBidForm.getUser_id()), newBidForm.getAmount()));
-        redirectAttributes.addAttribute("message", "New bidding was created!");
-        return "redirect:/";
-    }
-
-
-
 
 }

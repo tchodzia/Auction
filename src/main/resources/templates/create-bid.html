@@ -42,7 +42,7 @@
 </nav>
 <br>
 <div class="container">
-    <form th:object="${newbid}" th:action="@{/auctions/newbid}" method="post">
+    <form th:object="${newbid}" th:action="@{/bidding/newbid}" method="post">
         <div class="mb-3">
             <label for="auction" class="form-label">Auction:</label>
             <input id="auction" class="form-control" type="text" th:field="*{auction_id}">

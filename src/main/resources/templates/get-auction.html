@@ -53,6 +53,7 @@
     <td>Title</td>
     <td>Category</td>
     <td>BUY NOW</td>
+    <td th:if="${bidding != null}">Actual bid price</td>
     </thead>
     <tbody>
     <tr th:object="${bidding}">
@@ -60,18 +61,18 @@
         <td th:text="${auction.getTitle()}"></td>
         <td th:text="${auction.getCategory()}"></td>
         <td th:text="${auction.getBUY_NOW_price()}"></td>
+        <td th:if="${bidding != null}" th:text="${bidding.getAmount()}"></td>
         <td th:if="${bidding == null and loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
             <a class="btn btn-success" role="button" target="_parent"
-               th:href="@{newbid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Start
-                bidding</a>
+               th:href="@{bidding/newbid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Start bidding</a>
         </td>
-        <td th:if="${bidding != null and loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
+        <td th:if="${bidding != null and loggedUser != null and loggedUser.getID() != auction.getUser().getID() and bidding.getUser().getID() != loggedUser.getID()}">
             <a class="btn btn-warning" role="button" target="_parent"
-               href="">Bid!</a>
+               th:href="@{/bidding/bid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Bid!</a>
         </td>
         <td th:if="${loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
             <a class="btn btn-danger" role="button" target="_parent"
-               href="">BUY NOW</a>
+               href="@{}">BUY NOW</a>
         </td>
 
     </tr>
