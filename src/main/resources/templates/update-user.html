@@ -20,18 +20,18 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Categories</a>
+                    <a class="nav-link active" aria-current="page" href="#">Kategorie</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">FAQ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#">Kontakt</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Szukaj</button>
             </form>
         </div>
     </div>
@@ -43,7 +43,7 @@
         <input type="hidden" th:field="*{ID}">
         <input type="hidden" th:field="*{userRole}">
         <div class="mb-3">
-            <label for="firstName" class="form-label">Name:</label>
+            <label for="firstName" class="form-label">Imię:</label>
             <input id="firstName" class="form-control" type="text" th:field="*{account_name}">
             <div
                     th:if="${#fields.hasErrors('account_name')}"
@@ -61,7 +61,7 @@
             ></div>
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password:</label>
+            <label for="password" class="form-label">Hasło:</label>
             <input id="password" class="form-control" type="password" th:field="*{password}">
             <div
                     th:if="${#fields.hasErrors('password')}"
@@ -70,7 +70,7 @@
             ></div>
         </div>
         <div class="mb-3">
-            <label for="voivodeship" class="form-label">Voivodeship:</label>
+            <label for="voivodeship" class="form-label">Województwo:</label>
             <input id="voivodeship" class="form-control" type="text" th:field="*{voivodeship}">
             <div
                     th:if="${#fields.hasErrors('voivodeship')}"
@@ -79,7 +79,7 @@
             ></div>
         </div>
         <div class="mb-3">
-            <label for="city" class="form-label">City:</label>
+            <label for="city" class="form-label">Miasto:</label>
             <input id="city" class="form-control" type="text" th:field="*{city}">
             <div
                     th:if="${#fields.hasErrors('city')}"
@@ -88,7 +88,7 @@
             ></div>
         </div>
         <div class="mb-3">
-            <label for="address" class="form-label">Address:</label>
+            <label for="address" class="form-label">Adres:</label>
             <input id="address" class="form-control" type="text" th:field="*{address}">
             <div
                     th:if="${#fields.hasErrors('address')}"
@@ -97,7 +97,7 @@
             ></div>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">Aktualizuj</button>
         </div>
     </form>
 </div>

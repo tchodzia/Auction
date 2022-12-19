@@ -24,18 +24,18 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Categories</a>
+                    <a class="nav-link active" aria-current="page" href="#">Kategorie</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">FAQ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#">Kontakt</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Szukaj</button>
             </form>
         </div>
     </div>
@@ -44,15 +44,15 @@
 <div class="container">
     <form th:object="${newbid}" th:action="@{/bidding/newbid}" method="post">
         <div class="mb-3">
-            <label for="auction" class="form-label">Auction:</label>
+            <label for="auction" class="form-label">Aukcja:</label>
             <input id="auction" class="form-control" type="text" th:field="*{auction_id}">
         </div>
         <div class="mb-3">
-            <label for="user" class="form-label">User:</label>
+            <label for="user" class="form-label">Użytkownik:</label>
             <input id="user" class="form-control" type="text" th:field="*{user_id}">
         </div>
         <div class="mb-3">
-            <label for="amount" class="form-label">Amount:</label>
+            <label for="amount" class="form-label">Kwota:</label>
             <input id="amount" class="form-control" type="text" th:field="*{amount}">
             <div
                     th:if="${#fields.hasErrors('amount')}"
@@ -61,7 +61,7 @@
             ></div>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Bid</button>
+            <button type="submit" class="btn btn-primary">Utwórz</button>
         </div>
     </form>
 </div>

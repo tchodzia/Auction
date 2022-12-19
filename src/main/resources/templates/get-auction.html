@@ -25,18 +25,18 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Categories</a>
+                    <a class="nav-link active" aria-current="page" href="#">Kategorie</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">FAQ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#">Kontakt</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Szukaj</button>
             </form>
         </div>
     </div>
@@ -51,10 +51,10 @@
         <td th:text="${auction.getTitle()}"></td>
     </tr>
     <td>ID</td>
-    <td>Title</td>
-    <td>Category</td>
-    <td>BUY NOW</td>
-    <td th:if="${bidding != null}">Actual bid price</td>
+    <td>Tytuł</td>
+    <td>Kategoria</td>
+    <td>KUP TERAZ</td>
+    <td th:if="${bidding != null}">Aktualnie licytowana kwota</td>
     </thead>
     <tbody>
     <tr th:object="${bidding}">
@@ -65,45 +65,23 @@
         <td th:if="${bidding != null}" th:text="${bidding.getAmount()}"></td>
         <td th:if="${bidding == null and loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
             <a class="btn btn-success" role="button" target="_parent"
-               th:href="@{bidding/newbid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Start bidding</a>
+               th:href="@{bidding/newbid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Rozpocznij licytacje</a>
         </td>
         <td th:if="${bidding != null and loggedUser != null and loggedUser.getID() != auction.getUser().getID() and bidding.getUser().getID() != loggedUser.getID()}">
             <a class="btn btn-warning" role="button" target="_parent"
-               th:href="@{/bidding/bid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Bid!</a>
+               th:href="@{/bidding/bid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Podbij!</a>
         </td>
         <td th:if="${loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
             <a class="btn btn-danger" role="button" target="_parent"
-               href="@{}">BUY NOW</a>
+               href="@{}">KUP TERAZ</a>
         </td>
-
-
-
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th colspan="5" th:text="${auction.getTitle()}"></th>
-  </tr>
-  </thead>
-  <tbody>
-   <tr>
-    <td th:text="${auction.getID()}"></td>
-    <td th:text="${auction.getTitle()}"></td>
-    <td th:text="${auction.getCategory()}"></td>
-    <td th:text="${auction.getBUY_NOW_price()}"></td>
-
-    <td>
-      <a class="btn btn-success" th:href="@{/auctions/update/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj</a>
-      <a class="btn btn-danger" th:href="@{/auctions/delete/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
-    </td>
-  </tr>
-  </tbody>
-</table>
-</body>
+        <td>
+            <a class="btn btn-success" th:href="@{/auctions/update/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj</a>
+            <a class="btn btn-danger" th:href="@{/auctions/delete/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
+        </td>
       <div th:each="onefile : ${storedFiles}">
         <img th:src="@{/files/__${onefile.getID()}__}" width="10%" height="*" style="margin: 2px">
       </div>
-
-
     </tr>
     </tbody>
 </table>

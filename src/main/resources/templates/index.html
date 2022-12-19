@@ -35,30 +35,30 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Categories</a>
+                    <a class="nav-link active" aria-current="page" href="#">Kategorie</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">FAQ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#">Kontakt</a>
                 </li>
                 <li th:object="${loggedUser}" class="nav-item">
                     <a th:if="${loggedUser != null}" th:text="'Zalogowany jako ' + ${loggedUser.getEmail()}"
                        class="nav-link" href="/logout"></a>
-                    <a th:if="${loggedUser == null}" class="nav-link" href="/login">LogIn</a>
+                    <a th:if="${loggedUser == null}" class="nav-link" href="/login">Zaloguj się</a>
                 </li>
                 <li th:object="${loggedUser}">
-                    <a th:if="${loggedUser == null}" class="nav-link" href="/signup">SignUp</a>
+                    <a th:if="${loggedUser == null}" class="nav-link" href="/signup">Zarejestruj się</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/auctions/create/__${user.getID()}__}">Nowa aukcja</a>
+                    <a th:if="${loggedUser != null}" class="nav-link" th:href="@{/auctions/create/__${loggedUser.getID()}__}">Nowa aukcja</a>
                 </li>
 
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Szukaj</button>
             </form>
         </div>
     </div>
@@ -86,9 +86,9 @@
 <div th:object="${loggedUser}" align="right">
     <!--th:href="@{/update/user/__${user.id}__}"-->
     <a class="btn btn-success" role="button" target="_parent"
-       th:if="${loggedUser != null}" th:href="@{/update/user/__${loggedUser.getID().toString()}__}">Edit user data</a>
+       th:if="${loggedUser != null}" th:href="@{/update/user/__${loggedUser.getID().toString()}__}">Edytuj użytkownika</a>
     <a class="btn btn-danger" role="button" target="_parent"
-       th:if="${loggedUser != null}" th:href="@{/delete/user/__${loggedUser.getID().toString()}__}">Delete user account</a></div>
+       th:if="${loggedUser != null}" th:href="@{/delete/user/__${loggedUser.getID().toString()}__}">Usuń użytkownika</a></div>
 </div>
 
 <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="margin: 2px">
