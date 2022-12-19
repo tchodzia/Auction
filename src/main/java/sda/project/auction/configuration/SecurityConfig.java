@@ -24,6 +24,7 @@ public class SecurityConfig{
                 .requestMatchers("/", "", "/signup").permitAll()
                 .requestMatchers("/css/styles.css", "/images/**").permitAll()
                 .requestMatchers("/webjars/**").permitAll()
+                .requestMatchers("/js/**").permitAll()
                 .requestMatchers("/update/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .requestMatchers("/auctions/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .requestMatchers("/update/save").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")

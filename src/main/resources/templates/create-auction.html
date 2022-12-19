@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
 
   <meta charset="UTF-8">
@@ -9,10 +9,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Auctions Portal</title>
+
+
+  <script src="https://code.jquery.com/jquery-3.6.2.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+  <!-- <script th:src="@{/js/datetimepicker.js}"></script> -->
   <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
   <link rel="stylesheet" th:href="@{/css/styles.css}">
   <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 
+  <!-- Popperjs -->
+ <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script> -->
+  <!-- Tempus Dominus JavaScript -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.2.8/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script> -->
+
+  <!-- Tempus Dominus Styles -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.2.8/dist/css/tempus-dominus.min.css" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 
   <script>
     function rowClicked(value) {
@@ -20,27 +33,6 @@
     }
   </script>
 
-
-  <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src ="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-  <!--<script src ="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-  <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-  <script>
-    $(function() {
-      $('#datetimepicker1').datetimepicker();
-    });
-  </script>
-  <!-- <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"> -->
-  <link rel ="stylesheet" href ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
-  <!--
-  <style>
-    .container {
-      margin-top: 5px;
-      margin-left: 10px;
-      width: 600px;
-    }
-  </style>
-  -->
 
 
 </head>
@@ -197,37 +189,75 @@
             class="invalid-feedback-custom"
     ></div>
 
+
 <!--
-    <div class ="container">
-      <div class ="row">
-        <div class ='col-sm-6'>
-          <div class ="form-group">
-            <div class ='input-group date' id='datetimepicker1'>
-              <input type ='text' class="form-control" id="end_date" th:field="*{end_date}" />
-              <span class ="input-group-addon">
-            <span class ="glyphicon glyphicon-calendar"></span>
-          </span>
-            </div>
+    <div class="container">
+      <div class="alert alert-info" id="info"></div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="datetimepicker1Input" class="form-label"
+          >Simple picker</label
+          >
+          <div
+                  class="input-group"
+                  id="datetimepicker1"
+                  data-td-target-input="nearest"
+                  data-td-target-toggle="nearest"
+          >
+            <input
+                    id="datetimepicker1Input"
+                    type="text"
+                    class="form-control"
+                    data-td-target="#datetimepicker1"
+            />
+            <span
+                    class="input-group-text"
+                    data-td-target="#datetimepicker1"
+                    data-td-toggle="datetimepicker"
+            >
+              <span class="fa-solid fa-calendar"></span>
+            </span>
           </div>
         </div>
       </div>
     </div>
 -->
 
-  <div class="container" style="max-width: 600px; margin: 0 auto;">
+    <div class="container">
+      <div class="row">
+        <div class='col-sm-6'>
+          <div class="form-group">
+            <div class='input-group date' id='datetimepicker1'>
+              <input type='text' class="form-control" />
+              <span class="input-group-addon">
+               <i class="bi bi-calendar"></i>
+               </span>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            $('#datetimepicker1').datetimepicker();
+          });
+        </script>
+      </div>
+    </div>
+
+    <div class="mb-3" style="margin: 2px;">
 
     <label for="files" class="form-label">Pliki:</label>
     <input type="file" id="files" multiple name="files" />
     <!--
     <button class="btn btn-sm btn-outline-success float-right" type="submit">Upload</button>
     -->
+    </div>
 
-    <div th:if="${storedFiles.size() > 0}">
+    <div class="mb-3" th:if="${storedFiles.size() > 0}">
       <table class="table table-hover">
         <thead class="thead-light">
         <tr>
           <th scope="col">Nazwa pliku</th>
-          <th scope="col">Link</th>
+          <th scope="col">Pobierz</th>
           <th scope="col">Akcje</th>
         </tr>
         </thead>
@@ -243,11 +273,6 @@
         </tbody>
       </table>
     </div>
-<!--
-    <div th:unless="${storedFiles.size() > 0}">
-      <span>Nie znaleziono pliku!</span>
-    </div>
-    -->
   </div>
 
 <div th:if="${update}">
