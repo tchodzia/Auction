@@ -73,9 +73,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    public enum UserRole {
-        ROLE_USER, ROLE_ADMIN
-    }
+
 
     public void setID(Long id) {
         this.ID = id;

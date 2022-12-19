@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Auctions Portal</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
 
 
     <script>
@@ -51,6 +51,10 @@
                 <li th:object="${loggedUser}">
                     <a th:if="${loggedUser == null}" class="nav-link" href="/signup">SignUp</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/auctions/create/__${user.getID()}__}">Nowa aukcja</a>
+                </li>
+
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -135,7 +139,9 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img th:src="@{/images/Smartwatch.jfif}" width="100%" height="*" style="margin: 2px">
+                        <div th:each="onefile : ${storedFiles}">
+                        <img th:src="@{/files/__${onefile.getID()}__}" width="100%" height="*" style="margin: 2px">
+                            </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

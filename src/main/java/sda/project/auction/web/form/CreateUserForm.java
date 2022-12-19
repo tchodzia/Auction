@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import sda.project.auction.model.User;
+import sda.project.auction.model.UserRole;
 
 @Getter
 @Setter
@@ -37,5 +38,5 @@ public class CreateUserForm {
     private String address;
 
     @NotNull(message = "Pole nie może być puste")
-    private User.UserRole userRole;
+    private UserRole userRole;
 }

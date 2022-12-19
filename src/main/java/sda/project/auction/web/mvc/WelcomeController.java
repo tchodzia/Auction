@@ -25,8 +25,10 @@ public class WelcomeController {
 
     private final ObservedAuctionService observedAuctionService;
 
+    private final FileStorageService fileStorageService;
     @GetMapping("/")
     public String welcomePage(ModelMap map, @ModelAttribute("message") String message) {
+
 
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -39,12 +41,16 @@ public class WelcomeController {
             List<Bidding> auctionsBiddingByUser = biddingService.findAllBiddingsByUserId(loggedUser.getID());
             map.addAttribute("auctionsBiddingByUser", auctionsBiddingByUser);
 
+
             List<ObservedAuction> observedAuctions = observedAuctionService.findAllObservedAuctionsByUserId(loggedUser.getID());
             map.addAttribute("observedAuctionsByUser", observedAuctions);
 
             List<Auction> finishedAuctionsByUser = auctionService.finishedAuctionsByUser(loggedUser.getID());
             map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
         }
+
+        User user = userService.findById(8L);
+        map.addAttribute("user", user);
 
         List<Auction> auctionsNew10 = auctionService.findFirst10ByDateOfIssue();
         map.addAttribute("auctionsNew10", auctionsNew10);
@@ -60,21 +66,17 @@ public class WelcomeController {
         //  List<Auction> auctionsAll = auctionService.findAll();
         //  map.addAttribute("auctionsAll", auctionsAll);
 
-        // CATEGORIES
-/*
-        List<Category> categories = categoryService.findAllOrderedByParentCategory();
 
-        List<Category> sortedCategories = new ArrayList<>();
-        for (Category category : categories) {
-            sortedCategories.add(category);
-            List<Category> downCategories = categoryService.findAllSelectedByParentCategory(category.getID());
-            for (Category downCategory : downCategories) {
-                sortedCategories.add(downCategory);
-            }
+        List<File> files = fileStorageService.getFilesByAuctionId(currentRandomAuction.getID());
+        if (files == null || files.size() == 0) {
+            List<File> storedFiles = new ArrayList<>();
+            map.addAttribute("storedFiles", storedFiles);
+        } else {
+            map.addAttribute("storedFiles", files);
         }
 
-        map.addAttribute("sortedCategories", sortedCategories);
-*/
+        // CATEGORIES
+
         List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
         map.addAttribute("categoryTrees", categoryTrees);
 
