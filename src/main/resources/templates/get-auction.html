@@ -1,48 +1,80 @@
 <!DOCTYPE html>
-      <html lang="en" xmlns:th="http://www.thymeleaf.org">
-      <head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
 
-      <meta charset="UTF-8">
-      <meta name="description" content="Auction service">
-      <meta name="keywords" content="auction">
-      <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="description" content="Auction service">
+    <meta name="keywords" content="auction">
+    <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <title>Auctions</title>
-  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
-  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <title>Auctions</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/"><img src="https://assets.allegrostatic.com/metrum/metrum-brand/allegro-347440b030.svg" alt="Serwis aukcyjny"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Categories</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">FAQ</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">LogIn/SignUp/LogOut</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img
+                src="https://assets.allegrostatic.com/metrum/metrum-brand/allegro-347440b030.svg" alt="Serwis aukcyjny"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
     </div>
-  </div>
 </nav>
 <br>
+
+
+<table th:object="${loggedUser}" class="table table-striped">
+
+    <thead>
+    <tr>
+        <td th:text="${auction.getTitle()}"></td>
+    </tr>
+    <td>ID</td>
+    <td>Title</td>
+    <td>Category</td>
+    <td>BUY NOW</td>
+    <td th:if="${bidding != null}">Actual bid price</td>
+    </thead>
+    <tbody>
+    <tr th:object="${bidding}">
+        <td th:text="${auction.getID()}"></td>
+        <td th:text="${auction.getTitle()}"></td>
+        <td th:text="${auction.getCategory()}"></td>
+        <td th:text="${auction.getBUY_NOW_price()}"></td>
+        <td th:if="${bidding != null}" th:text="${bidding.getAmount()}"></td>
+        <td th:if="${bidding == null and loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
+            <a class="btn btn-success" role="button" target="_parent"
+               th:href="@{bidding/newbid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Start bidding</a>
+        </td>
+        <td th:if="${bidding != null and loggedUser != null and loggedUser.getID() != auction.getUser().getID() and bidding.getUser().getID() != loggedUser.getID()}">
+            <a class="btn btn-warning" role="button" target="_parent"
+               th:href="@{/bidding/bid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Bid!</a>
+        </td>
+        <td th:if="${loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
+            <a class="btn btn-danger" role="button" target="_parent"
+               href="@{}">BUY NOW</a>
+        </td>
 
 
 
@@ -71,5 +103,9 @@
         <img th:src="@{/files/__${onefile.getID()}__}" width="10%" height="*" style="margin: 2px">
       </div>
 
+
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

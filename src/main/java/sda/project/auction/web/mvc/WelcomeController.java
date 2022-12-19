@@ -34,10 +34,19 @@ public class WelcomeController {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedUser = userService.findByEmail(principal.getUsername());
             map.addAttribute("loggedUser", loggedUser);
-        }
 
-        else{
+            List<Auction> auctionsByUser = auctionService.findAllAuctionsByDateOfIssueAndUser(loggedUser.getID());
+            map.addAttribute("auctionsByUser", auctionsByUser);
 
+            List<Bidding> auctionsBiddingByUser = biddingService.findAllBiddingsByUserId(loggedUser.getID());
+            map.addAttribute("auctionsBiddingByUser", auctionsBiddingByUser);
+
+
+            List<ObservedAuction> observedAuctions = observedAuctionService.findAllObservedAuctionsByUserId(loggedUser.getID());
+            map.addAttribute("observedAuctionsByUser", observedAuctions);
+
+            List<Auction> finishedAuctionsByUser = auctionService.finishedAuctionsByUser(loggedUser.getID());
+            map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
         }
 
         User user = userService.findById(8L);
@@ -49,23 +58,13 @@ public class WelcomeController {
         List<Auction> auctionsLast10 = auctionService.findLast10ByDateOfIssue();
         map.addAttribute("auctionsLast10", auctionsLast10);
 
-        List<Auction> auctionsByUser = auctionService.findAllAuctionsByDateOfIssueAndUser(user.getID());
-        map.addAttribute("auctionsByUser", auctionsByUser);
+        Auction currentRandomAuction = auctionService.getCurrentRandomAuction();
+        map.addAttribute("currentRandomAuction", currentRandomAuction);
+
+
 
         //  List<Auction> auctionsAll = auctionService.findAll();
         //  map.addAttribute("auctionsAll", auctionsAll);
-
-        List<Bidding> auctionsBiddingByUser = biddingService.findAllBiddingsByUserId(user.getID());
-        map.addAttribute("auctionsBiddingByUser", auctionsBiddingByUser);
-
-        List<ObservedAuction> observedAuctions = observedAuctionService.findAllObservedAuctionsByUserId(user.getID());
-        map.addAttribute("observedAuctionsByUser", observedAuctions);
-
-        List<Auction> finishedAuctionsByUser = auctionService.finishedAuctionsByUser(user.getID());
-        map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
-
-        Auction currentRandomAuction = auctionService.getCurrentRandomAuction();
-        map.addAttribute("currentRandomAuction", currentRandomAuction);
 
 
         List<File> files = fileStorageService.getFilesByAuctionId(currentRandomAuction.getID());

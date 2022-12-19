@@ -3,19 +3,31 @@ package sda.project.auction.web.mvc;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sda.project.auction.model.Auction;
+import sda.project.auction.model.Bidding;
+import sda.project.auction.model.Category;
+import sda.project.auction.model.User;
+import org.springframework.web.multipart.MultipartFile;
 import sda.project.auction.model.*;
 import sda.project.auction.service.AuctionService;
+import sda.project.auction.service.BiddingService;
 import sda.project.auction.service.CategoryService;
 import sda.project.auction.service.FileStorageService;
 import sda.project.auction.service.UserService;
+import sda.project.auction.service.auth.CustomUserDetails;
+import sda.project.auction.web.form.NewBidForm;
 import sda.project.auction.web.form.CreateAuctionForm;
 import sda.project.auction.web.mappers.AuctionMapper;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +45,8 @@ import java.util.Map;
 public class AuctionController {
         private final AuctionService auctionService;
         private final CategoryService categoryService;
+        private final BiddingService biddingService;
+        private final UserService userService;
 
         private final FileStorageService fileStorageService;
 
@@ -155,12 +169,19 @@ public class AuctionController {
         Auction auction = auctionService.findById(id);
         map.addAttribute("auction", auction);
 
+        Bidding bidding = biddingService.findBiddingByAuctionId(id);
+        map.addAttribute("bidding", bidding);
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User loggedUser = userService.findByEmail(principal.getUsername());
+            map.addAttribute("loggedUser", loggedUser);}
+
+
         List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
         map.addAttribute("storedFiles", files);
 
+
         return "get-auction";
     }
-
-
 
 }
