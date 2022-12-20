@@ -47,10 +47,8 @@ public class WelcomeController {
 
             List<Auction> finishedAuctionsByUser = auctionService.finishedAuctionsByUser(loggedUser.getID());
             map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
-        }
 
-        User user = userService.findById(8L);
-        map.addAttribute("user", user);
+        }
 
         List<Auction> auctionsNew10 = auctionService.findFirst10ByDateOfIssue();
         map.addAttribute("auctionsNew10", auctionsNew10);
