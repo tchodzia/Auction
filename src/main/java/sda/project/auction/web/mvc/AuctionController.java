@@ -76,6 +76,10 @@ public class AuctionController {
     @GetMapping("/create/{id}")
     public String displayCreateAuctionForm(@PathVariable("id") Long id, ModelMap map) {
         map.addAttribute("update", false);
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User loggedUser = userService.findByEmail(principal.getUsername());
+            map.addAttribute("loggedUser", loggedUser);}
        //Auction auction = auctionService.findById(1L);
        Auction auction = new Auction();
        map.addAttribute("auction", auction);
@@ -174,7 +178,6 @@ public class AuctionController {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedUser = userService.findByEmail(principal.getUsername());
             map.addAttribute("loggedUser", loggedUser);}
-
 
         List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
         map.addAttribute("storedFiles", files);
