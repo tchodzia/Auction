@@ -60,7 +60,7 @@
     <tr th:object="${bidding}">
         <td th:text="${auction.getID()}"></td>
         <td th:text="${auction.getTitle()}"></td>
-        <td th:text="${auction.getCategory()}"></td>
+        <td th:text="${category.getName()}"></td>
         <td th:text="${auction.getBUY_NOW_price()}"></td>
         <td th:if="${bidding != null}" th:text="${bidding.getAmount()}"></td>
         <td th:if="${bidding == null and loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">

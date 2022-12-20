@@ -55,4 +55,8 @@ public class CategoryService {
         return repository.findById(Id).orElseThrow(() -> new RuntimeException("Category with id " + Id + " not found."));
     }
 
+    public List<Category> findAll() {
+        return repository.findAll();
+    }
+
 }

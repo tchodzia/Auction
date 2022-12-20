@@ -56,8 +56,8 @@
                 </li>
 
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+            <form class="d-flex" role="search" th:action="@{/search}" method="post">
+                <input id="search" name="search" class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Szukaj</button>
             </form>
         </div>
@@ -120,9 +120,11 @@
                     <tr th:each="auction : ${auctionsNew10}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
 
-                        <td th:text="${auction.getID()}"></td>
+                        <!-- <td th:text="${auction.getID()}"></td> -->
                         <td th:text="${auction.getTitle()}"></td>
-                        <td th:text="${auction.getCategory()}"></td>
+                        <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getCategory()}">
+                            <td th:text="${cat.getName()}"></td>
+                        </div>
                         <td th:text="${auction.getBUY_NOW_price()}"></td>
 
                     </tr>
@@ -146,12 +148,17 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${currentRandomAuction.getTitle()}"></h5>
-                            <p class="card-text" th:text="${currentRandomAuction.getCategory()}"></p>
+
+                            <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${currentRandomAuction.getCategory()}">
+                                <a th:href="@{/auctions/cat/__${cat.getID()}__}">
+                                    <p class="card-text" th:text="${cat.getName()}"></p>
+                                </a>
+                            </div>
                             <p class="card-text" th:text="${currentRandomAuction.getDescription()}"></p>
-                            <p class="card-text" th:text="${currentRandomAuction.getBUY_NOW_price()}"></p>
+                            <p class="card-text">Cena KUP TERAZ: [[${currentRandomAuction.getBUY_NOW_price()}]]</p>
                             <a class="btn btn-primary" th:href="@{/auctions/__${currentRandomAuction.getID()}__}">Pokaż
                                 aukcję</a>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <p class="card-text"><small class="text-muted"></small></p>
                         </div>
                     </div>
                 </div>
@@ -171,9 +178,11 @@
                     <tr th:each="auction : ${auctionsLast10}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
 
-                        <td th:text="${auction.getID()}"></td>
+                        <!-- <td th:text="${auction.getID()}"></td> -->
                         <td th:text="${auction.getTitle()}"></td>
-                        <td th:text="${auction.getCategory()}"></td>
+                        <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getCategory()}">
+                            <td th:text="${cat.getName()}"></td>
+                        </div>
                         <td th:text="${auction.getBUY_NOW_price()}"></td>
 
                     </tr>
@@ -199,9 +208,11 @@
                     <tbody>
                     <tr th:each="auction : ${auctionsByUser}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
-                        <td th:text="${auction.getID()}"></td>
+                        <!-- <td th:text="${auction.getID()}"></td> -->
                         <td th:text="${auction.getTitle()}"></td>
-                        <td th:text="${auction.getCategory()}"></td>
+                        <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getCategory()}">
+                            <td th:text="${cat.getName()}"></td>
+                        </div>
                         <td th:text="${auction.getBUY_NOW_price()}"></td>
                     </tr>
                     </tbody>
@@ -221,9 +232,13 @@
                     <tbody>
                     <tr th:each="auction : ${auctionsBiddingByUser}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getAuction().getID()} + '\');'">
-                        <td th:text="${auction.getAuction().getID()}"></td>
+
+                        <!-- <td th:text="${auction.getAuction().getID()}"></td> -->
                         <td th:text="${auction.getAuction().getTitle()}"></td>
-                        <td th:text="${auction.getAmount()}"></td>
+                        <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getAuction().getCategory()}">
+                            <td th:text="${cat.getName()}"></td>
+                        </div>
+                         <td th:text="${auction.getAmount()}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -243,9 +258,12 @@
                     <tbody>
                     <tr th:each="auction : ${observedAuctionsByUser}" style="cursor: pointer;"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getAuction().getID()} + '\');'">
-                        <td th:text="${auction.getAuction().getID()}"></td>
+                        <!-- <td th:text="${auction.getAuction().getID()}"></td> -->
                         <td th:text="${auction.getAuction().getTitle()}"></td>
-                    </tr>
+                        <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getAuction().getCategory()}">
+                            <td th:text="${cat.getName()}"></td>
+                        </div>
+                        </tr>
                     </tbody>
                 </table>
                 </p>
@@ -263,9 +281,11 @@
                     <tbody>
                     <tr th:each="auction : ${finishedAuctionsByUser}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
-                        <td th:text="${auction.getID()}"></td>
+                        <!-- <td th:text="${auction.getID()}"></td> -->
                         <td th:text="${auction.getTitle()}"></td>
-                        <td th:text="${auction.getCategory()}"></td>
+                        <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getCategory()}">
+                            <td th:text="${cat.getName()}"></td>
+                        </div>
                         <td th:text="${auction.getEnd_date()}"></td>
                     </tr>
                     </tbody>
@@ -278,16 +298,7 @@
 </div>
 
 </div>
-<!-- <td>
-<a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-<a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-</td>
--->
-<!--
-<div class="container">
-  <p th:text="'Welcome ' + ${user.firstName} + ' ' + ${user.lastName} + ' (' + ${user.login} + ')'"></p>
-</div>
--->
+
 
 </body>
 </html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="description" content="Auction service">
+  <meta name="keywords" content="auction">
+  <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Auctions</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><img src="https://assets.allegrostatic.com/metrum/metrum-brand/allegro-347440b030.svg" alt="Serwis aukcyjny"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Kategorie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">FAQ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Kontakt</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<br>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th colspan="5">Aukcje wyszukane wg "[[${search_value}]]"</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="auction : ${auctions}">
+    <td th:text="${auction.getID()}"></td>
+    <td th:text="${auction.getTitle()}"></td>
+    <td th:text="${auction.getCategory()}"></td>
+    <td th:text="${auction.getBUY_NOW_price()}"></td>
+    <td>
+       <a class="btn btn-success" th:href="@{/auctions/update/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj</a>
+       <a class="btn btn-danger" th:href="@{/auctions/delete/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
+     </td>
+
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
