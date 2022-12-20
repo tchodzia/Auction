@@ -14,4 +14,6 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
 
     @Query(value = "SELECT * FROM categories WHERE parent_category = :id ORDER BY name ASC", nativeQuery = true)
     public List<Category> findAllSelectedByParentCategory(@Param("id") Long id);
+
+    public List<Category> findAll();
 }

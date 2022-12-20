@@ -78,6 +78,11 @@ public class WelcomeController {
         List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
         map.addAttribute("categoryTrees", categoryTrees);
 
+
+        List<Category> categories = categoryService.findAll();
+        map.addAttribute("categories", categories);
+
+
         if (!message.isEmpty()) {
             map.addAttribute("message", message);
         }

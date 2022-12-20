@@ -182,6 +182,8 @@ public class AuctionController {
         List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
         map.addAttribute("storedFiles", files);
 
+        Category category = categoryService.findById(auction.getCategory());
+        map.addAttribute("category", category);
 
         return "get-auction";
     }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import sda.project.auction.model.Auction;
 import sda.project.auction.repository.AuctionRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -59,5 +60,12 @@ public class AuctionService {
     }
 
 
-
+    public List<Auction> findAllAuctionsBySearch(String search) {
+        if (search.matches("[A-Za-z0-9_\s]+")) {
+            search = "%" + search.toUpperCase() + "%";
+            return repository.findAllAuctionsBySearch(search);
+        } else {
+            return new ArrayList<>();
+        }
+    }
 }

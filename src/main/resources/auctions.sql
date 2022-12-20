@@ -1,5 +1,5 @@
-INSERT INTO `sda-project-auction-site-db`.`users` (`id`, `account_name`, `address`, `city`, `created_date`, `email`, `password`) VALUES ('1', 'Jan Kowalski', 'ul. Jasna 4/5', 'Warszawa', '2022-10-06', 'kowal@wp.pl', 'test1');
-INSERT INTO `sda-project-auction-site-db`.`users` (`id`, `account_name`, `address`, `city`, `created_date`, `email`, `password`) VALUES ('2', 'Anna Robak', 'ul. Zielona 2/3', 'Kraków', '2022-11-04', 'robak@wp.pl', 'test1');
+INSERT INTO `sda-project-auction-site-db`.`users` (`id`, `account_name`, `address`, `city`, `created_date`, `email`, `password`,`user_role`) VALUES ('1', 'Jan Kowalski', 'ul. Jasna 4/5', 'Warszawa', '2022-10-06', 'kowal@wp.pl', 'test1', 'ROLE_ADMIN');
+INSERT INTO `sda-project-auction-site-db`.`users` (`id`, `account_name`, `address`, `city`, `created_date`, `email`, `password`,`user_role`) VALUES ('2', 'Anna Robak', 'ul. Zielona 2/3', 'Kraków', '2022-11-04', 'robak@wp.pl', 'test1', 'ROLE_USER');
 
 INSERT INTO `sda-project-auction-site-db`.`categories` (`id`, `description`, `name`) VALUES ('1', 'Kategoria1', 'Komputery');
 INSERT INTO `sda-project-auction-site-db`.`categories` (`id`, `description`, `name`) VALUES ('2', 'Kategoria2', 'Sprzęt RTV');

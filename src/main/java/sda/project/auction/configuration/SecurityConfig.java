@@ -34,6 +34,7 @@ public class SecurityConfig{
                 .requestMatchers("/auctions/add/**").permitAll()
                 .requestMatchers("/auctions/add").permitAll()
                 .requestMatchers("/auctions/update").permitAll()
+                .requestMatchers("/auctions/cat/**").permitAll()
                 .requestMatchers("/upload").permitAll()
                 .requestMatchers("/files").permitAll()
                 .requestMatchers("/files/**").permitAll()
