@@ -50,6 +50,7 @@ public class AuctionController {
 
         private final FileStorageService fileStorageService;
 
+
         @GetMapping("/user/{id}")
         public String displayAuctionByUser(@PathVariable("id") Long id, ModelMap map) {
             List<Auction> auctions = auctionService.findAllAuctionsByDateOfIssueAndUser(id);

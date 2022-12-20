@@ -88,18 +88,20 @@ public class Auction {
     }
 
     public void setStringToDate_of_issue(String date_of_issue) {
+        //log.info("String date of issue: " + date_of_issue);
         LocalDateTime dateTime = LocalDateTime.now();
         if (date_of_issue != null && !date_of_issue.isBlank()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             dateTime = LocalDateTime.parse(date_of_issue, formatter);
         }
         this.date_of_issue = dateTime;
     }
 
     public void setStringToEnd_date(String end_date) {
+        //log.info("String end date: " + end_date);
         LocalDateTime dateTime = LocalDateTime.now();
         if (end_date != null && !end_date.isBlank()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             dateTime = LocalDateTime.parse(end_date, formatter);
         }
         this.end_date = dateTime;
@@ -108,7 +110,7 @@ public class Auction {
 
 
     public String getStringDateOfIssue() {
-        DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         if (this.date_of_issue != null) {
              return this.date_of_issue.format(customFormat);
         } else {
@@ -117,7 +119,7 @@ public class Auction {
     }
 
     public String getStringEndDate() {
-        DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         if (this.end_date != null) {
             return this.end_date.format(customFormat);
         } else {
