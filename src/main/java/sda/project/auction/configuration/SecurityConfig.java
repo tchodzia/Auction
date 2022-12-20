@@ -29,6 +29,7 @@ public class SecurityConfig{
                 .requestMatchers("/auctions/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .requestMatchers("/update/save").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .requestMatchers("/delete/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .requestMatchers("/auctions/buy/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .requestMatchers("/auctions/create").permitAll()
                 .requestMatchers("/auctions/create/**").permitAll()
                 .requestMatchers("/auctions/add/**").permitAll()
