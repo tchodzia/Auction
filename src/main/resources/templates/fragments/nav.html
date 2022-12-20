@@ -1,0 +1,38 @@
+<nav th:fragment="nav" class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><img
+            src="https://assets.allegrostatic.com/metrum/metrum-brand/allegro-347440b030.svg" alt="Serwis aukcyjny"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a th:if="${loggedUser != null}" class="nav-link active" th:href="@{/auctions/create/__${loggedUser.getID()}__}">Nowa aukcja</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Kategorie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">FAQ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Kontakt</a>
+        </li>
+        <li th:object="${loggedUser}">
+          <a th:if="${loggedUser != null}" class="nav-link active" th:text="'Zalogowany jako ' + ${loggedUser.getEmail()}" href="/logout"></a>
+          <a th:if="${loggedUser == null}" class="nav-link active" href="/login">Zaloguj się</a>
+        </li>
+        <li th:object="${loggedUser}">
+          <a th:if="${loggedUser == null}" class="nav-link active" href="/signup">Zarejestruj się</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<br>
