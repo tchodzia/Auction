@@ -28,8 +28,8 @@
           <a th:if="${loggedUser == null}" class="nav-link active" href="/signup">Zarejestruj się</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+      <form class="d-flex" role="search" th:action="@{/search}" method="post">
+        <input class="form-control me-2" id="search" name="search" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Szukaj</button>
       </form>
     </div>
