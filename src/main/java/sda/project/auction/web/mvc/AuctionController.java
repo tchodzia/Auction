@@ -39,29 +39,29 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(
-        path="/auctions",
-        method={RequestMethod.POST,RequestMethod.GET,RequestMethod.DELETE, RequestMethod.PUT}
+        path = "/auctions",
+        method = {RequestMethod.POST, RequestMethod.GET, RequestMethod.DELETE, RequestMethod.PUT}
 )
 public class AuctionController {
-        private final AuctionService auctionService;
-        private final CategoryService categoryService;
-        private final BiddingService biddingService;
-        private final UserService userService;
+    private final AuctionService auctionService;
+    private final CategoryService categoryService;
+    private final BiddingService biddingService;
+    private final UserService userService;
 
-        private final FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService;
 
 
-        @GetMapping("/user/{id}")
-        public String displayAuctionByUser(@PathVariable("id") Long id, ModelMap map) {
-            List<Auction> auctions = auctionService.findAllAuctionsByDateOfIssueAndUser(id);
-            map.addAttribute("auctions", auctions);
+    @GetMapping("/user/{id}")
+    public String displayAuctionByUser(@PathVariable("id") Long id, ModelMap map) {
+        List<Auction> auctions = auctionService.findAllAuctionsByDateOfIssueAndUser(id);
+        map.addAttribute("auctions", auctions);
 
 //            map.addAttribute("user", new CreateUserForm());
 //            map.addAttribute("roles", User.Roles.values());
-            // map.addAttribute("user", new CreateUserForm());
+        // map.addAttribute("user", new CreateUserForm());
 
-            return "get-auctions";
-        }
+        return "get-auctions";
+    }
 
     @GetMapping("/cat/{id}")
     public String displayAuctionByCategory(@PathVariable("id") Long id, ModelMap map) {
@@ -79,13 +79,14 @@ public class AuctionController {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedUser = userService.findByEmail(principal.getUsername());
-            map.addAttribute("loggedUser", loggedUser);}
-       //Auction auction = auctionService.findById(1L);
-       Auction auction = new Auction();
-       map.addAttribute("auction", auction);
+            map.addAttribute("loggedUser", loggedUser);
+        }
+        //Auction auction = auctionService.findById(1L);
+        Auction auction = new Auction();
+        map.addAttribute("auction", auction);
 
-       User user = userService.findById(id);
-       map.addAttribute("user", user);
+        User user = userService.findById(id);
+        map.addAttribute("user", user);
 
 
         //List<File> storedFiles = fileStorageService.getFilesByAuctionId(auction.getID());
@@ -100,44 +101,44 @@ public class AuctionController {
         promotedOptions.put("true", "tak");
         map.addAttribute("promotedOptions", promotedOptions);
 
-       // map.addAttribute("p_date_of_issue", auction.getDate_of_issue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-       // map.addAttribute("p_end_date", auction.getEnd_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        // map.addAttribute("p_date_of_issue", auction.getDate_of_issue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        // map.addAttribute("p_end_date", auction.getEnd_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 
-       return "create-auction";
+        return "create-auction";
     }
 
     @PostMapping("/add/{id}")
     public String handleCreateAndUpdateAuctionForm(@PathVariable("id") Long id, @RequestParam(value = "files", required = false) MultipartFile[] files, @ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, final RedirectAttributes redirectAttributes, ModelMap map) throws IOException {
         //map.addAttribute("update", false);
-            User user = userService.findById(id);
-            map.addAttribute("user", user);
-            Auction auction = AuctionMapper.toEntity(form, user);
-            //map.addAttribute("auction", auction);
+        User user = userService.findById(id);
+        map.addAttribute("user", user);
+        Auction auction = AuctionMapper.toEntity(form, user);
+        //map.addAttribute("auction", auction);
 
-           //List<File> storedFiles = fileStorageService.getFilesByAuctionId(auction.getID());
-            if (files == null || files.length == 0) {
-                List<File> storedFiles = new ArrayList<>();
-                map.addAttribute("storedFiles", storedFiles);
-            } else {
-                map.addAttribute("storedFiles", files);
-            }
+        //List<File> storedFiles = fileStorageService.getFilesByAuctionId(auction.getID());
+        if (files == null || files.length == 0) {
+            List<File> storedFiles = new ArrayList<>();
+            map.addAttribute("storedFiles", storedFiles);
+        } else {
+            map.addAttribute("storedFiles", files);
+        }
 
 
-            Map<String, String> promotedOptions = new HashMap<String, String>();
-            promotedOptions.put("false", "nie");
-            promotedOptions.put("true", "tak");
-            map.addAttribute("promotedOptions", promotedOptions);
+        Map<String, String> promotedOptions = new HashMap<String, String>();
+        promotedOptions.put("false", "nie");
+        promotedOptions.put("true", "tak");
+        map.addAttribute("promotedOptions", promotedOptions);
 
 
         List<CategoryTree> categories = categoryService.findAllCategoryTree();
         map.addAttribute("categories", categories);
 
-            log.info("Create auction from form: {}", form);
-            if (errors.hasErrors()){
-                return "create-auction";
-            }
+        log.info("Create auction from form: {}", form);
+        if (errors.hasErrors()) {
+            return "create-auction";
+        }
         Auction auction2 = auctionService.save(auction);
-            List<File> storedFiles2 = fileStorageService.store(files, auction2);
+        List<File> storedFiles2 = fileStorageService.store(files, auction2);
         //map.addAttribute("storedFiles2", storedFiles2);
         redirectAttributes.addAttribute("message", form.getTitle() + " auction was created!");
         return "redirect:/";
@@ -145,25 +146,25 @@ public class AuctionController {
 
     @GetMapping("/update/{id}")
     public String displayUpdateAuctionForm(@PathVariable("id") Long id, ModelMap map) {
-            map.addAttribute("update", true);
-            Auction auction = auctionService.findById(id);
-             map.addAttribute("auction", auction);
+        map.addAttribute("update", true);
+        Auction auction = auctionService.findById(id);
+        map.addAttribute("auction", auction);
 
-            User user = userService.findById(auction.getUser().getID());
-            map.addAttribute("user", user);
+        User user = userService.findById(auction.getUser().getID());
+        map.addAttribute("user", user);
 
-            List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
-            map.addAttribute("storedFiles", files);
+        List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
+        map.addAttribute("storedFiles", files);
 
-            List<CategoryTree> categories = categoryService.findAllCategoryTree();
-            map.addAttribute("categories", categories);
+        List<CategoryTree> categories = categoryService.findAllCategoryTree();
+        map.addAttribute("categories", categories);
 
-            Map<String, String> promotedOptions = new HashMap<String, String>();
-            promotedOptions.put("false", "nie");
-            promotedOptions.put("true", "tak");
-            map.addAttribute("promotedOptions", promotedOptions);
+        Map<String, String> promotedOptions = new HashMap<String, String>();
+        promotedOptions.put("false", "nie");
+        promotedOptions.put("true", "tak");
+        map.addAttribute("promotedOptions", promotedOptions);
 
-            return "create-auction";
+        return "create-auction";
     }
 
 
@@ -177,13 +178,20 @@ public class AuctionController {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedUser = userService.findByEmail(principal.getUsername());
-            map.addAttribute("loggedUser", loggedUser);}
+            map.addAttribute("loggedUser", loggedUser);
+        }
 
         List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
         map.addAttribute("storedFiles", files);
 
 
         return "get-auction";
+    }
+
+    @GetMapping("/buy/{auction_id}/user/{user_id}")
+    public String handleBuyNow(@PathVariable("auction_id") Long auction_id, @PathVariable("user_id") Long user_id, ModelMap map) {
+
+        return "redirect:/";
     }
 
 }

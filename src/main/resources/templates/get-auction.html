@@ -40,7 +40,7 @@
         </td>
         <td th:if="${loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
             <a class="btn btn-danger" role="button" target="_parent"
-               href="@{}">KUP TERAZ</a>
+               th:href="@{/auctions/buy/__${auction.getID()}__/user/__${loggedUser.getID()}__}">KUP TERAZ</a>
         </td>
         <td>
             <a th:if="${loggedUser != null and loggedUser.getID() == auction.getUser().getID()}" class="btn btn-success"
