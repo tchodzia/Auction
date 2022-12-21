@@ -68,10 +68,16 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/delete/user/{id}")
-    public String deleteUser(@PathVariable Long id){
-        userService.delete(id);
+    @GetMapping("/deactivation/user/{id}")
+    public String deactivateUser(@PathVariable Long id){
+        userService.deactivate(id);
         return "redirect:/logout";
+    }
+
+    @GetMapping("/activation/user/{id}")
+    public String activateUser(@PathVariable Long id){
+        userService.activate(id);
+        return "redirect:/";
     }
 
 
