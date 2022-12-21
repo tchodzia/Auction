@@ -54,9 +54,11 @@
         <button th:text="${categoryTree.getCategoryName()}" type="button" class="btn btn-primary dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
-            <li th:each="category : ${categoryTree.getSubcategories()}"><a th:text="${category.getCategoryName()}"
-                                                                           class="dropdown-item"
-                                                                           th:href="@{/auctions/cat/__${category.getCatID()}__}"></a>
+            <li><a class="dropdown-item"
+                   th:href="@{/auctions/cat/__${categoryTree.getCatID()}__}">[[${categoryTree.getCategoryName()}]]</a>
+            </li>
+            <li th:each="category : ${categoryTree.getSubcategories()}"><a class="dropdown-item"
+                                                                           th:href="@{/auctions/cat/__${category.getCatID()}__}">&gt;&gt; [[${category.getCategoryName()}]]</a>
             </li>
         </ul>
     </div>
