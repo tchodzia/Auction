@@ -24,6 +24,46 @@ public class AuctionService {
         return repository.save(auction);
     }
 
+    public Auction update(Auction auction) {
+        Auction current = findById(auction.getID());
+        if (auction.getTitle() == null) {
+            auction.setTitle(current.getTitle());
+        }
+        if (auction.getDescription() == null) {
+            auction.setDescription(current.getDescription());
+        }
+        if (auction.isPromoted() == false) {
+            auction.setPromoted(current.isPromoted());
+        }
+        if(auction.getCategory() == null) {
+            auction.setCategory(current.getCategory());
+        }
+        if(auction.getLocalization() == null) {
+            auction.setLocalization(current.getLocalization());
+        }
+        if (auction.getDate_of_issue() == null) {
+            auction.setDate_of_issue(current.getDate_of_issue());
+        }
+        if (auction.getEnd_date() == null) {
+            auction.setEnd_date(current.getEnd_date());
+        }
+        if (auction.getMin_price() == null) {
+            auction.setMin_price(current.getMin_price());
+        }
+        if (auction.getBUY_NOW_price() == null) {
+            auction.setBUY_NOW_price(current.getBUY_NOW_price());
+        }
+        if (auction.getNumbers_of_visitors() == null) {
+            auction.setNumbers_of_visitors(current.getNumbers_of_visitors());
+        }
+        if (auction.getUser() == null) {
+            auction.setUser(current.getUser());
+        }
+
+        return repository.save(auction);
+    }
+
+
     public Auction findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Auction with id " + id + " not found."));
     }
