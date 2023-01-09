@@ -47,7 +47,7 @@ public class BiddingController {
     @GetMapping("/bid/auction/{auction_id}/user/{user_id}")
     public String newBid(@PathVariable("auction_id") Long auction_id, @PathVariable("user_id") Long user_id, ModelMap map){
         //gdzie walidacja ceny nowego podbicia ?!
-        Long currentPrice = biddingService.findBiddingByAction(auctionService.findById(auction_id)).getAmount();
+        Long currentPrice = biddingService.findBiddingByAuction(auctionService.findById(auction_id)).getAmount();
         map.addAttribute("bid", new BidForm(auction_id, user_id, currentPrice));
         return "bid-form";
     }
