@@ -1,6 +1,7 @@
 package sda.project.auction.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -17,15 +18,19 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuctionService {
     private final AuctionRepository repository;
 
-    public Auction save(Auction auction){
+    public Auction save(Auction auction) {
         return repository.save(auction);
     }
 
     public Auction update(Auction auction) {
         Auction current = findById(auction.getID());
+
+        log.info("ID: " + auction.getID());
+
         if (auction.getTitle() == null) {
             auction.setTitle(current.getTitle());
         }
@@ -35,10 +40,10 @@ public class AuctionService {
         if (auction.isPromoted() == false) {
             auction.setPromoted(current.isPromoted());
         }
-        if(auction.getCategory() == null) {
+        if (auction.getCategory() == null) {
             auction.setCategory(current.getCategory());
         }
-        if(auction.getLocalization() == null) {
+        if (auction.getLocalization() == null) {
             auction.setLocalization(current.getLocalization());
         }
         if (auction.getDate_of_issue() == null) {

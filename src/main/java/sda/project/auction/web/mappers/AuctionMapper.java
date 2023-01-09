@@ -31,7 +31,9 @@ public class AuctionMapper {
     }
 
 
-    public static Auction toUpdateEntity(Auction auction, User user, CreateAuctionForm form){
+    public static Auction toUpdateEntity(User user, CreateAuctionForm form){
+        Auction auction = new Auction();
+        auction.setID(form.getID());
         auction.setTitle(form.getTitle());
         auction.setDescription(form.getDescription());
         auction.setCategory(form.getCategory());
