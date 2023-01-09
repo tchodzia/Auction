@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,10 +31,7 @@ import sda.project.auction.web.mappers.AuctionMapper;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -91,6 +89,7 @@ public class AuctionController {
 
         //List<File> storedFiles = fileStorageService.getFilesByAuctionId(auction.getID());
         List<File> storedFiles = new ArrayList<>();
+        map.addAttribute("filesSize", storedFiles.size());
         map.addAttribute("storedFiles", storedFiles);
 
         List<CategoryTree> categories = categoryService.findAllCategoryTree();
@@ -109,20 +108,31 @@ public class AuctionController {
 
     @PostMapping("/add/{id}")
     public String handleCreateAndUpdateAuctionForm(@PathVariable("id") Long id, @RequestParam(value = "files", required = false) MultipartFile[] files, @ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, final RedirectAttributes redirectAttributes, ModelMap map) throws IOException {
-        //map.addAttribute("update", false);
+        boolean update = false;
         User user = userService.findById(id);
         map.addAttribute("user", user);
         Auction auction = AuctionMapper.toEntity(form, user);
-        //map.addAttribute("auction", auction);
+        if (auction.getID() == null) {
+            map.addAttribute("auction", auction);
+            update = false;
+        } else {
+            update = true;
+        }
 
         //List<File> storedFiles = fileStorageService.getFilesByAuctionId(auction.getID());
         if (files == null || files.length == 0) {
             List<File> storedFiles = new ArrayList<>();
+            map.addAttribute("filesSize", storedFiles.size());
             map.addAttribute("storedFiles", storedFiles);
         } else {
-            map.addAttribute("storedFiles", files);
-        }
+            List<File> storedFiles = new ArrayList<>();
+            map.addAttribute("filesSize", files.length);
 
+            for (MultipartFile file : files) {
+                storedFiles.add(new File(StringUtils.cleanPath(file.getOriginalFilename()), file.getContentType(), file.getBytes(), auction));
+            }
+            map.addAttribute("storedFiles", storedFiles);
+        }
 
         Map<String, String> promotedOptions = new HashMap<String, String>();
         promotedOptions.put("false", "nie");
@@ -135,26 +145,34 @@ public class AuctionController {
 
         log.info("Create auction from form: {}", form);
         if (errors.hasErrors()) {
+           // log.info("Errors " + errors.getAllErrors());
             return "create-auction";
         }
-        Auction auction2 = auctionService.save(auction);
-        List<File> storedFiles2 = fileStorageService.store(files, auction2);
-        //map.addAttribute("storedFiles2", storedFiles2);
-        redirectAttributes.addAttribute("message", form.getTitle() + " auction was created!");
+        if (update) {
+            auctionService.update(auction);
+            List<File> storedFiles2 = fileStorageService.store(files, auction);
+            redirectAttributes.addAttribute("message", form.getTitle() + " auction was updated!");
+        } else {
+            Auction auction2 = auctionService.save(auction);
+            List<File> storedFiles2 = fileStorageService.store(files, auction2);
+            //map.addAttribute("storedFiles", storedFiles2);
+            redirectAttributes.addAttribute("message", form.getTitle() + " auction was created!");
+        }
         return "redirect:/";
     }
 
     @GetMapping("/update/{id}")
-    public String displayUpdateAuctionForm(@PathVariable("id") Long id, ModelMap map) {
-        map.addAttribute("update", true);
+    public String displayUpdateAuctionForm(@PathVariable("id") Long id, @RequestParam(value = "files", required = false) MultipartFile[] files, @ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, final RedirectAttributes redirectAttributes, ModelMap map) throws IOException {
+        //map.addAttribute("update", true);
         Auction auction = auctionService.findById(id);
         map.addAttribute("auction", auction);
 
         User user = userService.findById(auction.getUser().getID());
         map.addAttribute("user", user);
 
-        List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
-        map.addAttribute("storedFiles", files);
+        List<File> storedFiles = fileStorageService.getFilesByAuctionId(auction.getID());
+        map.addAttribute("storedFiles", storedFiles);
+        map.addAttribute("filesSize", storedFiles.size());
 
         List<CategoryTree> categories = categoryService.findAllCategoryTree();
         map.addAttribute("categories", categories);

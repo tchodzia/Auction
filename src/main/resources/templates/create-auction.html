@@ -1,14 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
-<head th:replace="fragments/header :: header">
-  <title>Create auctions</title>
+<!-- <head th:replace="fragments/header :: header"> -->
+
+<head th:fragment="header">
+  <meta charset="UTF-8">
+  <meta name="description" content="Auction service">
+  <meta name="keywords" content="auction, bidding, buy now, bid, categories">
+  <meta name="author" content="Magdalena Tchorzewska, Paweł Hermanowski">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+<title>Create auctions</title>
 </head>
 
 <body>
 
-<nav th:replace="fragments/nav:: nav">
+<!-- <nav th:replace="fragments/nav :: nav"></nav> th:fragment="nav" -->
+
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><img
+            src="https://assets.allegrostatic.com/metrum/metrum-brand/allegro-347440b030.svg" alt="Serwis aukcyjny"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a th:if="${loggedUser != null}" class="nav-link active" th:href="@{/auctions/create/__${loggedUser.getID()}__}">Nowa aukcja</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Kategorie</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">FAQ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Kontakt</a>
+        </li>
+        <li th:object="${loggedUser}">
+          <a th:if="${loggedUser != null}" class="nav-link active" th:text="'Zalogowany jako ' + ${loggedUser.getEmail()}" href="/logout"></a>
+          <a th:if="${loggedUser == null}" class="nav-link active" href="/login">Zaloguj się</a>
+        </li>
+        <li th:object="${loggedUser}">
+          <a th:if="${loggedUser == null}" class="nav-link active" href="/signup">Zarejestruj się</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" th:action="@{/search}" method="post">
+        <input class="form-control me-2" id="search" name="search" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Szukaj</button>
+      </form>
+    </div>
+  </div>
 </nav>
+<br>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -17,9 +64,7 @@
 
 <br>
 <div class="container">
-
-    <form th:object="${auction}" th:action="@{/auctions/add/__${user.getID()}__}" method="post" enctype="multipart/form-data">
-
+  <form th:object="${auction}" th:action="@{/auctions/add/__${user.getID()}__}" method="post" enctype="multipart/form-data">
 
   <input type="hidden" id="ID" th:field="*{ID}">
     <div class="mb-3">
@@ -35,6 +80,11 @@
   <div class="mb-3">
     <label for="description" class="form-label">Opis aukcji:</label>
     <input id="description" class="form-control" type="text" th:field="*{description}">
+    <div
+            th:if="${#fields.hasErrors('description')}"
+            th:text="${#fields.errors('description')[0]}"
+            class="invalid-feedback-custom"
+    ></div>
   </div>
 
   <div class="mb-3">
@@ -54,17 +104,6 @@
             th:text="${#fields.errors('category')[0]}"
             class="invalid-feedback-custom"
     ></div>
-  </div>
-
-  <div class="mb-3" role="group" aria-label="Button group with nested dropdown" style="margin: 2px">
-    <div th:each="categoryTree : ${categoryTrees}" class="btn-group" role="group">
-      <button th:text="${categoryTree.getCategoryName()}" type="button" class="btn btn-primary dropdown-toggle"
-              data-bs-toggle="dropdown" aria-expanded="false"></button>
-      <ul class="dropdown-menu">
-        <li th:each="category : ${categoryTree.getSubcategories()}">
-          <a th:text="${category.getCategoryName()}" class="dropdown-item" th:href="@{/auctions/cat/__${category.getCatID()}__}"></a></li>
-      </ul>
-    </div>
   </div>
 
   <div class="mb-3">
@@ -100,30 +139,7 @@
                 th:text="${promoteOption['value']}"></option>
       </select>
   </div>
-<!--
-  <div class="mb-3">
-    <label for="date_of_issue" class="form-label">Data i czas rozpoczęcia (yyyy-MM-dd HH:mm):</label>
-    <input id="date_of_issue" class="form-control" type="text" name="date_of_issue" th:field="date_of_issue">
 
-    <div
-            th:if="${#fields.hasErrors('date_of_issue')}"
-            th:text="${#fields.errors('date_of_issue')[0]}"
-            class="invalid-feedback-custom"
-    ></div>
-
-  </div>
-
-
-  <div class="mb-3">
-    <label for="end_date" class="form-label">Data i czas zakończenia (yyyy-MM-dd HH:mm):</label>
-    <input id="end_date" class="form-control" type="text" name="end_date" th:field="*{end_date}">
-
-    <div
-            th:if="${#fields.hasErrors('end_date')}"
-            th:text="${#fields.errors('end_date')[0]}"
-            class="invalid-feedback-custom"
-    ></div>
--->
 
 
     <div class="mb-3">
@@ -156,12 +172,10 @@
 
     <label for="files" class="form-label">Pliki:</label>
     <input type="file" id="files" multiple name="files" />
-    <!--
-    <button class="btn btn-sm btn-outline-success float-right" type="submit">Upload</button>
-    -->
+
     </div>
 
-    <div class="mb-3" th:if="${storedFiles.size() > 0}">
+    <div class="mb-3" th:if="${filesSize > 0}">
       <table class="table table-hover">
         <thead class="thead-light">
         <tr>
@@ -181,7 +195,12 @@
         </tr>
         </tbody>
       </table>
-    </div>
+</div>
+      <div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+      </div>
+
+</form>
 </div>
 </body>
 </html>
