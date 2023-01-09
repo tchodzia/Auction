@@ -109,13 +109,18 @@ public class AuctionController {
     @PostMapping("/add/{id}")
     public String handleCreateAndUpdateAuctionForm(@PathVariable("id") Long id, @RequestParam(value = "files", required = false) MultipartFile[] files, @ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, final RedirectAttributes redirectAttributes, ModelMap map) throws IOException {
         boolean update = false;
+        Auction auction = null;
         User user = userService.findById(id);
         map.addAttribute("user", user);
-        Auction auction = AuctionMapper.toEntity(form, user);
-        if (auction.getID() == null) {
-            map.addAttribute("auction", auction);
-            update = false;
-        } else {
+
+        if(form.getID() != null){
+            auction = AuctionMapper.toUpdateEntity(user, form);
+        }
+        else {
+            auction = AuctionMapper.toEntity(form, user);
+        }
+
+        if (auction.getID() != null) {
             update = true;
         }
 
@@ -145,7 +150,7 @@ public class AuctionController {
 
         log.info("Create auction from form: {}", form);
         if (errors.hasErrors()) {
-           // log.info("Errors " + errors.getAllErrors());
+            // log.info("Errors " + errors.getAllErrors());
             return "create-auction";
         }
         if (update) {
