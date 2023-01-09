@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("")
-public class WelcomeController {
+public class WelcomeController{
     private final UserService userService;
     private final AuctionService auctionService;
     private final CategoryService categoryService;
@@ -86,6 +86,7 @@ public class WelcomeController {
         if (!message.isEmpty()) {
             map.addAttribute("message", message);
         }
+
         return "index";
     }
 }
