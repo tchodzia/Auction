@@ -34,7 +34,7 @@ public class BiddingService {
     public Bidding findBiddingByAuctionId(Long id){ return repository.findBiddingByAuctionID(id);
     }
 
-    public Bidding findBiddingByAction(Auction auction){
+    public Bidding findBiddingByAuction(Auction auction){
         return repository.findBiddingByAuction(auction);
     }
 

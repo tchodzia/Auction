@@ -40,6 +40,8 @@ public class SecurityConfig{
                 .requestMatchers("/upload").permitAll()
                 .requestMatchers("/files").permitAll()
                 .requestMatchers("/files/**").permitAll()
+                .requestMatchers("/categories/**").permitAll()
+                .requestMatchers("/categories").permitAll()
                 .anyRequest().permitAll()
                 .and().formLogin()
                 .and().httpBasic()

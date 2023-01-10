@@ -12,7 +12,7 @@
           <a th:if="${loggedUser != null}" class="nav-link active" th:href="@{/auctions/create/__${loggedUser.getID()}__}">Nowa aukcja</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">Kategorie</a>
+          <a class="nav-link active" th:href="@{/categories/}">Kategorie</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="#">FAQ</a>
