@@ -16,6 +16,6 @@ public interface FileDBRepository extends CrudRepository<File, Long> {
 
     @Query(value = "SELECT * FROM files WHERE auction_id=:id", nativeQuery = true)
     public List<File> getFilesByAuctionId(@Param("id") Long id);
-    //@Query(value = "DELETE FROM files WHERE id=:id", nativeQuery = true)
+
 
 }

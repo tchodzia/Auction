@@ -98,6 +98,9 @@ public class FileController {
         map.addAttribute("user", user);
 
         List<File> files = storageService.getFilesByAuctionId(auction.getID());
+
+        //log.info("Deleted file: " + files);
+
         map.addAttribute("storedFiles", files);
         map.addAttribute("filesSize", files.size());
 

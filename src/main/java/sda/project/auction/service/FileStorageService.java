@@ -22,10 +22,12 @@ public class FileStorageService {
     public List<File> store(MultipartFile[] files, Auction auction) throws IOException {
         List<File> storedFiles = new ArrayList<>();
         for (MultipartFile file : files) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            File fileDB = new File(fileName, file.getContentType(), file.getBytes(), auction);
+            if (!file.getOriginalFilename().isEmpty()) {
+                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                File fileDB = new File(fileName, file.getContentType(), file.getBytes(), auction);
 
-            storedFiles.add(fileDBRepository.save(fileDB));
+                storedFiles.add(fileDBRepository.save(fileDB));
+            }
         }
         return storedFiles;
     }

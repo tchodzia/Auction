@@ -152,7 +152,9 @@ public class AuctionController {
            // List<File> storedFiles = new ArrayList<>();
 
             for (MultipartFile file : files) {
-                storedCurrentFiles.add(new File(StringUtils.cleanPath(file.getOriginalFilename()), file.getContentType(), file.getBytes(), auction));
+                if (!file.getOriginalFilename().isEmpty()) {
+                    storedCurrentFiles.add(new File(StringUtils.cleanPath(file.getOriginalFilename()), file.getContentType(), file.getBytes(), auction));
+                }
             }
             map.addAttribute("storedFiles", storedCurrentFiles);
             map.addAttribute("filesSize", storedCurrentFiles.size());
@@ -167,18 +169,22 @@ public class AuctionController {
         List<CategoryTree> categories = categoryService.findAllCategoryTree();
         map.addAttribute("categories", categories);
 
-        log.info("Create auction from form: {}", form);
+        //log.info("Create auction from form: {}", form);
         if (errors.hasErrors()) {
             // log.info("Errors " + errors.getAllErrors());
             return "create-auction";
         }
         if (update) {
             auctionService.update(auction);
-            List<File> storedFiles2 = fileStorageService.store(files, auction);
+            if (storedCurrentFiles.size() > 0) {
+                List<File> storedFiles2 = fileStorageService.store(files, auction);
+            }
             redirectAttributes.addAttribute("message", form.getTitle() + " auction was updated!");
         } else {
             Auction auction2 = auctionService.save(auction);
-            List<File> storedFiles2 = fileStorageService.store(files, auction2);
+            if (storedCurrentFiles.size() > 0) {
+                List<File> storedFiles2 = fileStorageService.store(files, auction2);
+            }
             //map.addAttribute("storedFiles", storedFiles2);
             redirectAttributes.addAttribute("message", form.getTitle() + " auction was created!");
         }
