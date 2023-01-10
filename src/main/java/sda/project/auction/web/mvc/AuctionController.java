@@ -246,4 +246,25 @@ public class AuctionController {
         return "redirect:/";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteAuction(@PathVariable("id") Long id, ModelMap map, RedirectAttributes redirectAttributes) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User loggedUser = userService.findByEmail(principal.getUsername());
+            map.addAttribute("loggedUser", loggedUser);
+
+            List<Auction> auctions = auctionService.getAuctionByUserAndAuction(loggedUser.getID(), id);
+            if (auctions.size() == 1) {
+                for (Auction auction : auctions) {
+                    auctionService.deleteAuction(auction.getID());
+                    redirectAttributes.addAttribute("message", auction.getTitle() + " auction was deleted!");
+                }
+            }
+
+        }
+
+        return "redirect:/";
+    }
+
+
 }

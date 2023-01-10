@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import sda.project.auction.model.Auction;
+import sda.project.auction.model.File;
 import sda.project.auction.repository.AuctionRepository;
+import sda.project.auction.repository.FileDBRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 public class AuctionService {
     private final AuctionRepository repository;
+    private final FileDBRepository fileDBRepository;
 
     public Auction save(Auction auction) {
         return repository.save(auction);
@@ -112,5 +115,18 @@ public class AuctionService {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    public void deleteAuction(Long id) {
+        List<File> files = fileDBRepository.getFilesByAuctionId(id);
+        for (File file : files) {
+            fileDBRepository.deleteById(file.getID());
+        }
+        repository.deleteById(id);
+    }
+
+    public List<Auction> getAuctionByUserAndAuction(Long userID, Long auctionID) {
+        List<Auction> auction = repository.findAllByUserId(userID, auctionID);
+        return auction;
     }
 }
