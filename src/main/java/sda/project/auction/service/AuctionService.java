@@ -2,15 +2,19 @@ package sda.project.auction.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import sda.project.auction.model.Auction;
+import sda.project.auction.model.Bidding;
+import sda.project.auction.model.Purchase;
+import sda.project.auction.model.User;
 import sda.project.auction.repository.AuctionRepository;
+import sda.project.auction.repository.BiddingRepository;
+import sda.project.auction.repository.PurchaseRepository;
+import sda.project.auction.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.toList;
@@ -21,6 +25,12 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 public class AuctionService {
     private final AuctionRepository repository;
+
+    private final PurchaseRepository purchaseRepository;
+
+    private final UserRepository userRepository;
+
+    private final BiddingRepository biddingRepository;
 
     public Auction save(Auction auction) {
         return repository.save(auction);
@@ -73,6 +83,13 @@ public class AuctionService {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Auction with id " + id + " not found."));
     }
 
+    public void alterAuctionToInactive(Long auction_id) {
+
+        Auction auction = findById(auction_id);
+        auction.setIsActive(false);
+        repository.save(auction);
+    }
+
 
     public List<Auction> findAll() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
@@ -111,6 +128,35 @@ public class AuctionService {
             return repository.findAllAuctionsBySearch(search);
         } else {
             return new ArrayList<>();
+        }
+    }
+
+    public void createNewPurchase(Long auction_id, Long user_id) {
+        Auction auction = findById(auction_id);
+        User user = userRepository.findById(user_id).orElseThrow(() -> new RuntimeException("User with id " + user_id + " not found."));
+        Purchase purchase = new Purchase(user, auction, auction.getBUY_NOW_price());
+        purchaseRepository.save(purchase);
+    }
+
+    public void createNewPurchaseFromBidding(Long auction_id, Long user_id, Bidding bidding) {
+        Auction auction = findById(auction_id);
+        User user = userRepository.findById(user_id).orElseThrow(() -> new RuntimeException("User with id " + user_id + " not found."));
+        Purchase purchase = new Purchase(user, auction, bidding.getAmount());
+        purchaseRepository.save(purchase);
+    }
+
+
+    public void findAllAuctionsToDisactivate() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        List<Auction> auctions = StreamSupport.stream(repository.findAll().spliterator(), false).toList();
+        for (Auction auction : auctions) {
+            if (auction.getIsActive() && currentTime.isAfter(auction.getEnd_date())) {
+                auction.setIsActive(false);
+                repository.save(auction);
+                if (biddingRepository.findBiddingByAuction(auction) != null) {
+                    createNewPurchaseFromBidding(auction.getID(), biddingRepository.findBiddingByAuction(auction).getUser().getID(), biddingRepository.findBiddingByAuction(auction));
+                }
+            }
         }
     }
 }

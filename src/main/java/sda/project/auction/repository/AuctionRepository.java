@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface AuctionRepository extends CrudRepository<Auction, Long> {
 
-    @Query(value = "SELECT * FROM auctions WHERE date_of_issue <= NOW() AND end_date >= NOW() ORDER BY date_of_issue ASC LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT * FROM auctions WHERE date_of_issue <= NOW() AND end_date >= NOW() AND is_active = 1 ORDER BY date_of_issue ASC LIMIT 10", nativeQuery = true)
     public List<Auction> findFirst10ByDateOfIssue();
 
-    @Query(value = "SELECT * FROM auctions WHERE date_of_issue <= NOW() AND end_date >= NOW() ORDER BY end_date ASC LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT * FROM auctions WHERE date_of_issue <= NOW() AND end_date >= NOW() AND is_active = 1 ORDER BY end_date ASC LIMIT 10", nativeQuery = true)
     public List<Auction> findLast10ByDateOfIssue();
 
     @Query(value = "SELECT * FROM auctions WHERE (date_of_issue <= NOW() AND end_date >= NOW()) AND user_id=:id ORDER BY end_date ASC", nativeQuery = true)

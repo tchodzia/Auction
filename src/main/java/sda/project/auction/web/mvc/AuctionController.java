@@ -25,7 +25,6 @@ import sda.project.auction.service.CategoryService;
 import sda.project.auction.service.FileStorageService;
 import sda.project.auction.service.UserService;
 import sda.project.auction.service.auth.CustomUserDetails;
-import sda.project.auction.web.form.NewBidForm;
 import sda.project.auction.web.form.CreateAuctionForm;
 import sda.project.auction.web.mappers.AuctionMapper;
 
@@ -45,7 +44,6 @@ public class AuctionController {
     private final CategoryService categoryService;
     private final BiddingService biddingService;
     private final UserService userService;
-
     private final FileStorageService fileStorageService;
 
 

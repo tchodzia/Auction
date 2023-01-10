@@ -29,23 +29,28 @@
         <td th:text="${category.getName()}"></td>
         <td th:text="${auction.getBUY_NOW_price()}"></td>
         <td th:if="${bidding != null}" th:text="${bidding.getAmount()}"></td>
-        <td th:if="${bidding == null and loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
+
+        <td th:if="${bidding == null and loggedUser != null and loggedUser.getID() != auction.getUser().getID() and auction.getIsActive() == true}">
             <a class="btn btn-success" role="button" target="_parent"
-               th:href="@{bidding/newbid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Rozpocznij
+               th:href="@{/bidding/newbid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Rozpocznij
                 licytacje</a>
         </td>
-        <td th:if="${bidding != null and loggedUser != null and loggedUser.getID() != auction.getUser().getID() and bidding.getUser().getID() != loggedUser.getID()}">
+
+        <td th:if="${bidding != null and loggedUser != null and loggedUser.getID() != auction.getUser().getID() and bidding.getUser().getID() != loggedUser.getID() and auction.getIsActive() == true}">
             <a class="btn btn-warning" role="button" target="_parent"
                th:href="@{/bidding/bid/auction/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Podbij!</a>
         </td>
-        <td th:if="${loggedUser != null and loggedUser.getID() != auction.getUser().getID()}">
+
+        <td th:if="${loggedUser != null and loggedUser.getID() != auction.getUser().getID() and auction.getIsActive() == true}">
             <a class="btn btn-danger" role="button" target="_parent"
-               th:href="@{/auctions/buy/__${auction.getID()}__/user/__${loggedUser.getID()}__}">KUP TERAZ</a>
+               th:href="@{/buy/__${auction.getID()}__/user/__${loggedUser.getID()}__}">KUP TERAZ</a>
         </td>
+
         <td>
-            <a th:if="${loggedUser != null and loggedUser.getID() == auction.getUser().getID()}" class="btn btn-success"
+            <a th:if="${loggedUser != null and loggedUser.getID() == auction.getUser().getID() and auction.getIsActive() == true}" class="btn btn-success"
                th:href="@{/auctions/update/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj</a>
-            <a th:if="${loggedUser != null and loggedUser.getID() == auction.getUser().getID()}" class="btn btn-danger"
+
+            <a th:if="${loggedUser != null and loggedUser.getID() == auction.getUser().getID() and auction.getIsActive() == true}" class="btn btn-danger"
                th:href="@{/auctions/delete/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
         </td>
 
