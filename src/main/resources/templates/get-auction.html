@@ -49,6 +49,18 @@
                th:href="@{/auctions/delete/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
         </td>
 
+
+        <td th:if="${loggedUser != null and loggedUser.getID() != auction.getUser().getID() and observedAuction.size() == 0}">
+            <a class="btn btn-info" role="button" target="_parent"
+               th:href="@{/auctions/watch/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Obserwuj</a>
+        </td>
+        <td th:if="${loggedUser != null and loggedUser.getID() != auction.getUser().getID() and observedAuction.size() > 0}">
+            <a class="btn btn-info" role="button" target="_parent"
+               th:href="@{/auctions/unwatch/__${auction.getID()}__/user/__${loggedUser.getID()}__}">Nie obserwuj</a>
+        </td>
+
+
+
         <div th:each="onefile : ${storedFiles}">
             <img th:src="@{/files/__${onefile.getID()}__}" width="10%" height="*" style="margin: 2px">
         </div>

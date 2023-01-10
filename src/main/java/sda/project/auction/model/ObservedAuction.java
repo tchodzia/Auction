@@ -1,15 +1,13 @@
 package sda.project.auction.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity(name="observed_auctions")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class ObservedAuction {
     @Id
@@ -29,4 +27,5 @@ public class ObservedAuction {
     public Long getID() {
         return ID;
     }
+
 }

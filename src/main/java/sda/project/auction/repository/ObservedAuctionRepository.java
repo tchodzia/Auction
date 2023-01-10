@@ -13,4 +13,9 @@ public interface ObservedAuctionRepository  extends CrudRepository<ObservedAucti
 
     @Query(value = "SELECT * FROM observed_auctions WHERE user_id=:id", nativeQuery = true)
     public List<ObservedAuction> findAllObservedAuctionsByUserId(@Param("id") Long id);
+
+    @Query(value = "SELECT * FROM observed_auctions WHERE user_id=:user_id AND auction_id=:auction_id", nativeQuery = true)
+    public List<ObservedAuction> findAllObservedAuctionsByUserIdAndAuctionID(@Param("user_id") Long user_id, @Param("auction_id") Long auction_id);
+
+
 }

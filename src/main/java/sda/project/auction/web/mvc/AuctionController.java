@@ -1,5 +1,6 @@
 package sda.project.auction.web.mvc;
 
+import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,7 @@ import sda.project.auction.model.Category;
 import sda.project.auction.model.User;
 import org.springframework.web.multipart.MultipartFile;
 import sda.project.auction.model.*;
-import sda.project.auction.service.AuctionService;
-import sda.project.auction.service.BiddingService;
-import sda.project.auction.service.CategoryService;
-import sda.project.auction.service.FileStorageService;
-import sda.project.auction.service.UserService;
+import sda.project.auction.service.*;
 import sda.project.auction.service.auth.CustomUserDetails;
 import sda.project.auction.web.form.NewBidForm;
 import sda.project.auction.web.form.CreateAuctionForm;
@@ -46,6 +43,7 @@ public class AuctionController {
     private final BiddingService biddingService;
     private final UserService userService;
 
+    private final ObservedAuctionService observedAuctionService;
     private final FileStorageService fileStorageService;
 
 
@@ -231,11 +229,18 @@ public class AuctionController {
         Bidding bidding = biddingService.findBiddingByAuctionId(id);
         map.addAttribute("bidding", bidding);
 
+        List<ObservedAuction> observedAuction = new ArrayList<>();
+
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedUser = userService.findByEmail(principal.getUsername());
             map.addAttribute("loggedUser", loggedUser);
+
+            observedAuction = observedAuctionService.findAllObservedAuctionsByUserIdAndAuctionID(loggedUser.getID(), auction.getID());
+
         }
+        map.addAttribute("observedAuction", observedAuction);
+
 
         List<File> files = fileStorageService.getFilesByAuctionId(auction.getID());
         map.addAttribute("storedFiles", files);
@@ -249,6 +254,31 @@ public class AuctionController {
     @GetMapping("/buy/{auction_id}/user/{user_id}")
     public String handleBuyNow(@PathVariable("auction_id") Long auction_id, @PathVariable("user_id") Long user_id, ModelMap map) {
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/watch/{auction_id}/user/{user_id}")
+    public String handleObserved(@PathVariable("auction_id") Long auction_id, @PathVariable("user_id") Long user_id, ModelMap map) {
+        Auction auction = auctionService.findById(auction_id);
+        User user = userService.findById(user_id);
+        List<ObservedAuction> observedAuction = observedAuctionService.findAllObservedAuctionsByUserIdAndAuctionID(user_id, auction_id);
+        if (observedAuction.size() == 0) {
+            observedAuctionService.observeAuction(auction, user);
+        }
+        return "redirect:/";
+    }
+
+
+    @GetMapping("/unwatch/{auction_id}/user/{user_id}")
+    public String handleStopObserved(@PathVariable("auction_id") Long auction_id, @PathVariable("user_id") Long user_id, ModelMap map) {
+        Auction auction = auctionService.findById(auction_id);
+        User user = userService.findById(user_id);
+        List<ObservedAuction> observedAuctions = observedAuctionService.findAllObservedAuctionsByUserIdAndAuctionID(user_id, auction_id);
+        if (observedAuctions.size() > 0) {
+            for (ObservedAuction observedAuction : observedAuctions) {
+                observedAuctionService.stopObserveAuction(observedAuction);
+            }
+        }
         return "redirect:/";
     }
 
