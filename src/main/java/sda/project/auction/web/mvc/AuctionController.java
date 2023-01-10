@@ -61,6 +61,9 @@ public class AuctionController {
         List<Auction> auctions = auctionService.findAllAuctionsByDateOfIssueAndUser(id);
         map.addAttribute("auctions", auctions);
 
+        Bidding bidding = biddingService.findBiddingByAuctionId(id);
+        map.addAttribute("bidding", bidding);
+
 //            map.addAttribute("user", new CreateUserForm());
 //            map.addAttribute("roles", User.Roles.values());
         // map.addAttribute("user", new CreateUserForm());
@@ -70,10 +73,43 @@ public class AuctionController {
 
     @GetMapping("/cat/{id}")
     public String displayAuctionByCategory(@PathVariable("id") Long id, ModelMap map) {
+
+        User loggedUser = null;
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            loggedUser = userService.findByEmail(principal.getUsername());
+        }
+        map.addAttribute("loggedUser", loggedUser);
+
         Category category = categoryService.findById(id);
         map.addAttribute("category", category);
+
         List<Auction> auctions = auctionService.findAllCurrentAuctionsByCategory(id);
         map.addAttribute("auctions", auctions);
+
+        List <Bidding> biddings = biddingService.findAllBiddingsByUserId(loggedUser.getID());
+        map.addAttribute("biddings", biddings);
+
+        List<ObservedAuction> observedAuctions = observedAuctionService.findAllObservedAuctionsByUserId(loggedUser.getID());
+        //map.addAttribute("observedAuctions", observedAuctions);
+        Map<Long, Boolean> observedAuctions2 = new HashMap<Long, Boolean>();
+
+        Long maximum = 0L;
+
+        for(ObservedAuction observedAuction : observedAuctions) {
+            if (maximum < observedAuction.getAuction().getID()) {
+                maximum = observedAuction.getAuction().getID();
+            }
+            observedAuctions2.put(observedAuction.getAuction().getID(), true);
+        }
+
+        for (Long i = 0L; i <= maximum; i++) {
+            if (!observedAuctions2.containsKey(i)) {
+                observedAuctions2.put(i, false);
+            }
+        }
+
+        map.addAttribute("observedAuctions", observedAuctions2);
 
         return "get-auctions-by-category";
     }
