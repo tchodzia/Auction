@@ -326,7 +326,8 @@ public class AuctionController {
             List<Auction> auctions = auctionService.getAuctionByUserAndAuction(loggedUser.getID(), id);
             if (auctions.size() == 1) {
                 for (Auction auction : auctions) {
-                    auctionService.deleteAuction(auction.getID());
+                    //auctionService.deleteAuction(auction.getID());
+                    auctionService.deactivateAuction(auction);
                     redirectAttributes.addAttribute("message", auction.getTitle() + " auction was deleted!");
                 }
             }
