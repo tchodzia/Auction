@@ -164,6 +164,7 @@ public class AuctionService {
                 }
             }
         }
+    }
 
     public void deleteAuction(Long id) {
         List<File> files = fileDBRepository.getFilesByAuctionId(id);

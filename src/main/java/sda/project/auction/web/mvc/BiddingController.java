@@ -64,10 +64,9 @@ public class BiddingController {
             User loggedUser = userService.findByEmail(principal.getUsername());
             map.addAttribute("loggedUser", loggedUser);
         }
-        Long currentPrice = biddingService.findBiddingByAction(auctionService.findById(auction_id)).getAmount();
+        Long currentPrice = biddingService.findBiddingByAuction(auctionService.findById(auction_id)).getAmount();
 
         //gdzie walidacja ceny nowego podbicia ?!
-        Long currentPrice = biddingService.findBiddingByAuction(auctionService.findById(auction_id)).getAmount();
 
         map.addAttribute("bid", new BidForm(auction_id, user_id, currentPrice));
         return "bid-form";
