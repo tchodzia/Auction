@@ -66,8 +66,10 @@ public class WelcomeController{
         //  List<Auction> auctionsAll = auctionService.findAll();
         //  map.addAttribute("auctionsAll", auctionsAll);
 
-
-        List<File> files = fileStorageService.getFilesByAuctionId(currentRandomAuction.getID());
+        List<File> files = null;
+        if (currentRandomAuction != null) {
+            files = fileStorageService.getFilesByAuctionId(currentRandomAuction.getID());
+        }
         if (files == null || files.size() == 0) {
             List<File> storedFiles = new ArrayList<>();
             map.addAttribute("storedFiles", storedFiles);

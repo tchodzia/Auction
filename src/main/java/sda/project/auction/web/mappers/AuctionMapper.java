@@ -26,6 +26,7 @@ public class AuctionMapper {
                 form.getLocalization(),
                 auction.getDate_of_issue(),
                 auction.getEnd_date(),
+                true,
                 user
         );
     }
@@ -44,6 +45,7 @@ public class AuctionMapper {
         auction.setStringToDate_of_issue(form.getDate_of_issue());
         auction.setStringToEnd_date(form.getEnd_date());
         auction.setUser(user);
+        auction.setIsActive(true);
         return auction;
     }
 }

@@ -156,7 +156,7 @@ public class AuctionService {
         LocalDateTime currentTime = LocalDateTime.now();
         List<Auction> auctions = StreamSupport.stream(repository.findAll().spliterator(), false).toList();
         for (Auction auction : auctions) {
-            if (auction.getIsActive() && currentTime.isAfter(auction.getEnd_date())) {
+            if (auction != null && (auction.getIsActive() == true || auction.getIsActive() == null) && currentTime.isAfter(auction.getEnd_date())) {
                 auction.setIsActive(false);
                 repository.save(auction);
                 if (biddingRepository.findBiddingByAuction(auction) != null) {
@@ -172,6 +172,11 @@ public class AuctionService {
             fileDBRepository.deleteById(file.getID());
         }
         repository.deleteById(id);
+    }
+
+    public void deactivateAuction(Auction auction) {
+        auction.setIsActive(false);
+        repository.save(auction);
     }
 
     public List<Auction> getAuctionByUserAndAuction(Long userID, Long auctionID) {

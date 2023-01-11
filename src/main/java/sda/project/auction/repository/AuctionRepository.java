@@ -15,13 +15,13 @@ public interface AuctionRepository extends CrudRepository<Auction, Long> {
     @Query(value = "SELECT * FROM auctions WHERE date_of_issue <= NOW() AND end_date >= NOW() AND is_active = 1 ORDER BY end_date ASC LIMIT 10", nativeQuery = true)
     public List<Auction> findLast10ByDateOfIssue();
 
-    @Query(value = "SELECT * FROM auctions WHERE (date_of_issue <= NOW() AND end_date >= NOW()) AND user_id=:id ORDER BY end_date ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM auctions WHERE ((date_of_issue <= NOW() AND end_date >= NOW()) AND is_active = 1) AND user_id=:id ORDER BY end_date ASC", nativeQuery = true)
     public List<Auction> findAllAuctionsByDateOfIssueAndUser(@Param("id") Long id);
 
-    @Query(value = "SELECT * FROM auctions WHERE (end_date < NOW()) AND user_id=:id ORDER BY end_date ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM auctions WHERE (end_date < NOW() OR is_active = 0) AND user_id=:id  ORDER BY end_date ASC", nativeQuery = true)
     public List<Auction> finishedAuctionsByUser(@Param("id") Long id);
 
-    @Query(value = "SELECT * FROM auctions WHERE date_of_issue <= NOW() AND end_date >= NOW() ORDER BY RAND() ASC LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM auctions WHERE ((date_of_issue <= NOW() AND end_date >= NOW()) AND is_active = 1) ORDER BY RAND() ASC LIMIT 1", nativeQuery = true)
     public Auction getCurrentRandomAuction();
 
     @Query(value = "SELECT * FROM auctions WHERE (date_of_issue <= NOW() AND end_date >= NOW()) AND category=:id ORDER BY end_date ASC", nativeQuery = true)

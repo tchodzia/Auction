@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 @ToString
 @Slf4j
 public class Auction {
-    public Auction(String title, String description, Long category, Long min_price, Long BUY_NOW_price, boolean promoted, String localization, LocalDateTime date_of_issue, LocalDateTime end_date, User user) {
+    public Auction(String title, String description, Long category, Long min_price, Long BUY_NOW_price, boolean promoted, String localization, LocalDateTime date_of_issue, LocalDateTime end_date, Boolean isActive, User user) {
         this.title = title;
         this.description = description;
         this.category = category;
@@ -27,7 +27,7 @@ public class Auction {
         this.date_of_issue = date_of_issue;
         this.end_date = end_date;
         this.user = user;
-        this.isActive = true;
+        this.isActive = isActive;
     }
 
     @Id
@@ -71,7 +71,7 @@ public class Auction {
     @Column
     private Boolean isActive;
 
-    public Auction(String title, String description, Long category, Long min_price, Long buy_now_price, boolean promoted, String localization, LocalDateTime date_of_issue, LocalDateTime end_date) {
+    public Auction(String title, String description, Long category, Long min_price, Long buy_now_price, boolean promoted, String localization, LocalDateTime date_of_issue, LocalDateTime end_date, Boolean isActive) {
     }
 
     public void setID(Long id) {
