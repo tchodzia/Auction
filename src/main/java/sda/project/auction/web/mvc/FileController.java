@@ -1,6 +1,7 @@
 package sda.project.auction.web.mvc;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
         path="/files",
         method={RequestMethod.POST,RequestMethod.GET,RequestMethod.DELETE, RequestMethod.PUT}
 )
+@Slf4j
 public class FileController {
 
     @Autowired
@@ -89,8 +91,6 @@ public class FileController {
         File fileDB = storageService.getFile(id);
         storageService.delete(id);
 
-        map.addAttribute("update", true);
-
         Auction auction = auctionService.findById(fileDB.getAuction().getID());
         map.addAttribute("auction", auction);
 
@@ -98,7 +98,11 @@ public class FileController {
         map.addAttribute("user", user);
 
         List<File> files = storageService.getFilesByAuctionId(auction.getID());
+
+        //log.info("Deleted file: " + files);
+
         map.addAttribute("storedFiles", files);
+        map.addAttribute("filesSize", files.size());
 
         List<CategoryTree> categories = categoryService.findAllCategoryTree();
         map.addAttribute("categories", categories);

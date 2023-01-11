@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sda.project.auction.model.Auction;
+
 import sda.project.auction.model.Bidding;
 import sda.project.auction.model.Purchase;
 import sda.project.auction.model.User;
@@ -11,6 +12,9 @@ import sda.project.auction.repository.AuctionRepository;
 import sda.project.auction.repository.BiddingRepository;
 import sda.project.auction.repository.PurchaseRepository;
 import sda.project.auction.repository.UserRepository;
+import sda.project.auction.model.File;
+import sda.project.auction.repository.FileDBRepository;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,6 +29,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 public class AuctionService {
     private final AuctionRepository repository;
+    private final FileDBRepository fileDBRepository;
 
     private final PurchaseRepository purchaseRepository;
 
@@ -131,6 +136,7 @@ public class AuctionService {
         }
     }
 
+
     public void createNewPurchase(Long auction_id, Long user_id) {
         Auction auction = findById(auction_id);
         User user = userRepository.findById(user_id).orElseThrow(() -> new RuntimeException("User with id " + user_id + " not found."));
@@ -158,5 +164,18 @@ public class AuctionService {
                 }
             }
         }
+
+    public void deleteAuction(Long id) {
+        List<File> files = fileDBRepository.getFilesByAuctionId(id);
+        for (File file : files) {
+            fileDBRepository.deleteById(file.getID());
+        }
+        repository.deleteById(id);
+    }
+
+    public List<Auction> getAuctionByUserAndAuction(Long userID, Long auctionID) {
+        List<Auction> auction = repository.findAllByUserId(userID, auctionID);
+        return auction;
+
     }
 }

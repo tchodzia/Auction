@@ -91,4 +91,13 @@ public class WelcomeController{
 
         return "index";
     }
+
+    @GetMapping("/categories/")
+    public String categoriesPage(ModelMap map, @ModelAttribute("message") String message) {
+
+        List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
+        map.addAttribute("categoryTrees", categoryTrees);
+
+        return "categories";
+    }
 }

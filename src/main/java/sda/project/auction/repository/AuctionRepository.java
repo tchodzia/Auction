@@ -31,5 +31,7 @@ public interface AuctionRepository extends CrudRepository<Auction, Long> {
     @Query(value = "SELECT * FROM auctions WHERE (date_of_issue <= NOW() AND end_date >= NOW()) AND (UPPER(title) LIKE :search OR UPPER(description) LIKE :search) ORDER BY promoted DESC, end_date ASC", nativeQuery = true)
     public List<Auction> findAllAuctionsBySearch(@Param("search") String search);
 
+    @Query(value = "SELECT * FROM auctions WHERE user_id = :userID and id = :auctionID", nativeQuery = true)
+    public List<Auction> findAllByUserId(@Param("userID") Long userID, @Param("auctionID") Long auctionID);
 
 }
