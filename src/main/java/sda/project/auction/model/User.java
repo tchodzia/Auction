@@ -35,6 +35,17 @@ public class User {
         this.userRole = userRole;
     }
 
+    public User(String email, String password, String account_name, String voivodeship, String city, String address, UserRole userRole, Account_State account_state) {
+        this.email = email;
+        this.password = password;
+        this.account_name = account_name;
+        this.voivodeship = voivodeship;
+        this.city = city;
+        this.address = address;
+        this.userRole = userRole;
+        this.account_state = account_state;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -61,6 +72,7 @@ public class User {
     private LocalDateTime created_date;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Account_State account_state;
 
     @Column

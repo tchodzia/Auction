@@ -21,6 +21,8 @@ public class BiddingService {
 
     private final BiddingRepository repository;
 
+    private final AuctionService auctionService;
+
     private final UserRepository userRepository;
 
     public Bidding save(Bidding bidding) {
@@ -50,5 +52,37 @@ public class BiddingService {
         else {
             throw new RuntimeException("New amount must be higher than current amount!");
         }
+    }
+
+    public Boolean isAmountCorrectForNewBid(Long auction_id, Long amount, Long user_id) {
+        Auction auction = auctionService.findById(auction_id);
+
+        if(auction.getMin_price() > amount){
+            throw new RuntimeException("New amount must be higher than " + auction.getMin_price());
+        }
+
+        if(amount > auction.getBUY_NOW_price()){
+            auctionService.alterAuctionToInactive(auction_id);
+            auctionService.createNewPurchase(auction_id, user_id);
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isAmountCorrectForUpdateBid(Long auction_id, Long amount, Long user_id, Long currentPrice) {
+        Auction auction = auctionService.findById(auction_id);
+
+        if(amount < currentPrice){
+            throw new RuntimeException("New amount must be higher than " + currentPrice);
+        }
+
+        if(amount > auction.getBUY_NOW_price()){
+            auctionService.alterAuctionToInactive(auction_id);
+            auctionService.createNewPurchase(auction_id, user_id);
+            return false;
+        }
+
+        return true;
     }
 }

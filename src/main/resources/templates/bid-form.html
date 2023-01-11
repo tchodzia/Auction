@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/header :: header">
-  <title>Bid form</title>
+    <title>Bid form</title>
 </head>
 
 <body>
@@ -11,31 +11,32 @@
 </nav>
 
 <div class="container">
-  <form th:object="${bid}" th:action="@{/bidding/newBid}" method="post">
-    <div class="mb-3">
-      <label for="auction" class="form-label">Aukcja:</label>
-      <input id="auction" class="form-control" type="text" th:field="*{auction_id}">
-    </div>
-    <div class="mb-3">
-      <label for="user" class="form-label">Użytkownik:</label>
-      <input id="user" class="form-control" type="text" th:field="*{user_id}">
-    </div>
-    <div class="mb-3">
-      <label for="amount" class="form-label">Kwota:</label>
-      <input id="amount" class="form-control" type="text" th:field="*{amount}">
-      <div
-              th:if="${#fields.hasErrors('amount')}"
-              th:text="${#fields.errors('amount')[0]}"
-              class="invalid-feedback-custom"
-      ></div>
-    </div>
-    <div>
-      <input class="form-control" type="hidden" th:field="*{currentPrice}">
-    </div>
-    <div>
-      <button type="submit" class="btn btn-primary">Podbij!</button>
-    </div>
-  </form>
+    <form th:object="${bid}" th:action="@{/bidding/newBid}" method="post">
+        <div class="mb-3">
+            <label for="auction" class="form-label">Aukcja:</label>
+            <input id="auction" class="form-control" type="text" th:field="*{auction_id}">
+        </div>
+        <div class="mb-3">
+            <label for="user" class="form-label">Użytkownik:</label>
+            <input id="user" class="form-control" type="text" th:field="*{user_id}">
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Twoje podbicie:</label>
+            <input id="amount" class="form-control" type="text" th:field="*{amount}">
+            <div
+                    th:if="${#fields.hasErrors('amount')}"
+                    th:text="${#fields.errors('amount')[0]}"
+                    class="invalid-feedback-custom"
+            ></div>
+        </div>
+        <div class="mb-3">
+            <label for="currentPrice" class="form-label">Aktualna wysokość podbicia:</label>
+            <input id="currentPrice" class="form-control" type="text" th:field="*{currentPrice}">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Podbij!</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>

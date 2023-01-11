@@ -1,10 +1,7 @@
 package sda.project.auction.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity(name="purchases")
 @Getter
@@ -22,6 +19,15 @@ public class Purchase {
 
     @OneToOne
     private Auction auction;
+
+    @Column
+    private Long price;
+
+    public Purchase(User user, Auction auction, Long price) {
+        this.user = user;
+        this.auction = auction;
+        this.price = price;
+    }
 
     public void setID(Long id) {
         this.ID = id;

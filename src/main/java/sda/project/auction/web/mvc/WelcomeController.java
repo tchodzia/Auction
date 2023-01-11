@@ -29,6 +29,8 @@ public class WelcomeController{
     @GetMapping("/")
     public String welcomePage(ModelMap map, @ModelAttribute("message") String message) {
 
+        auctionService.findAllAuctionsToDisactivate();
+
 
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

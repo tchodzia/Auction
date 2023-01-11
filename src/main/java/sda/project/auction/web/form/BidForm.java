@@ -18,6 +18,8 @@ public class BidForm {
         this.user_id = user_id;
         this.currentPrice = currentPrice;
     }
+
+
     private Long auction_id;
     private Long user_id;
 

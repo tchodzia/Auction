@@ -27,6 +27,7 @@ public class Auction {
         this.date_of_issue = date_of_issue;
         this.end_date = end_date;
         this.user = user;
+        this.isActive = true;
     }
 
     @Id
@@ -66,6 +67,9 @@ public class Auction {
 
     @ManyToOne
     private User user;
+
+    @Column
+    private Boolean isActive;
 
     public Auction(String title, String description, Long category, Long min_price, Long buy_now_price, boolean promoted, String localization, LocalDateTime date_of_issue, LocalDateTime end_date) {
     }

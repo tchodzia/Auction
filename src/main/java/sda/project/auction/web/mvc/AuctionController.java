@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import sda.project.auction.model.*;
 import sda.project.auction.service.*;
 import sda.project.auction.service.auth.CustomUserDetails;
-import sda.project.auction.web.form.NewBidForm;
 import sda.project.auction.web.form.CreateAuctionForm;
 import sda.project.auction.web.mappers.AuctionMapper;
 
@@ -42,7 +41,6 @@ public class AuctionController {
     private final CategoryService categoryService;
     private final BiddingService biddingService;
     private final UserService userService;
-
     private final ObservedAuctionService observedAuctionService;
     private final FileStorageService fileStorageService;
 
