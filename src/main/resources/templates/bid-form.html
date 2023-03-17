@@ -14,11 +14,11 @@
     <form th:object="${bid}" th:action="@{/bidding/newBid}" method="post">
         <div class="mb-3">
             <label for="auction" class="form-label">Aukcja:</label>
-            <input id="auction" class="form-control" type="text" th:field="*{auction_id}">
+            <input id="auction" class="form-control" type="text" th:field="*{auction_id}" readonly>
         </div>
         <div class="mb-3">
             <label for="user" class="form-label">Użytkownik:</label>
-            <input id="user" class="form-control" type="text" th:field="*{user_id}">
+            <input id="user" class="form-control" type="text" th:field="*{user_id}" readonly>
         </div>
         <div class="mb-3">
             <label for="amount" class="form-label">Twoje podbicie:</label>
@@ -31,7 +31,7 @@
         </div>
         <div class="mb-3">
             <label for="currentPrice" class="form-label">Aktualna wysokość podbicia:</label>
-            <input id="currentPrice" class="form-control" type="text" th:field="*{currentPrice}">
+            <input id="currentPrice" class="form-control" type="text" th:field="*{currentPrice}" readonly>
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Podbij!</button>
