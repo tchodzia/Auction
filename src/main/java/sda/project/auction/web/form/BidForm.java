@@ -27,7 +27,7 @@ public class BidForm {
 
     private Long amount;
 
-    @AssertTrue
+    @AssertTrue(message = "Wartość jest nieprawidłowa")
     public boolean isOk(){
         return amount > currentPrice;
     }
