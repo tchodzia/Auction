@@ -17,7 +17,7 @@
         <input type="hidden" th:field="*{userRole}">
         <div class="mb-3">
             <label for="firstName" class="form-label">Imię:</label>
-            <input id="firstName" class="form-control" type="text" th:field="*{account_name}">
+            <input id="firstName" class="form-control" type="text" th:field="*{account_name}" maxlength="20">
             <div
                     th:if="${#fields.hasErrors('account_name')}"
                     th:text="${#fields.errors('account_name')[0]}"
@@ -26,16 +26,12 @@
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input id="email" class="form-control" type="text" th:field="*{email}">
-            <div
-                    th:if="${#fields.hasErrors('email')}"
-                    th:text="${#fields.errors('email')[0]}"
-                    class="invalid-feedback-custom"
-            ></div>
+            <input id="email" class="form-control" type="text" th:field="*{email}" readonly hidden>
+            <p th:text="${user.email}">1</p>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Hasło:</label>
-            <input id="password" class="form-control" type="password" th:field="*{password}">
+            <input id="password" class="form-control" type="password" th:field="*{password}" maxlength="30">
             <div
                     th:if="${#fields.hasErrors('password')}"
                     th:text="${#fields.errors('password')[0]}"
@@ -44,7 +40,7 @@
         </div>
         <div class="mb-3">
             <label for="voivodeship" class="form-label">Województwo:</label>
-            <input id="voivodeship" class="form-control" type="text" th:field="*{voivodeship}">
+            <input id="voivodeship" class="form-control" type="text" th:field="*{voivodeship}" maxlength="20">
             <div
                     th:if="${#fields.hasErrors('voivodeship')}"
                     th:text="${#fields.errors('voivodeship')[0]}"
@@ -53,7 +49,7 @@
         </div>
         <div class="mb-3">
             <label for="city" class="form-label">Miasto:</label>
-            <input id="city" class="form-control" type="text" th:field="*{city}">
+            <input id="city" class="form-control" type="text" th:field="*{city}" maxlength="20">
             <div
                     th:if="${#fields.hasErrors('city')}"
                     th:text="${#fields.errors('city')[0]}"
@@ -62,7 +58,7 @@
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">Adres:</label>
-            <input id="address" class="form-control" type="text" th:field="*{address}">
+            <input id="address" class="form-control" type="text" th:field="*{address}" maxlength="20">
             <div
                     th:if="${#fields.hasErrors('address')}"
                     th:text="${#fields.errors('address')[0]}"
