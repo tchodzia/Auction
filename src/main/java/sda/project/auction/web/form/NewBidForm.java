@@ -15,6 +15,7 @@ public class NewBidForm {
     public NewBidForm(Long auction_id, Long user_id) {
         this.auction_id = auction_id;
         this.user_id = user_id;
+
     }
 
     private Long auction_id;

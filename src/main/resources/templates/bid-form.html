@@ -14,24 +14,26 @@
     <form th:object="${bid}" th:action="@{/bidding/newBid}" method="post">
         <div class="mb-3">
             <label for="auction" class="form-label">Aukcja:</label>
-            <input id="auction" class="form-control" type="text" th:field="*{auction_id}" readonly>
+            <input id="auction" class="form-control" type="text" th:field="*{auction_id}" readonly hidden>
+            <p th:text="${auction_id}"></p>
         </div>
         <div class="mb-3">
             <label for="user" class="form-label">Użytkownik:</label>
-            <input id="user" class="form-control" type="text" th:field="*{user_id}" readonly>
+            <input id="user" class="form-control" type="text" th:field="*{user_id}" readonly hidden>
+            <p th:text="${user_id}"></p>
+        </div>
+        <div class="mb-3">
+            <label for="currentPrice" class="form-label">Aktualna cena:</label>
+            <input id="currentPrice" class="form-control" type="text" th:field="*{currentPrice}" readonly>
         </div>
         <div class="mb-3">
             <label for="amount" class="form-label">Twoje podbicie:</label>
-            <input id="amount" class="form-control" type="text" th:field="*{amount}">
+            <input id="amount" class="form-control" type="number" th:field="*{amount}" maxlength="6" size="6">
             <div
                     th:if="${#fields.hasErrors('amount')}"
                     th:text="${#fields.errors('amount')[0]}"
                     class="invalid-feedback-custom"
             ></div>
-        </div>
-        <div class="mb-3">
-            <label for="currentPrice" class="form-label">Aktualna wysokość podbicia:</label>
-            <input id="currentPrice" class="form-control" type="text" th:field="*{currentPrice}" readonly>
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Podbij!</button>

@@ -1,4 +1,4 @@
-package sda.project.auction.exception;
+package sda.project.auction.model.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
