@@ -42,6 +42,7 @@ public class SecurityConfig{
                 .requestMatchers("/files/**").permitAll()
                 .requestMatchers("/categories/**").permitAll()
                 .requestMatchers("/categories").permitAll()
+                .requestMatchers("/logos/**").permitAll()
                 .anyRequest().permitAll()
                 .and().formLogin()
                 .and().httpBasic()
