@@ -251,7 +251,7 @@ public class AuctionController {
         promotedOptions.put("true", "tak");
         map.addAttribute("promotedOptions", promotedOptions);
 
-        return "create-auction";
+        return "update-auction";
     }
 
 

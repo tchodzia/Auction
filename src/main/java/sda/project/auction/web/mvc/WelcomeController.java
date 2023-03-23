@@ -102,4 +102,9 @@ public class WelcomeController{
 
         return "categories";
     }
+
+    @GetMapping("/kontakt")
+    public  String contactPage(){
+        return "kontakt";
+    }
 }

@@ -48,10 +48,10 @@
 
         <td>
             <a th:if="${loggedUser != null and loggedUser.getID() == auction.getUser().getID() and auction.getIsActive() == true}" class="btn btn-success"
-               th:href="@{/auctions/update/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj</a>
+               th:href="@{/auctions/update/__${auction.getID()}__}" role="button" target="_parent">Aktualizuj aukcje</a>
 
             <a th:if="${loggedUser != null and loggedUser.getID() == auction.getUser().getID() and auction.getIsActive() == true}" class="btn btn-danger"
-               th:href="@{/auctions/delete/__${auction.getID()}__}" role="button" target="_parent">Zakończ</a>
+               th:href="@{/auctions/delete/__${auction.getID()}__}" role="button" target="_parent">Zakończ aukcje</a>
         </td>
 
 
