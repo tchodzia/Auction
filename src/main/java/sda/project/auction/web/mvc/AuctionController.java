@@ -1,31 +1,21 @@
 package sda.project.auction.web.mvc;
 
-import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sda.project.auction.model.Auction;
-import sda.project.auction.model.Bidding;
-import sda.project.auction.model.Category;
-import sda.project.auction.model.User;
 import org.springframework.web.multipart.MultipartFile;
 import sda.project.auction.model.*;
 import sda.project.auction.service.*;
 import sda.project.auction.service.auth.CustomUserDetails;
 import sda.project.auction.web.form.CreateAuctionForm;
 import sda.project.auction.web.mappers.AuctionMapper;
-
-
 import java.io.IOException;
 import java.util.*;
 
@@ -48,14 +38,7 @@ public class AuctionController {
     @GetMapping("/user/{id}")
     public String displayAuctionByUser(@PathVariable("id") Long id, ModelMap map) {
 
-        User loggedUser = null;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            loggedUser = userService.findByEmail(principal.getUsername());
-        //    map.addAttribute("loggedUser", loggedUser);
-        }
-        map.addAttribute("loggedUser", loggedUser);
-
+        getLoggedUser(map);
         List<Auction> auctions = auctionService.findAllAuctionsByDateOfIssueAndUser(id);
         map.addAttribute("auctions", auctions);
 
@@ -72,12 +55,7 @@ public class AuctionController {
     @GetMapping("/cat/{id}")
     public String displayAuctionByCategory(@PathVariable("id") Long id, ModelMap map) {
 
-        User loggedUser = null;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            loggedUser = userService.findByEmail(principal.getUsername());
-        }
-        map.addAttribute("loggedUser", loggedUser);
+        User loggedUser = getLoggedUser(map);
 
         Category category = categoryService.findById(id);
         map.addAttribute("category", category);
@@ -115,12 +93,8 @@ public class AuctionController {
     @GetMapping("/create/{id}")
     public String displayCreateAuctionForm(@PathVariable("id") Long id, ModelMap map) {
         //map.addAttribute("update", false);
-        User loggedUser = null;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            loggedUser = userService.findByEmail(principal.getUsername());
-            map.addAttribute("loggedUser", loggedUser);
-        }
+        User loggedUser = getLoggedUser(map);
+
         //Auction auction = auctionService.findById(1L);
         Auction auction = new Auction();
         map.addAttribute("auction", auction);
@@ -147,12 +121,7 @@ public class AuctionController {
         boolean update = false;
         Auction auction = null;
 
-        User loggedUser = null;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            loggedUser = userService.findByEmail(principal.getUsername());
-            map.addAttribute("loggedUser", loggedUser);
-        }
+        User loggedUser = getLoggedUser(map);
 
         User user = loggedUser;
         // User user = userService.findById(auction.getUser().getID());
@@ -225,12 +194,7 @@ public class AuctionController {
 
     @GetMapping("/update/{id}")
     public String displayUpdateAuctionForm(@PathVariable("id") Long id, @RequestParam(value = "files", required = false) MultipartFile[] files, @ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, final RedirectAttributes redirectAttributes, ModelMap map) throws IOException {
-        User loggedUser = null;
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            loggedUser = userService.findByEmail(principal.getUsername());
-            map.addAttribute("loggedUser", loggedUser);
-        }
+        User loggedUser = getLoggedUser(map);
 
         //map.addAttribute("update", true);
         Auction auction = auctionService.findById(id);
@@ -269,7 +233,6 @@ public class AuctionController {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedUser = userService.findByEmail(principal.getUsername());
             map.addAttribute("loggedUser", loggedUser);
-
             observedAuction = observedAuctionService.findAllObservedAuctionsByUserIdAndAuctionID(loggedUser.getID(), auction.getID());
 
         }
@@ -337,5 +300,14 @@ public class AuctionController {
         return "redirect:/";
     }
 
+    private User getLoggedUser(ModelMap map) {
+        User loggedUser = null;
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            loggedUser = userService.findByEmail(principal.getUsername());
+            map.addAttribute("loggedUser", loggedUser);
+        }
+        return loggedUser;
+    }
 
 }
