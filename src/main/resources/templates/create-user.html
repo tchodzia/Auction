@@ -69,10 +69,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="role" class="form-label">Rola:</label>
-            <select id="role" class="form-control" th:field="*{userRole}">
-                <option th:each="roleOption : ${roles}" th:value="${roleOption}" th:text="${roleOption}">
-            </select>
+            <input id="userRole" class="form-control" type="text" th:field="*{userRole}" hidden>
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Zarejestruj</button>

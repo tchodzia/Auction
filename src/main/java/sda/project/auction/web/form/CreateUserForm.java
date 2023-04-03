@@ -39,4 +39,8 @@ public class CreateUserForm {
 
     @NotNull(message = "Pole nie może być puste")
     private UserRole userRole;
+
+    public CreateUserForm(UserRole userRole) {
+        this.userRole = userRole;
+    }
 }
