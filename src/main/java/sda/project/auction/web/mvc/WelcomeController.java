@@ -32,25 +32,7 @@ public class WelcomeController{
         auctionService.findAllAuctionsToDisactivate();
 
 
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User loggedUser = userService.findByEmail(principal.getUsername());
-            map.addAttribute("loggedUser", loggedUser);
-
-            List<Auction> auctionsByUser = auctionService.findAllAuctionsByDateOfIssueAndUser(loggedUser.getID());
-            map.addAttribute("auctionsByUser", auctionsByUser);
-
-            List<Bidding> auctionsBiddingByUser = biddingService.findAllBiddingsByUserId(loggedUser.getID());
-            map.addAttribute("auctionsBiddingByUser", auctionsBiddingByUser);
-
-
-            List<ObservedAuction> observedAuctions = observedAuctionService.findAllObservedAuctionsByUserId(loggedUser.getID());
-            map.addAttribute("observedAuctionsByUser", observedAuctions);
-
-            List<Auction> finishedAuctionsByUser = auctionService.finishedAuctionsByUser(loggedUser.getID());
-            map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
-
-        }
+        getLoggedUser(map);
 
         List<Auction> auctionsNew10 = auctionService.findFirst10ByDateOfIssue();
         map.addAttribute("auctionsNew10", auctionsNew10);
@@ -94,8 +76,11 @@ public class WelcomeController{
         return "index";
     }
 
+
     @GetMapping("/categories/")
     public String categoriesPage(ModelMap map, @ModelAttribute("message") String message) {
+
+        getLoggedUser(map);
 
         List<CategoryTree> categoryTrees = categoryService.findAllCategoryTree();
         map.addAttribute("categoryTrees", categoryTrees);
@@ -105,6 +90,11 @@ public class WelcomeController{
 
     @GetMapping("/kontakt")
     public  String contactPage(ModelMap map){
+        getLoggedUser(map);
+        return "kontakt";
+    }
+
+    private void getLoggedUser(ModelMap map) {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User loggedUser = userService.findByEmail(principal.getUsername());
@@ -124,6 +114,5 @@ public class WelcomeController{
             map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
 
         }
-        return "kontakt";
     }
 }
