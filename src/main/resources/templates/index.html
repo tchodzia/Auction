@@ -10,7 +10,9 @@
     <title>Auctions portal</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/styles.css">
-    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAACbm18AhnwaAP//6AB8eCYAg3wrAHp3KQCEgw8Av7iRAHdzJACYlVgA///5AIB6KQD8/f8A/f3/APb1/QD//f8A+fz6AHp4JwCCgxAA+v/6AIOCEwCLgBAA///6AIN/JACLfhYAf34fAPj/+wCHgBEAiYARAH55HQD//+IAh38UAP//+wD8/v4Ain8UAId+FwCLfxQA//7+AICCJQDy/PwAe3ojAO/vzgCOj1MA///rAP78/ACHgBIAurKEAI2BDwD+//wA//3xAP/7/wD///wA/f7/AP/+/wD9/vcAx8WZAMTBlAD//foAioEQAHt9HAD7//0AenwfAP3//QD+//0AhYERAP//7QCGgBQA//z+AP3//gD+//4A///+AHx7IwB+fBgAg4ESAP38/wCBiAcA//z/APz//wD9//8A/v//AP///wCKhAoAjohBAP//9wCLhg0Af3scAIaCGQCGfhwAhXwiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1NNTU1NTU1NTU1NTU1KNTZLFBQUFBQUFBQUFBQUR0VKJAsDPSY6QB9JKCgRSAZFSiQWT09PCBgtAD8/DSoGRUokMBpQUCEpAk5QUD5VBkVKJDAaUFA1Mz9GUFAsLwZFSiQwGlBQUFBQUBYQBBUGRUokMBpQUFBQUFBEOx4cBkVKJDAaM1AZNwdYCTkOVwZFSiQwGjNQQlYuJ00gPFIGRUokMBpGJRsbIxc/P0Q4BkVKJDAaRiUbGwFUKCgFHQZFSiQyCg9MGxsbGxsbGxsGRUokMSsrQRsbGxsbGxsbBkVDUSIiIiIiIiIiIiIiIhI0Eww/Pz8/Pz8/Pz8/Pz9MTgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" rel="icon" type="image/x-icon" />    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAACbm18AhnwaAP//6AB8eCYAg3wrAHp3KQCEgw8Av7iRAHdzJACYlVgA///5AIB6KQD8/f8A/f3/APb1/QD//f8A+fz6AHp4JwCCgxAA+v/6AIOCEwCLgBAA///6AIN/JACLfhYAf34fAPj/+wCHgBEAiYARAH55HQD//+IAh38UAP//+wD8/v4Ain8UAId+FwCLfxQA//7+AICCJQDy/PwAe3ojAO/vzgCOj1MA///rAP78/ACHgBIAurKEAI2BDwD+//wA//3xAP/7/wD///wA/f7/AP/+/wD9/vcAx8WZAMTBlAD//foAioEQAHt9HAD7//0AenwfAP3//QD+//0AhYERAP//7QCGgBQA//z+AP3//gD+//4A///+AHx7IwB+fBgAg4ESAP38/wCBiAcA//z/APz//wD9//8A/v//AP///wCKhAoAjohBAP//9wCLhg0Af3scAIaCGQCGfhwAhXwiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD1NNTU1NTU1NTU1NTU1KNTZLFBQUFBQUFBQUFBQUR0VKJAsDPSY6QB9JKCgRSAZFSiQWT09PCBgtAD8/DSoGRUokMBpQUCEpAk5QUD5VBkVKJDAaUFA1Mz9GUFAsLwZFSiQwGlBQUFBQUBYQBBUGRUokMBpQUFBQUFBEOx4cBkVKJDAaM1AZNwdYCTkOVwZFSiQwGjNQQlYuJ00gPFIGRUokMBpGJRsbIxc/P0Q4BkVKJDAaRiUbGwFUKCgFHQZFSiQyCg9MGxsbGxsbGxsGRUokMSsrQRsbGxsbGxsbBkVDUSIiIiIiIiIiIiIiIhI0Eww/Pz8/Pz8/Pz8/Pz9MTgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+          rel="icon" type="image/x-icon"/>
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script>
         function rowClicked(value) {
             location.href = "/auctions/" + value;
@@ -44,11 +46,14 @@
 <div th:object="${loggedUser}" align="right">
     <!--th:href="@{/update/user/__${user.id}__}"-->
     <a class="btn btn-success" role="button" target="_parent"
-       th:if="${loggedUser != null}" th:href="@{/update/user/__${loggedUser.getID().toString()}__}">Edytuj użytkownika</a>
+       th:if="${loggedUser != null}" th:href="@{/update/user/__${loggedUser.getID().toString()}__}">Edytuj
+        użytkownika</a>
     <a class="btn btn-danger" role="button" target="_parent"
-       th:if="${loggedUser != null and (loggedUser.getAccount_state() == null or loggedUser.getAccount_state().toString() == 'ACTIVE')}" th:href="@{/deactivation/user/__${loggedUser.getID().toString()}__}">Dezaktywuj konto</a>
+       th:if="${loggedUser != null and (loggedUser.getAccount_state() == null or loggedUser.getAccount_state().toString() == 'ACTIVE')}"
+       th:href="@{/deactivation/user/__${loggedUser.getID().toString()}__}">Dezaktywuj konto</a>
     <a class="btn btn-danger" role="button" target="_parent"
-       th:if="${loggedUser != null and (loggedUser.getAccount_state() == null  or loggedUser.getAccount_state().toString() == 'NOT_ACTIVE')}" th:href="@{/activation/user/__${loggedUser.getID().toString()}__}">Aktywuj konto</a>
+       th:if="${loggedUser != null and (loggedUser.getAccount_state() == null  or loggedUser.getAccount_state().toString() == 'NOT_ACTIVE')}"
+       th:href="@{/activation/user/__${loggedUser.getID().toString()}__}">Aktywuj konto</a>
 </div>
 
 <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="margin: 2px">
@@ -60,7 +65,8 @@
                    th:href="@{/auctions/cat/__${categoryTree.getCatID()}__}">[[${categoryTree.getCategoryName()}]]</a>
             </li>
             <li th:each="category : ${categoryTree.getSubcategories()}"><a class="dropdown-item"
-                                                                           th:href="@{/auctions/cat/__${category.getCatID()}__}">&gt;&gt; [[${category.getCategoryName()}]]</a>
+                                                                           th:href="@{/auctions/cat/__${category.getCatID()}__}">&gt;&gt;
+                [[${category.getCategoryName()}]]</a>
             </li>
         </ul>
     </div>
@@ -71,14 +77,18 @@
     <div style="margin: 2px">
         <div class="card text-white bg-primary mb-3" style="min-width: 20rem;">
             <div class="card-header"></div>
-            <div class="card-body">
+            <div class="card-body" align="center">
                 <h5 class="card-title">Nowe aukcje</h5>
                 <p class="card-text">
                 <table class="table table-striped table-hover">
                     <tbody>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Kategoria</th>
+                        <th>KUP TERAZ</th>
+                    </tr>
                     <tr th:each="auction : ${auctionsNew10}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
-
                         <!-- <td th:text="${auction.getID()}"></td> -->
                         <td th:text="${auction.getTitle()}"></td>
                         <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getCategory()}">
@@ -97,18 +107,19 @@
 
     <div class="card w-100" style="min-width: 550px;">
         <div class="card-body" style="margin: 4px">
-            <div class="card mb-3" style="max-width: 540px;"s>
+            <div class="card mb-3" style="max-width: 540px;" s>
                 <div class="row g-0">
                     <div class="col-md-4">
                         <div th:each="onefile : ${storedFiles}">
-                        <img th:src="@{/files/__${onefile.getID()}__}" width="100%" height="*" style="margin: 2px">
-                            </div>
+                            <img th:src="@{/files/__${onefile.getID()}__}" width="100%" height="*" style="margin: 2px">
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${currentRandomAuction.getTitle()}"></h5>
 
-                            <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${currentRandomAuction.getCategory()}">
+                            <div th:each="cat : ${categories}"
+                                 th:if="${cat.getID()} == ${currentRandomAuction.getCategory()}">
                                 <a th:href="@{/auctions/cat/__${cat.getID()}__}">
                                     <p class="card-text" th:text="${cat.getName()}"></p>
                                 </a>
@@ -131,11 +142,16 @@
     <div style="margin: 2px">
         <div class="card text-white bg-warning mb-3" style="min-width: 20rem;">
             <div class="card-header"></div>
-            <div class="card-body">
+            <div class="card-body" align="center">
                 <h5 class="card-title">Aukcje na zakończeniu</h5>
                 <p class="card-text">
                 <table class="table table-striped table-hover">
                     <tbody>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Kategoria</th>
+                        <th>KUP TERAZ</th>
+                    </tr>
                     <tr th:each="auction : ${auctionsLast10}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
 
@@ -160,11 +176,16 @@
     <div style="margin: 2px" class="table2">
         <div class="card text-white bg-secondary mb-3" style="min-width: 16rem;">
             <div class="card-header"></div>
-            <div class="card-body">
-                <h5 class="card-title">Aukcje wystawione przez użytkownika</h5>
+            <div class="card-body" align="center">
+                <h5 class="card-title">Twoje aukcje</h5>
                 <p class="card-text">
                 <table class="table table-striped table-hover">
                     <tbody>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Kategoria</th>
+                        <th>KUP TERAZ</th>
+                    </tr>
                     <tr th:each="auction : ${auctionsByUser}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
                         <!-- <td th:text="${auction.getID()}"></td> -->
@@ -184,20 +205,26 @@
     <div style="margin: 2px" class="table2">
         <div class="card text-white bg-success mb-3" style="min-width: 16rem;">
             <div class="card-header"></div>
-            <div class="card-body">
-                <h5 class="card-title">Aukcje licytowane przez użytkownika</h5>
+            <div class="card-body" align="center">
+                <h5 class="card-title">Licytujesz</h5>
                 <p class="card-text">
                 <table class="table table-striped table-hover">
                     <tbody>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Kategoria</th>
+                        <th>Podbicie</th>
+                    </tr>
                     <tr th:each="auction : ${auctionsBiddingByUser}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getAuction().getID()} + '\');'">
 
                         <!-- <td th:text="${auction.getAuction().getID()}"></td> -->
                         <td th:text="${auction.getAuction().getTitle()}"></td>
-                        <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getAuction().getCategory()}">
+                        <div th:each="cat : ${categories}"
+                             th:if="${cat.getID()} == ${auction.getAuction().getCategory()}">
                             <td th:text="${cat.getName()}"></td>
                         </div>
-                         <td th:text="${auction.getAmount()}"></td>
+                        <td th:text="${auction.getAmount()}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -210,19 +237,24 @@
     <div style="margin: 2px" class="table2">
         <div class="card text-white bg-dark mb-3" style="min-width: 16rem;">
             <div class="card-header"></div>
-            <div class="card-body">
-                <h5 class="card-title">Aukcje obserwowane przez użytkownika</h5>
+            <div class="card-body" align="center">
+                <h5 class="card-title">Obserwujesz</h5>
                 <p class="card-text">
                 <table class="table table-dark table-striped table-hover">
                     <tbody>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Kategoria</th>
+                    </tr>
                     <tr th:each="auction : ${observedAuctionsByUser}" style="cursor: pointer;"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getAuction().getID()} + '\');'">
                         <!-- <td th:text="${auction.getAuction().getID()}"></td> -->
                         <td th:text="${auction.getAuction().getTitle()}"></td>
-                        <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getAuction().getCategory()}">
+                        <div th:each="cat : ${categories}"
+                             th:if="${cat.getID()} == ${auction.getAuction().getCategory()}">
                             <td th:text="${cat.getName()}"></td>
                         </div>
-                        </tr>
+                    </tr>
                     </tbody>
                 </table>
                 </p>
@@ -233,11 +265,16 @@
     <div style="margin: 2px" class="table2">
         <div class="card text-black bg-light mb-3" style="min-width: 16rem;">
             <div class="card-header"></div>
-            <div class="card-body">
-                <h5 class="card-title">Zakończone aukcje użytkownika</h5>
+            <div class="card-body" align="center">
+                <h5 class="card-title">Moje zakupy</h5>
                 <p class="card-text">
                 <table class="table table-striped table-hover">
                     <tbody>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Kategoria</th>
+                        <th>Data zakończenia</th>
+                    </tr>
                     <tr th:each="auction : ${finishedAuctionsByUser}" style="cursor: pointer"
                         th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
                         <!-- <td th:text="${auction.getID()}"></td> -->
