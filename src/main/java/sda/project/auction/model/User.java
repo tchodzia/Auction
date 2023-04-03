@@ -25,14 +25,13 @@ public class User {
         this.userRole = userRole;
     }
 
-    public User(String email, String password, String account_name, String voivodeship, String city, String address, UserRole userRole) {
+    public User(String email, String password, String account_name, String voivodeship, String city, String address) {
         this.email = email;
         this.password = password;
         this.account_name = account_name;
         this.voivodeship = voivodeship;
         this.city = city;
         this.address = address;
-        this.userRole = userRole;
     }
 
     public User(String email, String password, String account_name, String voivodeship, String city, String address, UserRole userRole, Account_State account_state) {
@@ -44,6 +43,18 @@ public class User {
         this.address = address;
         this.userRole = userRole;
         this.account_state = account_state;
+    }
+
+    public User(String email, String password, String account_name, String voivodeship, String city, String address, UserRole userRole, Account_State account_state, Account_Type account_type) {
+        this.email = email;
+        this.password = password;
+        this.account_name = account_name;
+        this.voivodeship = voivodeship;
+        this.city = city;
+        this.address = address;
+        this.userRole = userRole;
+        this.account_state = account_state;
+        this.account_type = account_type;
     }
 
     @Id
@@ -79,6 +90,7 @@ public class User {
     private String icon;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Account_Type account_type;
 
     @Column

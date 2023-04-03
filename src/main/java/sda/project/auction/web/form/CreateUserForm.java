@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import sda.project.auction.model.Account_Type;
 import sda.project.auction.model.User;
 import sda.project.auction.model.UserRole;
 
@@ -37,10 +38,4 @@ public class CreateUserForm {
     @NotBlank(message = "Pole nie może być puste")
     private String address;
 
-    @NotNull(message = "Pole nie może być puste")
-    private UserRole userRole;
-
-    public CreateUserForm(UserRole userRole) {
-        this.userRole = userRole;
-    }
 }
