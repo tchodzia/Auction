@@ -24,7 +24,7 @@
           <a th:if="${loggedUser == null}" class="nav-link active" href="/signup">Zarejestruj się</a>
         </li>
         <li>
-          <p th:if="${loggedUser != null}" class="nav-link active" th:text="'-- STATUS KONTA: ' + ${loggedUser.getAccount_type} + ' | ' + ${loggedUser.getAccount_state} + ' --'"></p>
+          <p th:if="${loggedUser != null}" class="nav-link active" style="font-style:italic" th:text="'-- STATUS KONTA: ' + ${loggedUser.getAccount_type} + ' | ' + ${loggedUser.getAccount_state} + ' --'"></p>
         </li>
       </ul>
       <form class="d-flex" role="search" th:action="@{/search}" method="post">
