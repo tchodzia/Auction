@@ -40,17 +40,16 @@ public class WelcomeController{
         List<Auction> auctionsLast10 = auctionService.findLast10ByDateOfIssue();
         map.addAttribute("auctionsLast10", auctionsLast10);
 
-        Auction currentRandomAuction = auctionService.getCurrentRandomAuction();
-        map.addAttribute("currentRandomAuction", currentRandomAuction);
-
+        Auction[] currentRandomAuctions = auctionService.getCurrentRandomAuctions();
+        map.addAttribute("currentRandomAuctions", currentRandomAuctions);
 
 
         //  List<Auction> auctionsAll = auctionService.findAll();
         //  map.addAttribute("auctionsAll", auctionsAll);
 
         List<File> files = null;
-        if (currentRandomAuction != null) {
-            files = fileStorageService.getFilesByAuctionId(currentRandomAuction.getID());
+        if (currentRandomAuctions[0] != null) {
+            files = fileStorageService.getFilesByAuctionId(currentRandomAuctions[0].getID());
         }
         if (files == null || files.size() == 0) {
             List<File> storedFiles = new ArrayList<>();

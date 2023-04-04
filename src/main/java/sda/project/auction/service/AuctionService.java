@@ -52,7 +52,7 @@ public class AuctionService {
         if (auction.getDescription() == null) {
             auction.setDescription(current.getDescription());
         }
-        if (auction.isPromoted() == false) {
+        if (!auction.isPromoted()) {
             auction.setPromoted(current.isPromoted());
         }
         if (auction.getCategory() == null) {
@@ -118,9 +118,10 @@ public class AuctionService {
         return repository.finishedAuctionsByUser(id);
     }
 
-    public Auction getCurrentRandomAuction() {
-        return repository.getCurrentRandomAuction();
+    public Auction[] getCurrentRandomAuctions() {
+        return repository.getCurrentRandomAuctions();
     }
+
 
     public List<Auction> findAllCurrentAuctionsByCategory(Long id) {
         return repository.findAllCurrentAuctionsByCategory(id);

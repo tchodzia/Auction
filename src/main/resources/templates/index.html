@@ -75,7 +75,7 @@
 <div class="d-flex justify-content-between">
 
     <div style="margin: 2px">
-        <div class="card text-black bg-light mb-3" style="min-width: 20rem;">
+        <div class="card text-black bg-light mb-3" style="min-width: 30rem;">
             <div class="card-body" align="center">
                 <h5 class="card-title">Nowe aukcje</h5>
                 <table class="table table-striped table-hover">
@@ -103,40 +103,113 @@
 
 
     <div class="card w-100" style="min-width: 50%;">
-        <div class="card-body" style="margin: 2px">
-            <div class="card mb-3" style="max-width: 50%; min-width: 300px;">
-                <div class="row g-0">
+        <div class="card-body" style="margin: 3px">
+            <div class="card mb-3" style="max-width: 50%; min-width: 50%; float:left; border: none">
+                <div th:if="${currentRandomAuctions[0] != null}" class="row g-0" >
                     <div class="col-md-4">
                         <div th:each="onefile : ${storedFiles}">
                             <img th:src="@{/files/__${onefile.getID()}__}" width="100%" height="*" style="margin: 2px">
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div th:if="${currentRandomAuction != null}" class="card-body">
-                            <h5 class="card-title text-primary" th:text="${currentRandomAuction.getTitle()}"></h5>
+                        <div class="card-body">
+                            <h5 class="card-title text-primary" th:text="${currentRandomAuctions[0].getTitle()}"></h5>
 
                             <div th:each="cat : ${categories}"
-                                 th:if="${cat.getID()} == ${currentRandomAuction.getCategory()}">
+                                 th:if="${cat.getID()} == ${currentRandomAuctions[0].getCategory()}">
                                 <a th:href="@{/auctions/cat/__${cat.getID()}__}">
                                     <p class="card-text" th:text="${cat.getName()}"></p>
                                 </a>
                             </div>
-                            <p class="card-text" th:text="${currentRandomAuction.getDescription()}"></p>
-                            <p class="card-text">Cena KUP TERAZ: <b>[[${currentRandomAuction.getBUY_NOW_price()}]] zł</b></p>
-                            <a class="btn btn-primary" th:href="@{/auctions/__${currentRandomAuction.getID()}__}">Pokaż
+                            <p class="card-text" th:text="${currentRandomAuctions[0].getDescription()}"></p>
+                            <p class="card-text">Cena KUP TERAZ: <b>[[${currentRandomAuctions[0].getBUY_NOW_price()}]]
+                                zł</b></p>
+                            <a class="btn btn-primary" th:href="@{/auctions/__${currentRandomAuctions[0].getID()}__}">Pokaż
+                                aukcję</a>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${currentRandomAuctions[1] != null}" class="row g-0">
+                    <div class="col-md-4">
+                        <div th:each="onefile : ${storedFiles}">
+                            <img th:src="@{/files/__${onefile.getID()}__}" width="100%" height="*" style="margin: 2px">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary" th:text="${currentRandomAuctions[1].getTitle()}"></h5>
+
+                            <div th:each="cat : ${categories}"
+                                 th:if="${cat.getID()} == ${currentRandomAuctions[1].getCategory()}">
+                                <a th:href="@{/auctions/cat/__${cat.getID()}__}">
+                                    <p class="card-text" th:text="${cat.getName()}"></p>
+                                </a>
+                            </div>
+                            <p class="card-text" th:text="${currentRandomAuctions[1].getDescription()}"></p>
+                            <p class="card-text">Cena KUP TERAZ: <b>[[${currentRandomAuctions[1].getBUY_NOW_price()}]]
+                                zł</b></p>
+                            <a class="btn btn-primary" th:href="@{/auctions/__${currentRandomAuctions[1].getID()}__}">Pokaż
                                 aukcję</a>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card mb-3" style="max-width: 50%; min-width: 50%; float:left; border: none">
+                <div th:if="${currentRandomAuctions[2] != null}" class="row g-0">
+                    <div class="col-md-4">
+                        <div th:each="onefile : ${storedFiles}">
+                            <img th:src="@{/files/__${onefile.getID()}__}" width="100%" height="*" style="margin: 2px">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary" th:text="${currentRandomAuctions[2].getTitle()}"></h5>
 
+                            <div th:each="cat : ${categories}"
+                                 th:if="${cat.getID()} == ${currentRandomAuctions[2].getCategory()}">
+                                <a th:href="@{/auctions/cat/__${cat.getID()}__}">
+                                    <p class="card-text" th:text="${cat.getName()}"></p>
+                                </a>
+                            </div>
+                            <p class="card-text" th:text="${currentRandomAuctions[2].getDescription()}"></p>
+                            <p class="card-text">Cena KUP TERAZ: <b>[[${currentRandomAuctions[2].getBUY_NOW_price()}]]
+                                zł</b></p>
+                            <a class="btn btn-primary" th:href="@{/auctions/__${currentRandomAuctions[2].getID()}__}">Pokaż
+                                aukcję</a>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${currentRandomAuctions[3] != null}" class="row g-0">
+                    <div class="col-md-4">
+                        <div th:each="onefile : ${storedFiles}">
+                            <img th:src="@{/files/__${onefile.getID()}__}" width="100%" height="*" style="margin: 2px">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary" th:text="${currentRandomAuctions[3].getTitle()}"></h5>
+
+                            <div th:each="cat : ${categories}"
+                                 th:if="${cat.getID()} == ${currentRandomAuctions[3].getCategory()}">
+                                <a th:href="@{/auctions/cat/__${cat.getID()}__}">
+                                    <p class="card-text" th:text="${cat.getName()}"></p>
+                                </a>
+                            </div>
+                            <p class="card-text" th:text="${currentRandomAuctions[3].getDescription()}"></p>
+                            <p class="card-text">Cena KUP TERAZ: <b>[[${currentRandomAuctions[3].getBUY_NOW_price()}]]
+                                zł</b></p>
+                            <a class="btn btn-primary" th:href="@{/auctions/__${currentRandomAuctions[3].getID()}__}">Pokaż
+                                aukcję</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
 
 
     <div style="margin: 2px">
-        <div class="card text-black bg-light mb-3" style="min-width: 20rem;">
+        <div class="card text-black bg-light mb-3" style="min-width: 30rem;">
             <div class="card-body" align="center">
                 <h5 class="card-title">Na zakończeniu</h5>
                 <table class="table table-striped table-hover">
