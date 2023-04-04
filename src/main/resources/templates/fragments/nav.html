@@ -23,6 +23,9 @@
         <li th:object="${loggedUser}">
           <a th:if="${loggedUser == null}" class="nav-link active" href="/signup">Zarejestruj się</a>
         </li>
+        <li>
+          <p th:if="${loggedUser != null}" class="nav-link active" th:text="'-- STATUS KONTA: ' + ${loggedUser.getAccount_type} + ' | ' + ${loggedUser.getAccount_state} + ' --'"></p>
+        </li>
       </ul>
       <form class="d-flex" role="search" th:action="@{/search}" method="post">
         <input class="form-control me-2" id="search" name="search" type="search" placeholder="Wpisz szukaną frazę" aria-label="Search">
