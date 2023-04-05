@@ -3,18 +3,25 @@
 
 <head th:replace="fragments/header :: header">
     <title>Update user data form</title>
+    <script>
+        function rowClicked(value) {
+            location.href = "localhost:8081/auctions/" + value;
+        }
+    </script>
 </head>
 
 <body>
 
-<nav th:replace="fragments/nav:: nav">
-</nav>
+<nav th:replace="fragments/nav:: nav"></nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
 
 <div class="container">
 
     <form th:object="${user}" th:action="@{/update/save}" method="post">
         <input type="hidden" th:field="*{ID}">
-        <input type="hidden" th:field="*{userRole}">
         <div class="mb-3">
             <label for="firstName" class="form-label">Imię:</label>
             <input id="firstName" class="form-control" type="text" th:field="*{account_name}" maxlength="20">
@@ -69,6 +76,114 @@
             <button type="submit" class="btn btn-primary">Aktualizuj</button>
         </div>
     </form>
+    <div th:if="${loggedUser != null}" class="d-flex justify-content-between" style="margin-top: 15px">
+        <div style="margin: 2px; font-size: smaller" class="table2">
+            <div class="card text-black bg-light mb-3" style="min-width: 16rem;">
+                <div class="card-body" align="center">
+                    <h5 class="card-title">Moje aukcje</h5>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <th class="text-primary">Tytuł</th>
+                            <th class="text-primary">Kategoria</th>
+                            <th class="text-primary">KUP TERAZ</th>
+                        </tr>
+                        <tr th:each="auction : ${auctionsByUser}" style="cursor: pointer"
+                            th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
+                            <!-- <td th:text="${auction.getID()}"></td> -->
+                            <td th:text="${auction.getTitle()}"></td>
+                            <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getCategory()}">
+                                <td th:text="${cat.getName()}"></td>
+                            </div>
+                            <td th:text="${auction.getBUY_NOW_price()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin: 2px; font-size: smaller" class="table2">
+            <div class="card text-black bg-light mb-3" style="min-width: 16rem;">
+                <div class="card-body" align="center">
+                    <h5 class="card-title">Licytuje</h5>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <th class="text-primary">Tytuł</th>
+                            <th class="text-primary">Kategoria</th>
+                            <th class="text-primary">Podbicie</th>
+                        </tr>
+                        <tr th:each="auction : ${auctionsBiddingByUser}" style="cursor: pointer"
+                            th:onclick="'javascript:rowClicked(\'' + ${auction.getAuction().getID()} + '\');'">
+
+                            <!-- <td th:text="${auction.getAuction().getID()}"></td> -->
+                            <td th:text="${auction.getAuction().getTitle()}"></td>
+                            <div th:each="cat : ${categories}"
+                                 th:if="${cat.getID()} == ${auction.getAuction().getCategory()}">
+                                <td th:text="${cat.getName()}"></td>
+                            </div>
+                            <td th:text="${auction.getAmount()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin: 2px; font-size: smaller" class="table2">
+            <div class="card text-black  bg-light mb-3" style="min-width: 16rem;">
+                <div class="card-body" align="center">
+                    <h5 class="card-title">Obserwuje</h5>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <th class="text-primary">Tytuł</th>
+                            <th class="text-primary">Kategoria</th>
+                        </tr>
+                        <tr th:each="auction : ${observedAuctionsByUser}" style="cursor: pointer;"
+                            th:onclick="'javascript:rowClicked(\'' + ${auction.getAuction().getID()} + '\');'">
+                            <!-- <td th:text="${auction.getAuction().getID()}"></td> -->
+                            <td th:text="${auction.getAuction().getTitle()}"></td>
+                            <div th:each="cat : ${categories}"
+                                 th:if="${cat.getID()} == ${auction.getAuction().getCategory()}">
+                                <td th:text="${cat.getName()}"></td>
+                            </div>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin: 2px; font-size: smaller" class="table2">
+            <div class="card text-black bg-light mb-3" style="min-width: 16rem;">
+                <div class="card-body" align="center">
+                    <h5 class="card-title">Moje zakupy</h5>
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                        <tr>
+                            <th class="text-primary">Tytuł</th>
+                            <th class="text-primary">Kategoria</th>
+                            <th class="text-primary">Data zakończenia</th>
+                        </tr>
+                        <tr th:each="auction : ${finishedAuctionsByUser}" style="cursor: pointer"
+                            th:onclick="'javascript:rowClicked(\'' + ${auction.getID()} + '\');'">
+                            <!-- <td th:text="${auction.getID()}"></td> -->
+                            <td th:text="${auction.getTitle()}"></td>
+                            <div th:each="cat : ${categories}" th:if="${cat.getID()} == ${auction.getCategory()}">
+                                <td th:text="${cat.getName()}"></td>
+                            </div>
+                            <td th:text="${auction.getEnd_date()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>

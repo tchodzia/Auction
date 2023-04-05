@@ -45,9 +45,8 @@
 
 <div th:object="${loggedUser}" align="right">
     <!--th:href="@{/update/user/__${user.id}__}"-->
-    <a class="btn btn-success" role="button" target="_parent"
-       th:if="${loggedUser != null}" th:href="@{/update/user/__${loggedUser.getID().toString()}__}">Edytuj
-        użytkownika</a>
+    <a class="btn btn-primary" role="button" target="_parent"
+       th:if="${loggedUser != null}" th:href="@{/user-account}">MOJE KONTO</a>
     <a class="btn btn-danger" role="button" target="_parent"
        th:if="${loggedUser != null and (loggedUser.getAccount_state() == null or loggedUser.getAccount_state().toString() == 'ACTIVE')}"
        th:href="@{/deactivation/user/__${loggedUser.getID().toString()}__}">Dezaktywuj konto</a>
@@ -75,7 +74,7 @@
 <div class="d-flex justify-content-between">
 
     <div style="margin: 2px">
-        <div class="card text-black bg-light mb-3" style="min-width: 30rem;">
+        <div class="card text-black bg-light mb-3" style="min-width: 25rem;">
             <div class="card-body" align="center">
                 <h5 class="card-title">Nowe aukcje</h5>
                 <table class="table table-striped table-hover">
@@ -209,7 +208,7 @@
 
 
     <div style="margin: 2px">
-        <div class="card text-black bg-light mb-3" style="min-width: 30rem;">
+        <div class="card text-black bg-light mb-3" style="min-width: 25rem;">
             <div class="card-body" align="center">
                 <h5 class="card-title">Na zakończeniu</h5>
                 <table class="table table-striped table-hover">

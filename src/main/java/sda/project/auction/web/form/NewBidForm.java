@@ -1,5 +1,6 @@
 package sda.project.auction.web.form;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 import sda.project.auction.model.Auction;
@@ -22,6 +23,7 @@ public class NewBidForm {
 
     private Long user_id;
 
-    @Min(value = 0, message = "The amount must not be below 0!")
+    @Min(value = 0, message = "Kwota nie może być poniżej 0!")
+    @Max(value = 100000, message = "Maksymalna kwota to 100000")
     private Long amount;
 }

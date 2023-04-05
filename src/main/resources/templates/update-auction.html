@@ -91,9 +91,9 @@
       ></div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3" hidden>
       <label for="category" class="form-label">Kategoria:</label>
-      <select class="form-select" aria-label="multiple select example" th:field="*{category}" id="category" hidden>
+      <select class="form-select" aria-label="multiple select example" th:field="*{category}" id="category">
         <div th:each="categoryTree: ${categories}">
           <option th:value="${categoryTree.getCatID()}"
                   th:text="${categoryTree.getCategoryName()}"></option>

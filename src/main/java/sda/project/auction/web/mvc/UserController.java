@@ -9,14 +9,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sda.project.auction.model.User;
-import sda.project.auction.model.UserRole;
-import sda.project.auction.service.UserService;
+import sda.project.auction.model.*;
+import sda.project.auction.service.*;
 import sda.project.auction.service.auth.CustomUserDetails;
 import sda.project.auction.web.form.CreateUserForm;
 import sda.project.auction.web.mappers.UserMapper;
 
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -24,6 +24,11 @@ import java.security.Principal;
 @RequestMapping()
 public class UserController {
     private final UserService userService;
+    private final BiddingService biddingService;
+    private final ObservedAuctionService observedAuctionService;
+    private final AuctionService auctionService;
+    private final CategoryService categoryService;
+
 
     @GetMapping("/signup")
     public String signUp(ModelMap map) {
@@ -46,15 +51,40 @@ public class UserController {
 
     //principal.get name jak użytkownik uderzy w endpoint to wtedy możemy złapać name użytkownika z sobie go z bazy wyciągnąć
 
-    @GetMapping("/update/user/{id}")
-    public String update(@PathVariable Long id, ModelMap map) {
+    @GetMapping("/user-account")
+    public String update(ModelMap map) {
+        User loggedUser = getLoggedUser(map, userService, auctionService, biddingService, observedAuctionService);
+        List<Category> categories = categoryService.findAll();
+        map.addAttribute("categories", categories);
+/*
+        User foundUser = userService.findById(loggedUser.getID());
+*/
+        map.addAttribute("user", loggedUser);
+        return "update-user";
+    }
+
+    static User getLoggedUser(ModelMap map, UserService userService, AuctionService auctionService, BiddingService biddingService, ObservedAuctionService observedAuctionService) {
+        User loggedUser = null;
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
             CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User loggedUser = userService.findByEmail(principal.getUsername());
-            map.addAttribute("loggedUser", loggedUser);}
-        User foundUser = userService.findById(id);
-        map.addAttribute("user", foundUser);
-        return "update-user";
+            loggedUser = userService.findByEmail(principal.getUsername());
+            map.addAttribute("loggedUser", loggedUser);
+
+            List<Auction> auctionsByUser = auctionService.findAllAuctionsByDateOfIssueAndUser(loggedUser.getID());
+            map.addAttribute("auctionsByUser", auctionsByUser);
+
+            List<Bidding> auctionsBiddingByUser = biddingService.findAllBiddingsByUserId(loggedUser.getID());
+            map.addAttribute("auctionsBiddingByUser", auctionsBiddingByUser);
+
+
+            List<ObservedAuction> observedAuctions = observedAuctionService.findAllObservedAuctionsByUserId(loggedUser.getID());
+            map.addAttribute("observedAuctionsByUser", observedAuctions);
+
+            List<Auction> finishedAuctionsByUser = auctionService.finishedAuctionsByUser(loggedUser.getID());
+            map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
+
+        }
+        return loggedUser;
     }
 
     @PostMapping("/update/save")

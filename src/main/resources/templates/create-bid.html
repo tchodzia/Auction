@@ -14,12 +14,12 @@
 <div class="container">
     <form th:object="${newbid}" th:action="@{/bidding/newbid}" method="post">
         <div class="mb-3">
-            <label for="auction" class="form-label">Aukcja:</label>
-            <input id="auction" class="form-control" type="text" th:field="*{auction_id}">
+            <label for="auction" class="form-label">Nr aukcji:</label>
+            <input id="auction" class="form-control" type="text" th:field="*{auction_id}" readonly>
         </div>
         <div class="mb-3">
-            <label for="user" class="form-label">Użytkownik:</label>
-            <input id="user" class="form-control" type="text" th:field="*{user_id}">
+            <label for="user" class="form-label">Twój ID:</label>
+            <input id="user" class="form-control" type="text" th:field="*{user_id}" readonly>
         </div>
         <div class="mb-3">
             <label for="amount" class="form-label">Kwota:</label>
@@ -31,7 +31,7 @@
             ></div>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary">Utwórz</button>
+            <button type="submit" class="btn btn-primary">Rozpocznij licytację</button>
         </div>
     </form>
 </div>

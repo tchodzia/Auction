@@ -94,24 +94,6 @@ public class WelcomeController{
     }
 
     private void getLoggedUser(ModelMap map) {
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-            CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User loggedUser = userService.findByEmail(principal.getUsername());
-            map.addAttribute("loggedUser", loggedUser);
-
-            List<Auction> auctionsByUser = auctionService.findAllAuctionsByDateOfIssueAndUser(loggedUser.getID());
-            map.addAttribute("auctionsByUser", auctionsByUser);
-
-            List<Bidding> auctionsBiddingByUser = biddingService.findAllBiddingsByUserId(loggedUser.getID());
-            map.addAttribute("auctionsBiddingByUser", auctionsBiddingByUser);
-
-
-            List<ObservedAuction> observedAuctions = observedAuctionService.findAllObservedAuctionsByUserId(loggedUser.getID());
-            map.addAttribute("observedAuctionsByUser", observedAuctions);
-
-            List<Auction> finishedAuctionsByUser = auctionService.finishedAuctionsByUser(loggedUser.getID());
-            map.addAttribute("finishedAuctionsByUser", finishedAuctionsByUser);
-
-        }
+        UserController.getLoggedUser(map, userService, auctionService, biddingService, observedAuctionService);
     }
 }
